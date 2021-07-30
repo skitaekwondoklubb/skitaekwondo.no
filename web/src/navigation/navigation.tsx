@@ -20,7 +20,7 @@ function Navigation() {
         <nav className={styles.navigation}>
             <div className={styles.logoHome}>
                 <Link to="/" onClick={() => setMenuEnabled(false)} className={styles.hjemLink}>
-                    <img src="/pictures/skitkd_logo.png"/>
+                    <img src={`${process.env.PUBLIC_URL}/pictures/skitkd_logo.png`}/>
                     <span>Ski Taekwondo Klubb</span>
                 </Link>
             </div>

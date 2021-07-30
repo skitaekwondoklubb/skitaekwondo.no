@@ -21,7 +21,7 @@ function Home() {
 
     return (
         <div className={styles.home}>
-            <img src="/pictures/HomePerson1.png" className={`${styles.homeBG} fadeInHomeBG`} />
+            <img src={`${process.env.PUBLIC_URL}/pictures/HomePerson1.png`} className={`${styles.homeBG} fadeInHomeBG`} />
             <div className={styles.homeGrid}>
                 <div className={styles.infoBox}>
                     <HashRouter>

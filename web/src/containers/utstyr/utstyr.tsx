@@ -4,7 +4,7 @@ function Utstyr() {
     return (
         <div className={`${styles.utstyrGrid} slideLeft`}>
             <div className={styles.picture}>
-                <img src={`/pictures/utstyr/overtrekk${Math.floor(Math.random() * (5-1) + 1)}.png`} />
+                <img src={`${process.env.PUBLIC_URL}/pictures/utstyr/overtrekk${Math.floor(Math.random() * (5-1) + 1)}.png`} />
             </div>
             <div className={styles.textSide}>
                 <h1>Utstyr</h1>

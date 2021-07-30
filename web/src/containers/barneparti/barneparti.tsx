@@ -48,7 +48,7 @@ function Barneparti() {
     return (
         <div className={`${styles.barnepartiGrid} slideLeft`}>
             <div className={styles.picture}>
-                <img src="/pictures/stock_barneparti.png"/>
+                <img src={`${process.env.PUBLIC_URL}/pictures/stock_barneparti.png`}/>
             </div>
             <div className={styles.textSide}>
                 <HashRouter>

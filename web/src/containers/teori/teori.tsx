@@ -18,7 +18,7 @@ function TeoriInformation() {
 function Taegeuki() {
     return (
         <div className={`${styles.theory} fadeIn`}>
-            <img src="/pictures/taegeuki.png" className={styles.clickablePicture} onClick={() => window.open("/pictures/taegeuki.png")}/>
+            <img src={`${process.env.PUBLIC_URL}/pictures/taegeuki.png`} className={styles.clickablePicture} onClick={() => window.open(`${process.env.PUBLIC_URL}/pictures/taegeuki.png`)}/>
             <p>Taegeukgi kan deles inn i tre deler. Den hvite bakgrunnen, den røde og blå "taegeuk" i midten og de fire triagrammene.</p>
             <p>Det Sør-Koreanske nasjonalflagget, Taegeuk betyr opprinnelsen til alle ting i universet. Den hvite bakgrunnen symboliserer renhet og fred. 
                 Sirkelen i midten er en delt rød og blå del med en horisontal ”S”. 
@@ -45,7 +45,7 @@ function Taegeuki() {
 function Mom() {
     return (
         <div className={`${styles.theory} fadeIn`}>
-            <img src="/pictures/mom_kroppen.jpg" className={styles.clickablePicture} onClick={() => window.open("/pictures/mom_kroppen.jpg")} />
+            <img src={`${process.env.PUBLIC_URL}/pictures/mom_kroppen.jpg`} className={styles.clickablePicture} onClick={() => window.open("/pictures/mom_kroppen.jpg")} />
         </div>
     )
 }
@@ -70,7 +70,7 @@ function Teori() {
         <div className={`${styles.teoriGrid} slideLeft`}>
             <div className={styles.picture}>
                 <small><b>TODO: Bedre bilder</b></small>
-                <img src={`/pictures/ttu_bok${Math.floor(Math.random() * (4-1) + 1)}.jpg`} />
+                <img src={`${process.env.PUBLIC_URL}/pictures/ttu_bok${Math.floor(Math.random() * (4-1) + 1)}.jpg`} />
                 <p>Teoribøkene er 299,- per stk</p>
             </div>
             <div className={styles.textSide}>

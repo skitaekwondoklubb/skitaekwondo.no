@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Router, Switch } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../containers/home/home';
 import OmOss from '../containers/omoss/omoss';
 import Barneparti from '../containers/barneparti/barneparti';
@@ -17,10 +16,8 @@ import VinterleirRegistrering from '../containers/vinterleir/registrering';
 
 
 function MainRouting() {
-  const history = createBrowserHistory();
-
   return (
-      <Router history={history} >
+      <BrowserRouter basename={`${process.env.PUBLIC_URL}`} >
         <Navigation/>
         <div className={styles.overflow}>
           <Switch>
@@ -59,7 +56,7 @@ function MainRouting() {
             </Route>
           </Switch>
         </div>
-    </Router>
+    </BrowserRouter>
   )
 }
 

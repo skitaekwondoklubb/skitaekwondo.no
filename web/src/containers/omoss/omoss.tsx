@@ -4,7 +4,7 @@ function OmOss() {
     return (
         <div className={`${styles.omOssGrid} slideLeft`}>
             <div className={styles.picture}>
-                <img src="/pictures/skitkd_logo.png"/>
+                <img src={`${process.env.PUBLIC_URL}/pictures/skitkd_logo.png`}/>
             </div>
             <div className={styles.textSide}>
                 <h1>Om Ski Taekwondo Klubb</h1>

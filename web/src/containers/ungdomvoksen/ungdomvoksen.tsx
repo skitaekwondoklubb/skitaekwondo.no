@@ -46,7 +46,7 @@ function UngdomVoksenpartiet() {
     return (
         <div className={`${styles.ungdomvoksenGrid} slideLeft`}>
             <div className={styles.picture}>
-                <img src="/pictures/stock_ungvoks.png"/>
+                <img src={`${process.env.PUBLIC_URL}/pictures/stock_ungvoks.png`}/>
             </div>
             <div className={styles.textSide}>
                 <HashRouter>

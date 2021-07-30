@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.294dfbd0.chunk.css",
-    "main.js": "/static/js/main.a675d013.chunk.js",
-    "main.js.map": "/static/js/main.a675d013.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.981ee696.js",
-    "runtime-main.js.map": "/static/js/runtime-main.981ee696.js.map",
-    "static/js/2.8d285e34.chunk.js": "/static/js/2.8d285e34.chunk.js",
-    "static/js/2.8d285e34.chunk.js.map": "/static/js/2.8d285e34.chunk.js.map",
-    "static/js/3.dfe6675e.chunk.js": "/static/js/3.dfe6675e.chunk.js",
-    "static/js/3.dfe6675e.chunk.js.map": "/static/js/3.dfe6675e.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.294dfbd0.chunk.css.map": "/static/css/main.294dfbd0.chunk.css.map",
-    "static/js/2.8d285e34.chunk.js.LICENSE.txt": "/static/js/2.8d285e34.chunk.js.LICENSE.txt",
-    "static/media/vipps_hurtigkasse.cd7f0f7d.svg": "/static/media/vipps_hurtigkasse.cd7f0f7d.svg"
+    "main.css": "/skitaekwondo.no/static/css/main.294dfbd0.chunk.css",
+    "main.js": "/skitaekwondo.no/static/js/main.8fc56694.chunk.js",
+    "main.js.map": "/skitaekwondo.no/static/js/main.8fc56694.chunk.js.map",
+    "runtime-main.js": "/skitaekwondo.no/static/js/runtime-main.1e31cc33.js",
+    "runtime-main.js.map": "/skitaekwondo.no/static/js/runtime-main.1e31cc33.js.map",
+    "static/js/2.cf52c32c.chunk.js": "/skitaekwondo.no/static/js/2.cf52c32c.chunk.js",
+    "static/js/2.cf52c32c.chunk.js.map": "/skitaekwondo.no/static/js/2.cf52c32c.chunk.js.map",
+    "static/js/3.dfe6675e.chunk.js": "/skitaekwondo.no/static/js/3.dfe6675e.chunk.js",
+    "static/js/3.dfe6675e.chunk.js.map": "/skitaekwondo.no/static/js/3.dfe6675e.chunk.js.map",
+    "index.html": "/skitaekwondo.no/index.html",
+    "static/css/main.294dfbd0.chunk.css.map": "/skitaekwondo.no/static/css/main.294dfbd0.chunk.css.map",
+    "static/js/2.cf52c32c.chunk.js.LICENSE.txt": "/skitaekwondo.no/static/js/2.cf52c32c.chunk.js.LICENSE.txt",
+    "static/media/vipps_hurtigkasse.cd7f0f7d.svg": "/skitaekwondo.no/static/media/vipps_hurtigkasse.cd7f0f7d.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.981ee696.js",
-    "static/js/2.8d285e34.chunk.js",
+    "static/js/runtime-main.1e31cc33.js",
+    "static/js/2.cf52c32c.chunk.js",
     "static/css/main.294dfbd0.chunk.css",
-    "static/js/main.a675d013.chunk.js"
+    "static/js/main.8fc56694.chunk.js"
   ]
 }
