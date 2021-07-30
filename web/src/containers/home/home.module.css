@@ -18,7 +18,7 @@
 }
 
 :local .infoBox {
-    margin-top: 10%;
+    margin-top: 5%;
     grid-column: 2;
     font-size: 2em;
 }
