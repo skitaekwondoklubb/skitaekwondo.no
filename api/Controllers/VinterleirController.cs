@@ -13,7 +13,7 @@ namespace SkiTKD.Api.Controllers
     {
         private readonly ILogger<VinterleirController> _logger;
 
-        public WeatherForecastController(ILogger<VinterleirController> logger)
+        public VinterleirController(ILogger<VinterleirController> logger)
         {
             _logger = logger;
         }
@@ -21,7 +21,6 @@ namespace SkiTKD.Api.Controllers
         [HttpPost]
         public ActionResult<bool> Post()
         {
-            var rng = new Random();
             return Ok(true);
         }
     }

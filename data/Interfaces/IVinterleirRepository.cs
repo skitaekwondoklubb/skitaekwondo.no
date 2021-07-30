@@ -1,6 +1,6 @@
 using System;
 
-namespace SkiTKD.Data.Contracts
+namespace SkiTKD.Data.Interfaces
 {
     public interface IVinterleirRepository
     {
