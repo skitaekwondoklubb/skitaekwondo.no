@@ -29,6 +29,10 @@ export const destinations: Destination[] = [
         "link": "/utstyr"
     },
     {
+        "name": "Vinterleir",
+        "link": "/vinterleir"
+    },
+    {
         "name": "Kontakt",
         "link": "/kontakt"
     }

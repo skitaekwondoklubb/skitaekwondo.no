@@ -62,7 +62,7 @@
 
 
 
-@media only screen and (max-width: 1080px) {
+@media only screen and (max-width: 1500px) {
 
     :local .navigation {
         position: sticky;
