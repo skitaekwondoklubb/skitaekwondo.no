@@ -1,0 +1,99 @@
+:local .navLink {
+    font-size: 1.3em;
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+    border-left: 15px solid transparent;
+    animation: "fadeIn" 0.2s ease-in;
+}
+
+:local .navLink:hover {
+    color: slategrey;
+}
+
+:local .selectedNav {
+    padding-bottom: 10px;
+    border-bottom: 15px solid #eb1a52;
+    border-left: 15px solid transparent;
+  }
+
+:local .hjemLink {
+    display: flex;
+    font-size: 1.3em;
+    color: black;
+    text-decoration: none;
+    align-items: center;
+    
+}
+
+
+:local .hjemLink img {
+    max-height: 50px;
+    padding-right: 20px;
+}
+
+:local .navigation {
+    display: flex;
+    border-bottom: 2px solid rgba(100, 100, 100, 0.4);
+    justify-content: space-between;
+    padding: 30px;
+    height: 50px;
+}
+
+:local .rightSideNav {
+    margin-top: 10px;
+
+}
+
+:local .mobileButton {
+    display: none;         
+}
+
+:local .mobileMenu {
+    margin-top: 4vh;
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+}
+
+:local .mobileMenu a {
+    font-size: 6vw;
+}
+
+
+
+@media only screen and (max-width: 1080px) {
+
+    :local .navigation {
+        position: sticky;
+        z-index: 200;
+        background-color: white;
+    }
+
+    :local .logoHome span {
+        display: none;
+    }
+
+    :local .mobileButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    :local .mobileButton button {
+        padding: 8px 15px 5px 15px;
+        border: 0px solid #eb1a52;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+    :local .showMobileMenu a {
+        font-size: 6vw;
+        width: 60%;
+    }
+
+    :local .rightSideNav {
+        display: none !important;
+    }
+    
+}

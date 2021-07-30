@@ -1,0 +1,109 @@
+:local .vinterleirGrid {
+    display: grid;
+    grid-template-columns: 30vw 10% 40%;
+    margin-top: 2em;
+    height: 100%;
+}
+
+:local .title {
+    font-size: 40px;   
+}
+
+:local .picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+:local .picture img {
+    object-fit: cover;
+    
+}
+
+:local .textSide {
+    grid-column: 3;
+}
+
+:local .subButtons {
+    display: flex;
+    justify-content: space-around;
+}
+
+:local .subButtons button {
+    font-size: 20px;
+    padding: 15px 25px 15px 25px;
+    width: 200px;
+    border-radius: 8px;
+}
+
+:local .scheduleGrid {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-content: center;
+    gap: 10%;
+}
+
+:local .registrationButton {
+    padding: 20px;
+    font-size: 2em;
+    border: 3px solid #eb1a52;
+    border-radius: 15px;
+}
+
+:local .buttonActive button {
+    color: white;
+    background-color: #eb1a52;
+}
+
+:local .price {
+    font-size: 2em;
+    font-weight: 700;
+}
+
+:local .margin {
+    margin-top: 1.5em;
+}
+
+
+@media only screen and (max-width: 1080px) {
+    :local .vinterleirGrid {
+        grid-template-columns: 100%;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    :local .textSide {
+        grid-column: 1;
+    }
+
+    :local .subButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        justify-content: space-around;
+    }
+
+    :local .picture {
+        display: none;
+        margin-top: 5%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    :local .picture img {
+        width: 60vw;
+        height: 200px;
+        object-fit: none;
+        object-position: 45% 10%;
+        box-shadow: 30px 30px 40px 40px white inset;
+    }
+
+    :local .textSide h1 {
+        font-size: 7vw;
+    }
+
+    :local .textSide p {
+        font-size: 5vw;
+    }
+}

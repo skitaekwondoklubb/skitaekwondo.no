@@ -1,0 +1,82 @@
+:local .kontaktGrid {
+    display: grid;
+    grid-template-columns: 30% 40%;
+    gap: 10%;
+    margin-top: 2em;
+    height: 100%;
+}
+
+:local .textSide {
+    grid-column: 2;
+}
+
+:local .kontaktButtons {
+    display: grid;
+    grid-template-columns: max-content;
+    justify-content: center;
+    gap: 3em;
+}
+
+:local .kontaktButtons button {
+    padding: 20px;
+    width: 600px;
+    font-size: 2em;
+    border-radius: 10px;
+}
+
+:local .picture {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media only screen and (max-width: 1080px) {
+    :local .kontaktGrid {
+        grid-template-columns: 100%;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    :local .textSide {
+        grid-column: 1;
+    }
+
+    :local .kontaktButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        justify-content: space-around;
+    }
+
+    :local .kontaktButtons button {
+        padding: 10px;
+        width: 80vw;
+        font-size: 2em;
+        border-radius: 10px;
+    }
+
+    :local .picture {
+        display: none;
+        margin-top: 5%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    :local .picture img {
+        width: 60vw;
+        height: 200px;
+        object-fit: none;
+        object-position: 45% 10%;
+        box-shadow: 30px 30px 40px 40px white inset;
+    }
+
+    :local .textSide h1 {
+        font-size: 10vw;
+    }
+
+    :local .textSide p {
+        font-size: 5vw;
+    }
+}

@@ -1,0 +1,43 @@
+.App {
+  text-align: center;
+  
+}
+
+.fadeInHomeBG {
+  animation: fadeIn 0.35s linear;
+}
+
+.slideLeft {
+  animation: slide-left 0.5s ease-in-out;
+}
+
+.fadeIn {
+  animation: fadeIn 0.2s ease-in;
+}
+
+.fadeInSlow {
+  animation: fadeIn 1.3s ease-in;
+}
+
+@keyframes slide-left {
+  from {
+      opacity: 0;
+      transform: translateX(15px);
+  }
+  to {
+      opacity: 1;
+      transform: translateX(0px);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+  }
+  50% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}

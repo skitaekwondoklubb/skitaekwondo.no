@@ -1,0 +1,321 @@
+
+:local .registration {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+}
+
+:local .registration p {
+    font-size: 1.5em;
+}
+
+:local .registration h1 {
+    text-align: center;
+}
+
+:local .registration button {
+    padding: 7px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    min-width: 170px;
+}
+
+:local .navigationButtons {
+    border-top: 1px solid rgba(25, 25, 25, 0.2);
+    display: grid;
+    grid-template-columns: 0.2fr 0.5fr 0.2fr 0.2fr;
+    padding-top: 1em;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+:local .nextButton {
+    justify-content: right;
+    border-color: rgb(0, 102, 255);
+    background-color: rgb(0, 102, 255);
+    color: white;
+    grid-column: 4;
+    justify-content: right;
+}
+
+:local .nextButton:disabled {
+    border-color: rgb(117, 167, 243);
+    background-color: rgb(117, 167, 243);
+    cursor: not-allowed;
+}
+
+:local .nextButton:hover {
+    border-color: rgb(0, 90, 230);
+    background-color: rgb(0, 90, 230);
+}
+
+:local .backButton {
+    justify-content: right;
+    border-color: slategray;
+    grid-column: 1;
+}
+
+:local .backButton:hover {
+    border-color: slategray;
+    background-color: slategray;
+}
+
+
+:local .textSide {
+    width: 50vw;
+}
+
+:local .disclaimer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9em;
+    margin-bottom: 2em;
+    cursor: pointer;
+}
+
+:local .disclaimer input {
+    margin-right: 1em;
+    display: inline;
+    transform: scale(1.5);
+}
+
+:local .checkboxLine {
+    display: flex;
+    align-self: center;
+    cursor: pointer;
+}
+
+:local .checkboxLine input {
+    margin-right: 1em;
+    display: inline;
+    transform: scale(1.5);
+}
+
+:local .clickable {
+    cursor: pointer;
+}
+
+:local .registrationForm {
+    display: grid;
+    grid-template-columns: min-content max-content;
+    column-gap: 2vw;
+    row-gap: 4vh;
+    justify-content: center;
+    align-items: center;
+}
+
+:local .largeSpan {
+    grid-column: span 2;
+}
+
+:local .registrationForm input {
+    border: 1px solid slategray;
+    padding: 0.8em;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+:local .ageInput {
+    justify-self: left;
+    justify-content: right;
+    max-width: 100px;
+}
+
+:local .autosuggestRow {
+    z-index: 100;
+    position: sticky;
+    left: 0;
+}
+
+:local .addLedsagerButton {
+    border-color: rgb(0, 102, 255);
+    background-color: rgb(0, 102, 255);
+    color: white;
+    justify-self: center;
+    align-self: center;
+}
+
+:local .addLedsagerButton:hover {
+    border-color: rgb(0, 90, 230);
+    background-color: rgb(0, 90, 230);
+
+}
+
+:local .ledsagerRow {
+    width: 700px;
+    border-bottom: 1px solid slategray;
+    padding: 1em 0em 1em 0em;
+    margin: 1em 0em 1em 0em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+:local .ledsagerRow span {
+    font-size: 1.5em;
+}
+
+:local .ledsagereForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+:local .freeText {
+    width: 50vw;
+    height: 10vw;
+    font-size: 1.3em;
+}
+
+:local .paymentButtons {
+    display: grid;
+    grid-template-columns: 0.2fr 0.3fr 0.2fr 0.3fr;
+    gap: 20px;
+    padding-top: 1em;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    align-items: center;
+}
+
+:local .cashCard {
+    justify-content: right;
+    border-color: rgb(0, 0, 0);
+    background-color: rgb(0, 0, 0);
+    color: white;
+    grid-column: 3;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+:local .cashCard:hover {
+    border-color: rgb(39, 39, 39);
+    background-color: rgb(39, 39, 39);
+}
+
+:local .paymentButtons img {
+    grid-column: 4;
+    cursor: pointer;
+}
+
+:local .checkout {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    font-size: 1.5em;
+    border-bottom: 1px solid rgba(112, 128, 144, 0.500);
+    padding: 15px;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+:local .checkoutTotal {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 1.5em;
+    padding: 15px;
+}
+
+:local .done {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+:local .done h2 {
+    font-size: 2.5em;
+}
+
+:local .done button {
+    padding: 20px;
+    font-size: 1.5em;
+}
+
+
+
+@media only screen and (max-width: 1080px) {
+
+    :local .registration h1 {
+        font-size: 2em;
+    }
+
+    :local .registration p {
+        font-size: 1.5em;
+    }
+
+    :local .navigationButtons {
+        grid-template-columns: 1fr;
+        gap: 1em;
+    }
+
+    :local .nextButton {
+        grid-column: auto;
+    }
+
+    :local .textSide {
+        width: 90vw;
+        margin-left: 3vw;
+        margin-right: 3vw;
+    }
+
+    :local .registrationForm {
+        grid-template-columns: 1fr;
+        column-gap: 0vw;
+        row-gap: 0vh;
+    }
+
+    :local .ledsagerRow {
+        width: 90vw;
+    }
+
+    :local .freeText {
+        width: 100%;
+        height: 20vw;
+    }
+
+
+    :local .largeSpan {
+        grid-column: 1;
+    }
+    
+    :local .paymentButtons {
+        grid-template-columns: 1fr;
+        justify-content: center;
+        align-items: center;
+    }
+
+    :local .paymentButtons button {
+        width: 210px;
+        justify-self: center;
+    }
+
+    :local .cashCard {
+        grid-column: auto;
+    }
+
+    :local .paymentButtons img {
+        justify-self: center;
+        grid-column: auto;
+    }
+
+    :local .checkboxLine {
+        display: grid;
+        grid-template-columns: min-content 1fr;
+        justify-content: left;
+        align-items: center;
+        margin-top: 1em;
+    }
+
+    :local .checkboxLine p {
+        font-size: 1.5em;
+    }
+    
+    :local .checkboxLine input {
+        transform: scale(1.5);
+    }
+
+}

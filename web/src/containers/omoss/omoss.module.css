@@ -1,0 +1,46 @@
+:local .omOssGrid {
+    display: grid;
+    grid-template-columns: 600px 40%;
+    margin-top: 2em;
+    gap: 10%;
+}
+
+:local .picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+:local .textSide {
+    grid-column: 2;
+}
+
+@media only screen and (max-width: 1080px) {
+    :local .omOssGrid {
+        grid-template-columns: 100%;
+        margin-left: 10%;
+        margin-right: 10%;
+        gap: 0%
+    }
+
+    :local .textSide {
+        grid-column: 1;
+    }
+
+    :local .picture {
+        margin-top: 5%;
+    }
+
+    :local .picture img {
+        width: 30vw;
+    }
+
+    :local .textSide h1 {
+        font-size: 6vw;
+    }
+
+    :local .textSide p {
+        font-size: 5vw;
+    }
+}

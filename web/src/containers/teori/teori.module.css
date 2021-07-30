@@ -1,0 +1,145 @@
+:local .teoriGrid {
+    display: grid;
+    column-gap: 5%;
+    grid-template-columns: 600px 50%;
+    margin-top: 2em;
+}
+
+:local .textSide {
+    grid-column: 2;
+}
+
+:local .buttonActive button {
+    color: white;
+    background-color: #eb1a52;
+}
+
+:local .title {
+    justify-content: center;
+}
+
+:local .title h1 {
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+:local .picture {
+    margin-top: 5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+}
+
+:local .picture img {
+    margin: 20px 0px 20px 0px;
+    width: 450px;
+    height: 450px;
+    box-shadow: 10px 10px 10px 5px slategray;
+    border-radius: 15px;
+}
+
+:local .teoriNavigation {
+    display: grid;
+    gap: 2em;
+    row-gap: 2em;
+    grid-template-columns: min-content min-content min-content min-content;
+    justify-content: center;
+}
+
+:local .teoriNavigation button {
+    width: 200px;
+    padding: 15px;
+    font-size: 1.5em;
+    border: 2px solid #eb1a52;
+    border-radius: 10px;
+}
+
+:local .theory {
+    margin-top: 2em;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+:local .pensum {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+:local .pensumGrid {
+    margin-top: 2em;
+    display: grid;
+    gap: 10%;
+    grid-template-columns: min-content;
+    justify-content: center;
+    margin-bottom: 20%;
+}
+
+:local .clickablePicture {
+    cursor: pointer;
+}
+
+:local .pensumGrid button {
+    padding: 30px;
+    width: 600px;
+    font-size: 2em;
+    border-radius: 10px;
+}
+
+
+@media only screen and (max-width: 1080px) {
+    :local .teoriGrid {
+        grid-template-columns: 100%;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    :local .teoriNavigation {
+        grid-template-columns: 100%;
+        gap: 1em;
+    }
+
+    :local .textSide {
+        grid-column: 1;
+    }
+    :local .pensumGrid button {
+        width: 80vw;
+        padding: 10px;
+        font-size: 1.5em;
+    }
+
+    :local .picture {
+        display: none;
+        margin-top: 5%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    :local .picture img {
+        width: 60vw;
+        height: 200px;
+        object-fit: none;
+        object-position: 45% 10%;
+        box-shadow: 30px 30px 40px 40px white inset;
+    }
+
+    :local .textSide h1 {
+        font-size: 10vw;
+    }
+
+    :local .textSide h2 {
+        font-size: 6vw;
+    }
+
+    :local .textSide p {
+        font-size: 5vw;
+    }
+
+    :local .clickablePicture {
+        max-width: 90vw;
+    }
+}
