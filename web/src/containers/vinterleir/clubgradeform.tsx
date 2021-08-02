@@ -33,7 +33,7 @@ function ClubGrade(props: StepProps) {
     }
 
     return (
-        <div>
+        <div className="slideLeft">
             <p>Her kan du finne din klubb og beltegrad.</p>
             <p>Dersom din klubb ikke er i listen, ta kontakt med oss så vil vi legge den til!</p>
             <div className={styles.registrationForm}>

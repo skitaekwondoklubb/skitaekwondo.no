@@ -24,7 +24,7 @@ function OtherInformation(props: StepProps) {
 
 
     return (
-        <div>
+        <div className="slideLeft">
             <p>Dersom det er annen informasjon vi trenger å vite kan dette skrives i tekstfeltet under:</p>
             <textarea  className={styles.freeText} value={otherInfo} onChange={(x) => setOtherInfo(x.currentTarget.value)} />
 

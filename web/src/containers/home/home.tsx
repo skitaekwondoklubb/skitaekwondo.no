@@ -39,7 +39,7 @@ function Home() {
                             <div className={`${styles.treningstider} slideLeft`}>
                                 <h1>Treningstider</h1>
                                 <h2>Barn:</h2>
-                                <p>Mandag og onsdag: 18:00 - 19:30</p>
+                                <p>Mandag og onsdag: 18:00 - 19:20</p>
                                 <p>Lørdag 12:00 - 13:00</p>
                                 <h2>Ungdom/voksen:</h2>
                                 <p>Tirsdag og torsdag: 18:00 - 19:30</p>

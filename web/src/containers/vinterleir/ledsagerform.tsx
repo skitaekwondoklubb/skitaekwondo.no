@@ -33,7 +33,7 @@ function Ledsager(props: StepProps) {
     }
 
     return (
-        <div>
+        <div className="slideLeft">
             <p>Ledsagere er egne foreldere, foresatte eller annen ansvarlig som vil være sammen med utøver under hele vinterleiren og
                 ønsker overnatting, frokost, lunsj og/eller middag.</p>
             <p>På grunn av denne kostnaden vil ledsagere måtte betale slik som utøvere. Dette vil dermed bli lagt til i prisen til slutt.</p>

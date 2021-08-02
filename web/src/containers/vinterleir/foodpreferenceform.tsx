@@ -23,19 +23,19 @@ function FoodPreference(props: StepProps) {
     }
 
     return (
-        <div>
+        <div className="slideLeft">
             <p>Er du vegetarianer, veganer eller lignende? Ved å vite dette kan vi passe på å ha alternativer til deg på matbordene.</p>
 
-        <div className={styles.registrationForm}>
-            <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setIsVegan(!isVegan)}>
-            <input type="checkbox" checked={isVegan} onChange={x => setIsVegan(x.currentTarget.checked)} />
-                <p>Jeg er vegetarianer/veganer</p>
+            <div className={styles.registrationForm}>
+                <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setIsVegan(!isVegan)}>
+                <input type="checkbox" checked={isVegan} onChange={x => setIsVegan(x.currentTarget.checked)} />
+                    <p>Jeg er vegetarianer/veganer</p>
+                </div>
             </div>
-        </div>
-        <div className={styles.navigationButtons}>
-            <button className={styles.backButton} onClick={goBack}>Tilbake</button>
-            <button className={styles.nextButton} onClick={nextStep}>Neste</button>
-        </div>
+            <div className={styles.navigationButtons}>
+                <button className={styles.backButton} onClick={goBack}>Tilbake</button>
+                <button className={styles.nextButton} onClick={nextStep}>Neste</button>
+            </div>
         </div>
     )
 }

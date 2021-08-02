@@ -32,7 +32,7 @@ function PayLater(props: ActualPaymentProps) {
     }
 
     return (
-        <div>
+        <div className="slideLeft">
             <p>Du kan betale med kort eller kontant når du kommer til innsjekking på vinterleiren.</p>
             <p>Trykk neste for å fullfør registreringen til vinterleir eller gå tilbake for å endre ting først.</p>
             <div className={styles.navigationButtons}>
@@ -49,7 +49,7 @@ function Vipps(props: ActualPaymentProps) {
     }
 
     return (
-        <div>
+        <div className="slideLeft">
             <p>Vipps integrasjon er ikke fullført enda :( Men du kan fullføre likevel da!</p>
             <p>Takk for at du brukte Vipps betaling umiddelbart!</p>
             
@@ -81,7 +81,7 @@ function Payment(props: StepProps) {
     }
 
     return (
-        <div>
+        <div className="slideLeft">
             <p>Din registrering:</p>
             <div>
                 <CheckoutRow article={`Vinterleir for utøver: ${props.registration.firstName} ${props.registration.lastName}`} price={1100}/>

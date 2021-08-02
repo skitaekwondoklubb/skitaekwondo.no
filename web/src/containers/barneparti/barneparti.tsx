@@ -17,8 +17,11 @@ function BpInformation() {
 function Treningstider() {
     return (
         <div>
-            <h2 className={styles.margin}>Treningstider:</h2>
-            <p>Mandag og onsdag: 18:00 - 19:30</p>
+            <h2 className={styles.margin}>Nybegynner:</h2>
+            <p>Mandag og onsdag: 18:10 - 19:20</p>
+            <p>Lørdag: 12:00 - 13:00</p>
+            <h2 className={styles.margin}>Videregående:</h2>
+            <p>Mandag og onsdag: 18:00 - 19:15</p>
             <p>Lørdag: 12:00 - 13:00</p>
         </div>
     )

@@ -106,4 +106,9 @@
     :local .textSide p {
         font-size: 5vw;
     }
+
+    :local .scheduleGrid {
+        grid-template-columns: max-content;
+        gap: 2%;
+    }
 }

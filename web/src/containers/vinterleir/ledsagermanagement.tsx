@@ -33,7 +33,7 @@ function LedsagerManagement(props: StepProps) {
     }
 
     return (
-        <div>
+        <div className="slideLeft">
             <div className={styles.ledsagereForm}>
                 {
                     ledsagere.map((ledsager) => {

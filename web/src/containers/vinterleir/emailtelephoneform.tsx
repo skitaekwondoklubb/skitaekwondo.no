@@ -42,7 +42,7 @@ function EmailTelephone(props: StepProps) {
     }
 
     return (
-        <div>
+        <div className="slideLeft">
             <p className={styles.largeSpan}>For å kunne nå utøver/foreldre for informasjon eller ved en nødsituasjon må vi ha epost og telefonnummer til utøver/forelder.</p>
             <div className={styles.registrationForm}>
                 

@@ -24,7 +24,7 @@ function Sleepover(props: StepProps) {
     }
 
     return (
-        <div>
+        <div className="slideLeft">
             <p hidden={!isSkiTaekwondoKlubb}><b>Utøvere i Ski Taekwondo Klubb må være minst 12 år for å kunne overnatte i salen.</b></p>
             <p>Overnatting i salen er gratis for alle utøvere, men krever egne sovesaker slik som for eksempel sovepose, madrass eller lignende.</p>
             <div className={`${styles.registrationForm}`} >

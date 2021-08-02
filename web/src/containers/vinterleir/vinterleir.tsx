@@ -20,7 +20,7 @@ function Information(props: { history: any }) {
 function Schedule() {
     return (
         <div>
-            <p>Se full timeplan her: <a href="www.vg.no">Timeplan for Vinterleir 2021</a></p>
+            <p>Se full timeplan her: <b>{`<`}Timeplan fortsatt under arbeid{`>`}</b></p>
             <div className={styles.scheduleGrid}>
                 <div>
                     <h2 className={styles.margin}>Fredag 3. desember:</h2>

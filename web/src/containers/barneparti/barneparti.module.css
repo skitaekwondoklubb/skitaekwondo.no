@@ -9,12 +9,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    max-height: 60vh;
 }
 
 :local .picture img {
     object-fit: scale-down;
-    object-position: 0 30vh;    
 }
 
 :local .textSide {

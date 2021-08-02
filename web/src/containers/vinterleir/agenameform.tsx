@@ -51,7 +51,7 @@ function NameAgeForm(props: StepProps) {
     }
 
     return (
-        <div>
+        <div className="slideLeft">
             <div className={styles.registrationForm}>
                 <p>Fornavn:</p>
                 <input value={firstName} onChange={x => validateFirstName(x.currentTarget.value)} />
