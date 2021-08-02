@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 
 web/build/*
+*.*ocal.json
+*.local.env

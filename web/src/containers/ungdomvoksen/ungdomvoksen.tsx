@@ -19,7 +19,9 @@ function Treningstider() {
     return (
         <div>
             <h2 className={styles.margin}>Treningtider:</h2>
-            <p>Mandag og onsdag: 18:00 - 19:30.</p>
+            <p>Tirsdag og torsdag: 18:00 - 19.30</p>
+            <h2>Rødt og svart belte:</h2>
+            <p>Mandag og onsdag: 19:30 - 21:00.</p>
         </div>
     )
 }

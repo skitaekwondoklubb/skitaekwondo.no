@@ -18,6 +18,12 @@ namespace SkiTKD.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(x => {
+                    x.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) //load base settings
+                    .AddJsonFile($"appsettings.Development.json", optional: true) //load environment settings
+                    .AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true) //load local settings
+                    .AddEnvironmentVariables();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
