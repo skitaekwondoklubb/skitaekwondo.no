@@ -1,5 +1,6 @@
 
 :local .registration {
+    margin-top: 3vh;
     display: grid;
     justify-content: center;
     align-items: center;

@@ -23,7 +23,7 @@ function Schedule() {
             <p>Se full timeplan her: <b>{`<`}Timeplan fortsatt under arbeid{`>`}</b></p>
             <div className={styles.scheduleGrid}>
                 <div>
-                    <h2 className={styles.margin}>Fredag 3. desember:</h2>
+                    <h2 >Fredag 3. desember:</h2>
                     <p>Registrering:</p>
                     <p>17:00 - 19:00</p>
                     <p>Trening:</p>
@@ -32,7 +32,7 @@ function Schedule() {
                     <p>19:15 - Ukjent</p>
                 </div>
                 <div>
-                    <h2 className={styles.margin}>Lørdag 4. desember:</h2>
+                    <h2>Lørdag 4. desember:</h2>
                     <p>Frokost:</p>
                     <p>08:00 - 09:00</p>
                     <p>Trening:</p>
@@ -47,8 +47,8 @@ function Priser() {
     return (
         <div>
             <p>Her er prisene for vinterleiren 2021:</p>
-            <h2 className={styles.price}>1000,- for utøvere.</h2>
-            <h2 className={styles.price}>800,- for følgere.</h2>
+            <h2>1000,- for utøvere.</h2>
+            <h2>800,- for følgere.</h2>
             <p>Betaling er enten igjennom Vipps eller med kort/kontant.</p>
             <p>Vipps kan gjøres direkte fra registreringssiden! Bare velg Vipps hurtigkasse og betal direkte.</p>
             <p>Ved kort betales det til XX.XX.XX.XX. Send mail til oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> slik at vi kan bekrefte at betalingen har skjedd.</p>
@@ -67,7 +67,7 @@ function Vinterleir() {
             </div>
             <div className={styles.textSide}>
                 <HashRouter>
-                    <h1>Vinterleir</h1>
+                    <h1 className={styles.vinterleirTitle}>Vinterleir</h1>
                     <div className={styles.subButtons}>
                         <NavLink exact to="/" activeClassName={styles.buttonActive}>
                             <button>

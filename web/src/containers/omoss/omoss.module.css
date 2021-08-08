@@ -29,7 +29,7 @@
     }
 
     :local .picture {
-        margin-top: 5%;
+        margin-bottom: 3vh;
     }
 
     :local .picture img {

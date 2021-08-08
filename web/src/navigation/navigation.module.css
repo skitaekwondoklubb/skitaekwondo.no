@@ -87,6 +87,10 @@
         cursor: pointer;
     }
 
+    :local .mobileButton button:hover {
+        background: transparent;
+    }
+
     :local .showMobileMenu a {
         font-size: 6vw;
         width: 60%;

@@ -32,6 +32,7 @@
 }
 
 :local .start {
+    margin-top: 15vh;
     animation: slide-left-home 1.5s forwards;
 }
 
@@ -111,6 +112,10 @@
     
     :local .treningstider p {
         font-size: 5vw;
+    }
+
+    :local .start {
+        margin-top: 5vh;
     }
 
 

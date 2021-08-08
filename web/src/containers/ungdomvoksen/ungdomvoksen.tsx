@@ -33,13 +33,14 @@ function Priser() {
             <h2 className={styles.price}>Voksen: 370,- per måned.</h2>
             <p>Vi tilbyr også familie rabatt! Fra andre betalende familiemedlem gjelder 10 % rabatt.*</p>
             <p>Bindingsperiode etter start er på 6 måneder.</p>
-            <small>* Hvis flere enn 3 deltagere i en familie, vil egne regler gjelde.</small>
             
             <h2 className={styles.margin}>Om medlemskontigent:</h2>
             <p>Vi har avtalegiro basert på NIF og NKF sine retningslinjer for å sikre at alle er registrert og forsikret etter gjeldende regler.</p>
             <p>Medlemskapet er løpende frem til det er skriftlig sagt opp.</p>
             <p>I tillegg til månedsgebyr er det en kontigent til Norges Idrettsforbund (kr 350) som vil bli belastet i april hvert år.</p>
             <p>Denne kontingenten inkluderer årskontingent til Norges Kampsportforbund (NKF) som inkluderer forsikring og medlemspass.</p>
+            <small>* Hvis flere enn 3 deltagere i en familie, vil egne regler gjelde.</small>
+
         </div>
     )
 }
