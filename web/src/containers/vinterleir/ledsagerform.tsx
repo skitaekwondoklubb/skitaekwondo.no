@@ -41,7 +41,7 @@ function Ledsager(props: StepProps) {
             <div className={styles.registrationForm}>
                 <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setHasLedsager(!hasLedsager)}>
                     <input type={"checkbox"} checked={hasLedsager} onChange={x => setHasLedsager(x.currentTarget.checked)}/>
-                    <p>Utøver har egen ledsager</p>
+                    <span>Utøver har egen ledsager</span>
                 </div>
             </div>
             <div className={styles.navigationButtons}>

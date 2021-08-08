@@ -43,7 +43,7 @@ function ClubGrade(props: StepProps) {
                 <GradeAutocomplete currentSelection={grade} setGrade={setGrade}/>
                 <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setGradering(!gradering)}>
                     <input type="checkbox" checked={gradering} onChange={x => setGradering(x.currentTarget.checked)}/>
-                    <p>Delta på gradering under vinterleir</p>
+                    <span>Delta på gradering under vinterleir</span>
                 </div>
             </div>
             <div className={styles.navigationButtons}>

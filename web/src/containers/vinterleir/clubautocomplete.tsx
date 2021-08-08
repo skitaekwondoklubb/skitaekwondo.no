@@ -25,14 +25,13 @@ function ClubAutocomplete(props: ClubAutocompleteProps) {
     }, [club])
 
     function getSuggestions(value: string) {
-        console.log(value);
         const escapedValue = escapeRegexCharacters(value.trim());
   
         if (escapedValue === '') {
           return [];
         }
       
-        return props.clubs.filter(club => club.toLowerCase().includes(value.toLowerCase()));
+        return props.clubs.filter(club => club.toLowerCase().includes(escapedValue.toLowerCase()));
     }
 
     const onSuggestionsFetch: SuggestionsFetchRequested = (request) => {

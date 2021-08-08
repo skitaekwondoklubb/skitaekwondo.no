@@ -32,14 +32,13 @@ export function GradeAutocomplete(props: GradeAutocompleteProps) {
     }, [grade])
 
     function getSuggestions(value: string) {
-        console.log(value);
         const escapedValue = escapeRegexCharacters(value.trim());
   
         if (escapedValue === '') {
           return [];
         }
       
-        return grades.filter(grade => grade.name.includes(value));
+        return grades.filter(grade => grade.name.toLowerCase().includes(escapedValue.toLowerCase()));
     }
 
     const onSuggestionsFetch: SuggestionsFetchRequested = (request) => {

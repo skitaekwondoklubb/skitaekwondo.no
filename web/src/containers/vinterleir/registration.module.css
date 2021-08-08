@@ -93,6 +93,10 @@
     transform: scale(1.5);
 }
 
+:local .checkboxLine span {
+    font-size: 1.4em;
+}
+
 :local .clickable {
     cursor: pointer;
 }

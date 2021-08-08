@@ -47,7 +47,7 @@ function EmailTelephone(props: StepProps) {
             <div className={styles.registrationForm}>
                 
                 <p>Epost:</p>
-                <input value={email} onChange={x => validateEmail(x.currentTarget.value)} />
+                <input value={email} type="email" onChange={x => validateEmail(x.currentTarget.value)} />
                 <p>Telefon:</p>
                 <input value={telephone} type="tel" onChange={x => validateTelephone(x.currentTarget.value)} />
 

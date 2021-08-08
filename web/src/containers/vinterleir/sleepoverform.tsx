@@ -33,7 +33,7 @@ function Sleepover(props: StepProps) {
                         type={"checkbox"} checked={sleepover} 
                         onChange={(x) => setSleepover(x.currentTarget.checked)}
                     />
-                    <p>Jeg ønsker å overnatte i salen</p>
+                    <span>Jeg ønsker å overnatte i salen</span>
                 </div>
             </div>
             <div className={styles.navigationButtons}>

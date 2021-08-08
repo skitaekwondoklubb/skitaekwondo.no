@@ -33,7 +33,8 @@ function PayLater(props: ActualPaymentProps) {
 
     return (
         <div className="slideLeft">
-            <p>Du kan betale med kort eller kontant når du kommer til innsjekking på vinterleiren.</p>
+            <p>Du kan betale med kort ved å sende penger til XX.XX.XX.XX. Send en mail til <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> slik at vi kan godkjenne betalingen.</p>
+            <p>Kontant må betales når du kommer til innsjekking på vinterleiren.</p>
             <p>Trykk neste for å fullfør registreringen til vinterleir eller gå tilbake for å endre ting først.</p>
             <div className={styles.navigationButtons}>
                 <button className={styles.backButton} onClick={props.goBack}>Tilbake</button>

@@ -49,7 +49,10 @@ function Priser() {
             <p>Her er prisene for vinterleiren 2021:</p>
             <h2 className={styles.price}>1000,- for utøvere.</h2>
             <h2 className={styles.price}>800,- for følgere.</h2>
-            <p>Betaling skjer igjennom Vipps på registreringssiden.</p>
+            <p>Betaling er enten igjennom Vipps eller med kort/kontant.</p>
+            <p>Vipps kan gjøres direkte fra registreringssiden! Bare velg Vipps hurtigkasse og betal direkte.</p>
+            <p>Ved kort betales det til XX.XX.XX.XX. Send mail til oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> slik at vi kan bekrefte at betalingen har skjedd.</p>
+            <p>Dersom du ønsker å betale med kontanter kan dette gjøres fysisk på vinterleiren når du registrerer ankomst.</p>
         </div>
     )
 }

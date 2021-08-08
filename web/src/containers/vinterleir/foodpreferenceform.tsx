@@ -29,7 +29,7 @@ function FoodPreference(props: StepProps) {
             <div className={styles.registrationForm}>
                 <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setIsVegan(!isVegan)}>
                 <input type="checkbox" checked={isVegan} onChange={x => setIsVegan(x.currentTarget.checked)} />
-                    <p>Jeg er vegetarianer/veganer</p>
+                    <span>Jeg er vegetarianer/veganer</span>
                 </div>
             </div>
             <div className={styles.navigationButtons}>

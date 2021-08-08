@@ -97,16 +97,16 @@ function AddLedsager(props: StepProps) {
                 <p>Alder:</p>
                 <input value={age} type="number" onChange={x => validateAge(x.currentTarget.valueAsNumber)} />
                 <p>Telefonnummer:</p>
-                <input value={telephone} onChange={x => validateTelephone(x.currentTarget.value)} />
+                <input value={telephone} type="tel" onChange={x => validateTelephone(x.currentTarget.value)} />
                 <p>Epost:</p>
-                <input value={email} onChange={x => validateEmail(x.currentTarget.value)} />
+                <input value={email} type="email" onChange={x => validateEmail(x.currentTarget.value)} />
                 <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setSleepover(!sleepover)}>
                     <input type="checkbox" checked={sleepover} onChange={x => setSleepover(x.currentTarget.checked)} />
-                    <p>Overnatter</p>
+                    <span>Overnatter</span>
                 </div>
                 <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setRegistreredPreviously(!registeredPreviously)}>
                     <input type="checkbox" checked={registeredPreviously} onChange={x => setRegistreredPreviously(x.currentTarget.checked)} />
-                    <p>Har allerede registrert seg tidligere for andre utøvere</p>
+                    <span>Har allerede registrert seg tidligere for andre utøvere</span>
                 </div>
             </div>
             <div className={styles.navigationButtons}>
