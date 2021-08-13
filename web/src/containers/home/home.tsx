@@ -4,8 +4,16 @@ import styles from './home.module.css'
 
 function Treningstider() {
     return (
-        <div>
-
+        <div className={`${styles.treningstider} slideLeft`}>
+            <h1>Treningstider</h1>
+            <h2>Barn:</h2>
+            <p>Mandag og onsdag: 18:00 - 19:20</p>
+            <p>Lørdag 12:00 - 13:00</p>
+            <h2>Ungdom/voksen:</h2>
+            <p>Tirsdag og torsdag: 18:00 - 19:30</p>
+            <h2>Rødt og svart belte:</h2>
+            <p>Mandag og onsdag: 19:30 - 21:00</p>
+            <Link to="/"><button className={styles.backButton}>Tilbake</button></Link>
         </div>
     )
 }
@@ -36,17 +44,7 @@ function Home() {
                             </div>
                         </Route>
                         <Route exact path ="/treningstider">
-                            <div className={`${styles.treningstider} slideLeft`}>
-                                <h1>Treningstider</h1>
-                                <h2>Barn:</h2>
-                                <p>Mandag og onsdag: 18:00 - 19:20</p>
-                                <p>Lørdag 12:00 - 13:00</p>
-                                <h2>Ungdom/voksen:</h2>
-                                <p>Tirsdag og torsdag: 18:00 - 19:30</p>
-                                <h2>Rødt og svart belte:</h2>
-                                <p>Mandag og onsdag: 19:30 - 21:00</p>
-                                <Link to="/"><button className={styles.backButton}>Tilbake</button></Link>
-                            </div>
+                            <Treningstider/>
                         </Route>
                     </HashRouter>
 

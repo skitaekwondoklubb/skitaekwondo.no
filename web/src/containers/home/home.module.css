@@ -5,7 +5,7 @@
     left: 0;
     top: 112px;
     z-index: -1;
-    max-height: 90.2%;
+    max-height: 91.2%;
 }
 
 :local .home {
@@ -64,6 +64,11 @@
     font-size: 4.5vw;
 }
 
+:local .treningstider h2 {
+    font-size: 2.5vw;
+    margin-bottom: 0px;
+}
+
 @media only screen and (max-width: 1080px) {
 
     :local .home {
@@ -108,10 +113,14 @@
 
     :local .treningstider h2 {
         font-size: 6vw;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
     }
     
     :local .treningstider p {
         font-size: 5vw;
+        margin-bottom: 0px;
+        padding: 0px;
     }
 
     :local .start {

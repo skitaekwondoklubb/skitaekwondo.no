@@ -2,7 +2,6 @@
     display: grid;
     grid-template-columns: 30vw 10% 40%;
     margin-top: 2em;
-    height: 100%;
 }
 
 :local .title {
@@ -11,16 +10,15 @@
 
 :local .picture {
     display: flex;
-    align-items: center;
     justify-content: center;
-    max-height: fit-content;
-    max-width: fit-content;
-    
 }
 
 :local .picture img {
-    object-fit: cover;
-    
+    object-fit: none;
+    object-position: -10vw -5vh;
+    max-height: 88vh;
+    width: 600px;
+    overflow:hidden;
 }
 
 :local .textSide {
