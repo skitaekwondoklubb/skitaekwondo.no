@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SkiTKD.Data.Interfaces;
+using SkiTKD.Data.Models;
 
 namespace SkiTKD.Api.Controllers
 {
@@ -12,6 +14,7 @@ namespace SkiTKD.Api.Controllers
     public class VinterleirController : ControllerBase
     {
         private readonly ILogger<VinterleirController> _logger;
+        private readonly IVinterleirRepository _vinterleirRepository;
 
         public VinterleirController(ILogger<VinterleirController> logger)
         {
@@ -19,9 +22,10 @@ namespace SkiTKD.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<bool> Post()
+        public ActionResult<bool> Post(Registration reg)
         {
-            return Ok(true);
+            _vinterleirRepository.AddRegistrationToExcel(reg);
+            return true;
         }
     }
 }

@@ -15,6 +15,10 @@
 		{
 			"name": "Web",
 			"path": "./web"
+		},
+		{
+			"name": "Root",
+			"path": "./"
 		}
 	],
 	"settings": {}

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -10,22 +13,23 @@ using Microsoft.Graph;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json;
 using SkiTKD.Data.Interfaces;
+using SkiTKD.Data.Models;
 
 namespace SkiTKD.Data.Repositories
 {
     public class VinterleirRepository : IVinterleirRepository
     {
         private readonly string clientId;
-        private readonly string clientSecret;
         private readonly string user;
         private readonly string path;
+        private readonly string password;
         private AuthenticationResult authenticationResult;
 
         public VinterleirRepository(IConfiguration config) {
             clientId = config["ClientId"];
-            clientSecret = config["ClientSecret"];
             user = config["User"];
-            path = config["VinterleirExcelPath"];
+            path = config["Path"];
+            password = config["Pass"];
         }
 
         private async Task<string> GetToken() {
@@ -34,14 +38,14 @@ namespace SkiTKD.Data.Repositories
                 return authenticationResult.AccessToken;
             }
 
-            var clientApp = ConfidentialClientApplicationBuilder.Create(clientId)
-                            .WithClientSecret(clientSecret)
-                            .Build();
+            var clientApp = PublicClientApplicationBuilder.Create(clientId)
+            .WithAuthority("https://login.microsoftonline.com/organizations/")
+            .Build();
 
             var scopes = new List<string>();
             scopes.Add("https://graph.microsoft.com/.default");
             
-            var token = (await clientApp.AcquireTokenForClient(scopes).ExecuteAsync());
+            var token = (await clientApp.AcquireTokenByUsernamePassword(scopes, user, new NetworkCredential("", password).SecurePassword).ExecuteAsync());
             authenticationResult = token;
 
             if(token == null) {
@@ -51,7 +55,7 @@ namespace SkiTKD.Data.Repositories
             return token.AccessToken;
         }
 
-        public async Task<GraphServiceClient> Login() {
+        public GraphServiceClient Login() {
 
             var client = new GraphServiceClient("https://graph.microsoft.com/v1.0", new DelegateAuthenticationProvider(async (requestMessage) => {
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", await GetToken());
@@ -60,25 +64,30 @@ namespace SkiTKD.Data.Repositories
             return client;
         }
 
-        public async Task<string> AddInfoToExcel(string name, string address)
+        public async Task<bool> AddRegistrationToExcel(Registration registration)
         {
-            var f = await Login();
+            var registrationEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{path}:/workbook/tables/Table1/rows/add";
+            var ledsagerEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{path}:/workbook/tables/Table2/rows/add";
 
-            var children = await f.Users[$"{user}"].Drive.Root.Children
-                .Request()
-                .GetAsync();
+            string[][] regData = { registration.ConvertToExcel() }; // Only one.
+            await SendToExcel(registrationEndpoint, regData);
+            if(registration.HasLedsager) {
+                string[][] ledsagerReg = registration.ConvertLedsagereToExcel();
+                await SendToExcel(ledsagerEndpoint, ledsagerReg);
+            }
 
-            string endpoint = $"https://graph.microsoft.com/v1.0/Users/{user}/drive/root:/{path}:/workbook/tables/Table1/rows/add";
+            return true;
+        }
+
+        // Data is a matrix in an excel sheet. 
+        public async Task<bool> SendToExcel(string endpoint, string[][] data) {
             using (var client = new HttpClient())
             {
                 using (var request = new HttpRequestMessage(HttpMethod.Post, endpoint))
                 {
-                    // Populate UserInfoRequest object
-                    string[] userInfo = { name, address  };
-                    string[][] userInfoArray = { userInfo };
-                    var userInfoRequest = new TestRequest();
+                    var userInfoRequest = new ExcelRequest();
                     userInfoRequest.index = null;
-                    userInfoRequest.values = userInfoArray;
+                    userInfoRequest.values = data;
 
                     // Serialize the information in the UserInfoRequest object
                     string jsonBody = JsonConvert.SerializeObject(userInfoRequest);
@@ -90,22 +99,17 @@ namespace SkiTKD.Data.Repositories
                     {
                         if (response.IsSuccessStatusCode)
                         {
-                            return "Success!";
+                            return true;
                         }
-                        return response.ReasonPhrase;
+
+                        throw new Exception(response.ReasonPhrase);
                     }
                 }
              }
         }
     }
 
-    public class Test {
-        public string Name { get; set; }
-        public string Tast { get; set; }
-        public bool SuperTest { get; set; }
-    }
-
-    public class TestRequest {
+    public class ExcelRequest {
         public string index { get; set; }
         public string[][] values { get; set; }
     }
