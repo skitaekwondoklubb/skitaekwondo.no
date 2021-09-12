@@ -1,0 +1,18 @@
+# ---- Build ----
+FROM node:latest AS build
+WORKDIR /code
+
+# Install build dependencies
+COPY ./web/package.json ./
+RUN npm install
+
+# Build
+COPY ./web ./
+RUN cp ./.env.development ./.env
+RUN npm run build
+ 
+
+# ---- Release ----
+FROM nginx:latest as production
+# Copy production build
+COPY --from=build ./code/build /usr/share/nginx/html/
