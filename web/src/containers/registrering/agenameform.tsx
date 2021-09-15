@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from './registration.module.css';
-import { StepProps, Steps } from "./vinterleirRegistrationRoute";
+import { StepProps, Steps } from "../../models/steps";
 
 function NameAgeForm(props: StepProps) {
     const [firstName, setFirstName] = useState(props.registration.firstName);
@@ -42,12 +42,16 @@ function NameAgeForm(props: StepProps) {
     
     function goBack() {
         save();
-        props.setCurrentStep(Steps.Welcome);
+        if(typeof(props.prevStep) === "number") {
+            props.setCurrentStep(props.prevStep);
+        }
     }
 
     function nextStep() {
         save();
-        props.setCurrentStep(Steps.EmailTelephone);
+        if(typeof(props.nextStep) === "number") {
+            props.setCurrentStep(props.nextStep);
+        }
     }
 
     return (

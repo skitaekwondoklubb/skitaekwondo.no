@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from './registration.module.css';
-import { StepProps, Steps } from "./vinterleirRegistrationRoute";
+import { StepProps, Steps } from "../../models/steps";
 
 function OtherInformation(props: StepProps) {
     const [otherInfo, setOtherInfo] = useState("");
@@ -14,12 +14,16 @@ function OtherInformation(props: StepProps) {
     
     function goBack() {
         save();
-        props.setCurrentStep(Steps.FoodPreference);
+        if(typeof(props.prevStep) === "number") {
+            props.setCurrentStep(props.prevStep);
+        }
     }
 
     function nextStep() {
         save();
-        props.setCurrentStep(Steps.Payment);
+        if(typeof(props.nextStep) === "number") {
+            props.setCurrentStep(props.nextStep);
+        }
     }
 
 

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styles from './registration.module.css';
-import { Ledsager } from "../../services/vinterleirService";
-import { StepProps, Steps } from "./vinterleirRegistrationRoute";
+import { StepProps, Steps } from "../../models/steps";
+import { Ledsager } from "../../models/registrationModels";
 
 function LedsagerManagement(props: StepProps) {
-    const [ledsagere, setLedsagere] = useState<Ledsager[]>(props.registration.ledsagere);
+    const [ledsagere, setLedsagere] = useState<Ledsager[]>(props?.registration?.ledsagere ? props.registration.ledsagere : []);
 
     function removeLedsager(firstName: string) {
         setLedsagere(ledsagere.filter(x => x.firstName !== firstName));

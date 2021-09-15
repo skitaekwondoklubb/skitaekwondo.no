@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from './registration.module.css';
-import { StepProps, Steps } from "./vinterleirRegistrationRoute";
+import { StepProps, Steps } from "../../models/steps";
 
 function AddLedsager(props: StepProps) {
     const [firstName, setFirstName] = useState("");
@@ -72,6 +72,11 @@ function AddLedsager(props: StepProps) {
 
     function nextStep() {
         let registration = {... props.registration};
+        
+        if(registration.ledsagere == null) {
+            registration.ledsagere = [];
+        }
+
         registration.ledsagere.push({
             id: 0,
             firstName: firstName,

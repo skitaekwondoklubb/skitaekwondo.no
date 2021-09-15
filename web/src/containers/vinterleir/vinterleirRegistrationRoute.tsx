@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { deleteAllCookies, getCookie, setCookie } from "../../services/cookieService";
-import { Registration } from "../../services/vinterleirService";
-import NameAgeForm from "./agenameform";
-import Allergies from "./allergiesform";
-import ClubGrade from "./clubgradeform";
-import EmailTelephone from "./emailtelephoneform";
-import FoodPreference from "./foodpreferenceform";
-import AddLedsager from "./ledsageraddform";
-import Ledsager from "./ledsagerform";
-import LedsagerManagement from "./ledsagermanagement";
-import OtherInformation from "./otherinformationform";
-import Payment from "./payment";
-import { Done, Welcome } from "./registrering";
-import Sleepover from "./sleepoverform";
+import { Steps } from "../../models/steps";
+import NameAgeForm from "../registrering/agenameform";
+import Allergies from "../registrering/allergiesform";
+import ClubGrade from "../registrering/clubgradeform";
+import EmailTelephone from "../registrering/emailtelephoneform";
+import FoodPreference from "../registrering/foodpreferenceform";
+import AddLedsager from "../registrering/ledsageraddform";
+import Ledsager from "../registrering/ledsagerform";
+import LedsagerManagement from "../registrering/ledsagermanagement";
+import OtherInformation from "../registrering/otherinformationform";
+import Payment from "../registrering/payment";
+import { Done, Welcome } from "./vinterleirregistrering";
+import Sleepover from "../registrering/sleepoverform";
+import { Registration } from "../../models/registrationModels";
 
 
 function RegistrationRouting() {
@@ -33,6 +34,12 @@ function RegistrationRouting() {
         sleepover: false,
         vegan: false
     });
+    const currentProps = { 
+        step: currentStep,
+        setCurrentStep: setCurrentStepAndSaveCookie, 
+        registration: registration, 
+        setRegistration: setRegistrationAndSaveCookie 
+    };
 
     useEffect(() => {
         const registrationCookie = getCookie("vinterleir_registrering");
@@ -63,55 +70,44 @@ function RegistrationRouting() {
         // case Steps.Welcome:
         //     return <Welcome step={currentStep} setCurrentStep={setCurrentStep} registration={registration} setRegistration={setRegistration}/>;
         case Steps.NameAge:
-            return <NameAgeForm step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>
+            return <NameAgeForm {... currentProps } prevStep={Steps.Welcome} nextStep={Steps.EmailTelephone} 
+                />
         case Steps.EmailTelephone:
-            return <EmailTelephone step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>
+            return <EmailTelephone {... currentProps } prevStep={Steps.NameAge} nextStep={Steps.ClubGrade}
+                />
         case Steps.ClubGrade:
-            return <ClubGrade step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>
+            return <ClubGrade {... currentProps} prevStep={Steps.EmailTelephone} nextStep={Steps.Sleepover}
+                />
         case Steps.Sleepover:
-            return <Sleepover step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>
+            return <Sleepover {... currentProps } prevStep={Steps.ClubGrade} nextStep={Steps.Ledsager}
+                />
         case Steps.Ledsager:
-            return <Ledsager step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>
+            return <Ledsager {... currentProps } prevStep={Steps.Sleepover} nextStep={[Steps.LedsagerManagement, Steps.Allergies]}
+                />
         case Steps.LedsagerAdd:
-            return <AddLedsager step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>
+            return <AddLedsager {... currentProps } prevStep={Steps.LedsagerManagement} nextStep={Steps.LedsagerManagement}
+                />
         case Steps.LedsagerManagement:
-            return <LedsagerManagement step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>
+            return <LedsagerManagement {... currentProps } prevStep={Steps.Ledsager} nextStep={[Steps.LedsagerAdd, Steps.Allergies]}
+                />
         case Steps.Allergies:
-            return <Allergies step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>
+            return <Allergies {... currentProps } prevStep={[Steps.Ledsager, Steps.LedsagerManagement]} nextStep={Steps.FoodPreference}
+                />
         case Steps.FoodPreference:
-            return <FoodPreference step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>
+            return <FoodPreference {... currentProps } prevStep={Steps.Allergies} nextStep={Steps.OtherInformation}
+                />
         case Steps.OtherInformation:
-            return <OtherInformation step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>
+            return <OtherInformation {... currentProps } prevStep={Steps.FoodPreference} nextStep={Steps.Payment}
+                />
         case Steps.Payment:
-            return <Payment step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie} />
+            return <Payment {... currentProps } prevStep={Steps.OtherInformation} nextStep={Steps.Done} 
+                />
         case Steps.Done:
             return <Done />
         default:
-            return <Welcome step={currentStep} setCurrentStep={setCurrentStepAndSaveCookie} registration={registration} setRegistration={setRegistrationAndSaveCookie}/>;
+            return <Welcome {... currentProps } prevStep={Steps.Welcome} nextStep={Steps.NameAge}/>;
     }
 }
 
-export interface StepProps {
-    step: Steps;
-    setCurrentStep: (step: Steps) => void;
-    registration: Registration;
-    setRegistration: (reg: Registration) => void;
-}
-
-export enum Steps {
-    Welcome,
-    NameAge,
-    EmailTelephone,
-    ClubGrade,
-    Sleepover, 
-    Ledsager,
-    LedsagerAdd,
-    LedsagerManagement,
-    Allergies,
-    FoodPreference,
-    OtherInformation,
-    Payment,
-    Done
-}
 
 export default RegistrationRouting;

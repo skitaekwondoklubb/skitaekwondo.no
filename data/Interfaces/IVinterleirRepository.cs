@@ -6,6 +6,6 @@ namespace SkiTKD.Data.Interfaces
 {
     public interface IVinterleirRepository
     {
-        Task<bool> AddRegistrationToExcel(Registration registration);
+        Task<bool> AddRegistrationToExcel(VinterleirRegistration registration);
     }
 }

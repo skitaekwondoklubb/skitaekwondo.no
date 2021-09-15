@@ -20,7 +20,6 @@ function ClubAutocomplete(props: ClubAutocompleteProps) {
         
         if(foundClub != null) {
             props.setClub(foundClub);
-            console.log("Setting CLUB");
         }
     }, [club])
 

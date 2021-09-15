@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -17,7 +17,7 @@ using SkiTKD.Data.Models;
 
 namespace SkiTKD.Data.Repositories
 {
-    public class VinterleirRepository : IVinterleirRepository
+    public class RegistreringRepository : IRegistreringRepository
     {
         private readonly string clientId;
         private readonly string user;
@@ -25,10 +25,10 @@ namespace SkiTKD.Data.Repositories
         private readonly string password;
         private AuthenticationResult authenticationResult;
 
-        public VinterleirRepository(IConfiguration config) {
+        public RegistreringRepository(IConfiguration config) {
             clientId = config["ClientId"];
             user = config["User"];
-            path = config["Path"];
+            path = config["RegistrationPath"];
             password = config["Pass"];
         }
 
@@ -64,17 +64,13 @@ namespace SkiTKD.Data.Repositories
             return client;
         }
 
-        public async Task<bool> AddRegistrationToExcel(VinterleirRegistration registration)
+        public async Task<bool> AddRegistrationToExcel(Registration registration)
         {
             var registrationEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{path}:/workbook/tables/Table1/rows/add";
             var ledsagerEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{path}:/workbook/tables/Table2/rows/add";
 
             string[][] regData = { registration.ConvertToExcel() }; // Only one.
             await SendToExcel(registrationEndpoint, regData);
-            if(registration.HasLedsager) {
-                string[][] ledsagerReg = registration.ConvertLedsagereToExcel();
-                await SendToExcel(ledsagerEndpoint, ledsagerReg);
-            }
 
             return true;
         }
@@ -107,10 +103,5 @@ namespace SkiTKD.Data.Repositories
                 }
              }
         }
-    }
-
-    public class ExcelRequest {
-        public string index { get; set; }
-        public string[][] values { get; set; }
     }
 }

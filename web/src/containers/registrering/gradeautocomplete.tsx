@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import Autosuggest, { SuggestionsFetchRequested } from "react-autosuggest";
-import { getGrades, Grade } from "../../services/vinterleirService";
+import { Grade } from "../../models/registrationModels";
+import { getGrades } from "../../services/vinterleirService";
 
 function escapeRegexCharacters(str: string) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

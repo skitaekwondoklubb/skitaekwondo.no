@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import { Grade } from "../../services/vinterleirService";
 import styles from './registration.module.css';
-import { StepProps, Steps } from "./vinterleirRegistrationRoute";
-import Autosuggest from 'react-autosuggest';
+import { StepProps, Steps } from "../../models/steps";
 import { GradeAutocomplete } from "./gradeautocomplete";
 import ClubAutocomplete from "./clubautocomplete";
+import { Grade } from "../../models/registrationModels";
 
 
 function ClubGrade(props: StepProps) {
     const [clubs, setClubs] = useState(["Ski Taekwondo Klubb", "Hamar Taekwondo Klubb", "Bergen Taekwondo Klubb"]);
-    const [club, setClub] = useState<string>(props.registration.club);
-    const [grade, setGrade] = useState<Grade | null>(props.registration.grade);
+    const [club, setClub] = useState<string>(props?.registration?.club ?  props.registration.club : "");
+    const [grade, setGrade] = useState<Grade | null>(
+        props?.registration?.grade 
+        ? props.registration.grade 
+        : { color: "Hvitt", dan: false, grade: 10, name: "Hvitt belte"}
+    );
     const [gradering, setGradering] = useState(props.registration.gradering);
 
     function save() {

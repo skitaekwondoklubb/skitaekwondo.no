@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SkiTKD.Data.Models {
-      public class Registration : Person {
+      public class VinterleirRegistration : Person {
         public string Club { get; set; }
         public string Grade { get; set; }
         public bool Gradering { get; set; }

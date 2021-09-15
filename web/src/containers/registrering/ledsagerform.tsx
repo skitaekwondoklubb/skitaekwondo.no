@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from './registration.module.css';
-import { StepProps, Steps } from "./vinterleirRegistrationRoute";
+import { StepProps, Steps } from "../../models/steps";
 
 function Ledsager(props: StepProps) {
     const [hasLedsager, setHasLedsager] = useState(props.registration.hasLedsager);

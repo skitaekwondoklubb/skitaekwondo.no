@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { StepProps } from '../../models/steps';
 import { deleteAllCookies } from '../../services/cookieService';
-import styles from './registration.module.css';
-import RegistrationRouting, { StepProps } from './vinterleirRegistrationRoute';
+import styles from '../registrering/registration.module.css';
+import RegistrationRouting from './vinterleirRegistrationRoute';
 
 export function Done() {
     useEffect(() => {

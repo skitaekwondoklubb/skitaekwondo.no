@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from './registration.module.css';
-import { StepProps, Steps } from "./vinterleirRegistrationRoute";
+import { StepProps, Steps } from "../../models/steps";
 
 function EmailTelephone(props: StepProps) {
     const [email, setEmail] = useState(props.registration.email);
@@ -33,12 +33,16 @@ function EmailTelephone(props: StepProps) {
 
     function goBack() {
         save();
-        props.setCurrentStep(Steps.NameAge);
+        if(typeof(props.prevStep) === "number") {
+            props.setCurrentStep(props.prevStep);
+        }
     }
 
     function nextStep() {
         save();
-        props.setCurrentStep(Steps.ClubGrade);
+        if(typeof(props.nextStep) === "number") {
+            props.setCurrentStep(props.nextStep);
+        }
     }
 
     return (

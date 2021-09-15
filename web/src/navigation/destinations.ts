@@ -29,8 +29,8 @@ export const destinations: Destination[] = [
         "link": "/utstyr"
     },
     {
-        "name": "Vinterleir",
-        "link": "/vinterleir"
+        "name": "Arrangementer",
+        "link": "/arrangementer"
     },
     {
         "name": "Kontakt",

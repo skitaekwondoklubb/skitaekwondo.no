@@ -40,6 +40,7 @@ function Home() {
                                 <div className={`${styles.infoBoxButtons} fadeInSlow`}>
                                     <button onClick={() => history.push("/omoss")}>Les mer</button>
                                     <Link to="/treningstider"><button>Treningstider</button></Link>
+                                    <button onClick={() => history.push("/arrangementer")}>Arrangementer</button>
                                 </div>
                             </div>
                         </Route>

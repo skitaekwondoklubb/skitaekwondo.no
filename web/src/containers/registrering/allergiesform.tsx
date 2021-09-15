@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from './registration.module.css';
-import { StepProps, Steps } from "./vinterleirRegistrationRoute";
+import { StepProps, Steps } from "../../models/steps";
 
 function Allergies(props: StepProps) {
     const [allergies, setAllergies] = useState("");
@@ -14,17 +14,21 @@ function Allergies(props: StepProps) {
     
     function goBack() {
         save();
+        
         if(props.registration.hasLedsager) {
             props.setCurrentStep(Steps.LedsagerManagement);
         }
         else {
-            props.setCurrentStep(Steps.Ledsager);
+            if(typeof(props.prevStep) === "number") {
+                props.setCurrentStep(props.prevStep);
+            }
         }
     }
-
     function nextStep() {
         save();
-        props.setCurrentStep(Steps.FoodPreference);
+        if(typeof(props.nextStep) === "number") {
+            props.setCurrentStep(props.nextStep);
+        }
     }
 
     return (

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import styles from './registration.module.css';
-import { StepProps, Steps } from "./vinterleirRegistrationRoute";
+import { StepProps, Steps } from "../../models/steps";
 
 function Sleepover(props: StepProps) {
-    const isSkiTaekwondoKlubb = props.registration.club.startsWith("Ski Taekwondo");
+    const isSkiTaekwondoKlubb = props.registration?.club ? props.registration.club.startsWith("Ski Taekwondo") : false
     const [sleepover, setSleepover] = useState(props.registration.sleepover);
 
     function save() {

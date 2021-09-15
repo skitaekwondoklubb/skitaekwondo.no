@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { StepProps, Steps } from "./vinterleirRegistrationRoute";
+import { StepProps, Steps } from "../../models/steps";
 import styles from './registration.module.css';
-import Vippshurtigkasse from "./vipps_hurtigkasse.svg";
+//import Vippshurtigkasse from "./vipps_hurtigkasse.svg";
 
 function Gradering(props: {gradering: boolean }) {
     if(props.gradering) {
@@ -86,23 +86,29 @@ function Payment(props: StepProps) {
             <p>Din registrering:</p>
             <div>
                 <CheckoutRow article={`Vinterleir for utøver: ${props.registration.firstName} ${props.registration.lastName}`} price={1100}/>
-                <Gradering gradering={props.registration.gradering} />
+                <Gradering gradering={props.registration.gradering != null && props.registration.gradering === true} />
                 {
-                    props.registration.ledsagere.map((ledsager) => {
+                    props?.registration?.ledsagere ? props.registration.ledsagere.map((ledsager) => {
                         return (
                             <CheckoutRow article={`Ledsager: ${ledsager.firstName} ${ledsager.lastName}`} price={ledsager.alreadyRegistred ? 0 : 1100}/>
                         )
                     })
+                    : ""
                 }
                 <div className={styles.checkoutTotal}>
                     <span>Totalt:</span>
-                    <span>{1100 + (props.registration.gradering ? 300 : 0) + (props.registration.ledsagere.filter(x => !x.alreadyRegistred).length * 1100)} kr</span>
+                    <span>{1100 + (props.registration.gradering ? 300 : 0) + (
+                        props?.registration?.ledsagere 
+                        ? props.registration.ledsagere.filter(x => !x.alreadyRegistred).length * 1100
+                        : 0
+                    )
+                    } kr</span>
                 </div>
             </div>
             <div className={styles.paymentButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
                 <button className={styles.cashCard} onClick={() => setPayLater(true)}>Kort/Kontant</button>
-                <img src={Vippshurtigkasse} onClick={() => setPayVipps(true)}/>
+                {/* <img src={Vippshurtigkasse} onClick={() => setPayVipps(true)}/> */}
             </div>
         </div>
     )

@@ -1,37 +1,4 @@
-export interface Registration {
-    firstName: string;
-    lastName: string;
-    age: number;
-    email: string;
-    telephone: string;
-    club: string;
-    grade: Grade | null;
-    gradering: boolean;
-    sleepover: boolean;
-    hasLedsager: boolean;
-    ledsagere: Array<Ledsager>;
-    allergies: string;
-    vegan: boolean;
-    otherInfo: string;
-}
-
-export interface Ledsager {
-    id: number;
-    firstName: string;
-    lastName: string;
-    age: number;
-    telephone: string;
-    email: string;
-    sleepover: boolean;
-    alreadyRegistred: boolean;
-}
-
-export interface Grade {
-    grade: number;
-    dan: boolean;
-    color: string;
-    name: string;
-}
+import { Grade } from '../models/registrationModels';
 
 export function getGrades() {
     const colors = [

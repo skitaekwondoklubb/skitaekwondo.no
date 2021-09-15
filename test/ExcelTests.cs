@@ -40,7 +40,7 @@ namespace SkiTKD.Test
 
         public void TestSingleRegistration()
         {
-            var testRegistration = new Registration {
+            var testRegistration = new VinterleirRegistration {
                 FirstName = "Taekwondo",
                 LastName = "Taekwondosen",
                 Age = 42,
@@ -67,7 +67,7 @@ namespace SkiTKD.Test
 
         public void TestLedsagerRegistration()
         {
-            var testRegistration = new Registration {
+            var testRegistration = new VinterleirRegistration {
                 FirstName = "Taekwondo",
                 LastName = "Taekwondosen",
                 Age = 42,

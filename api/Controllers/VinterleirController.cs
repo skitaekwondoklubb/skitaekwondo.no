@@ -22,7 +22,7 @@ namespace SkiTKD.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<bool> Post(Registration reg)
+        public ActionResult<bool> Post(VinterleirRegistration reg)
         {
             _vinterleirRepository.AddRegistrationToExcel(reg);
             return true;

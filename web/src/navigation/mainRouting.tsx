@@ -11,9 +11,10 @@ import Kontakt from '../containers/kontakt/kontakt';
 import MobileMenu from './mobileMenu';
 import Navigation from './navigation';
 import styles from './navigation.module.css';
+import Arrangementer from '../containers/arrangementer/arrangementer';
 import Vinterleir from '../containers/vinterleir/vinterleir';
-import VinterleirRegistrering from '../containers/vinterleir/registrering';
-
+import VinterleirRegistrering from '../containers/vinterleir/vinterleirregistrering';
+import Registrering from '../containers/registrering/registrering';
 
 function MainRouting() {
   return (
@@ -51,7 +52,13 @@ function MainRouting() {
             <Route path="/vinterleir">
               <Vinterleir/>
             </Route>
+            <Route path="/arrangementer">
+              <Arrangementer/>
+            </Route>
             <Route exact path="/registrering">
+              <Registrering />
+            </Route>
+            <Route exact path="/vinterleirregistrering">
               <VinterleirRegistrering />
             </Route>
           </Switch>
