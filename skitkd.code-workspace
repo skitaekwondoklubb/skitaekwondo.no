@@ -11,7 +11,7 @@
 		},	
 		{
 			"name": "Web",
-			"path": "./SkiTKD.Web"
+			"path": "./web"
 		},
 		{
 			"name": "Root",

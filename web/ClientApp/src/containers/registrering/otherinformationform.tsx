@@ -29,7 +29,8 @@ function OtherInformation(props: StepProps) {
 
     return (
         <div className="slideLeft">
-            <p>Dersom det er annen informasjon vi trenger å vite kan dette skrives i tekstfeltet under:</p>
+            <p>Dersom det er annen informasjon vi trenger å vite kan dette skrives i tekstfeltet under.</p>
+            <p>Vi tar bilder under arrangementer til bruk på nettsiden, Facebook o.l. Dersom du ikke ønsker at du/ditt barn skal bli tatt bilde av må du skrive det i feltet.</p>
             <textarea  className={styles.freeText} value={otherInfo} onChange={(x) => setOtherInfo(x.currentTarget.value)} />
 
             <div className={styles.navigationButtons}>

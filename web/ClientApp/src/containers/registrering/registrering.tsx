@@ -29,7 +29,7 @@ export function RegistrationStep(props: StepProps)  {
             <p>Telefon: {props.registration.telephone}</p>
             <p>Epost: {props.registration.email}</p>
             <p>Pizza: {props.registration.pizza === true ? "Ja" : "Nei"}</p>
-            <p>Veganer: {props.registration.vegan}</p>
+            <p>Veganer: {props.registration.vegan === true ? "Ja" : "Nei"}</p>
             <p>Allergier: {props.registration.allergies}</p>
             <p>Annet: {props.registration.otherInfo}</p>
             <div className={styles.navigationButtons}>
@@ -66,6 +66,7 @@ export function Welcome(props: StepProps) {
             <p>Denne informasjonen vil <b>kun</b> brukes av Ski Taekwondo Klubb for å arrangere kamphelgen. Ski Taekwondo Klubb deler ingen
                 informasjon med tredjeparter.</p>
             <p>Etter helgen er gjennomført vil digital personlig identifiserbar informasjon anonymiseres eller slettes.</p>
+            <p>Vi tar bilder under arrangementet for bruk på nettsiden, Facebook o.l. Dersom du/ditt barn ikke ønsker å bli tatt bilde av må dette meddeles mot slutten av registreringen.</p>
             <div className={styles.disclaimer} onClick={() => setAccept(!accept)}>
                 <input type={"checkbox"} checked={accept} onClick={() => setAccept(!accept)} />
                 <p>Jeg godkjenner at Ski Taekwondo Klubb bruker denne informasjonen for å arrangere kamphelg.</p>

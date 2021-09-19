@@ -11,7 +11,6 @@ function BpInformation() {
             <p>Taekwondo er ikke bare trening, men også en stor sosial faktor for mange barn som får trent med både gamle og nye venner på samme alder.</p>
             <img src={actionPicture} alt="Barnepartiet in action" />
             <p>Barnepartiet består av to partier, ett nybegynnerparti og ett videregåendeparti, dermed er det lett å passe inn med andre som er på samme nivå. </p>
-            <p><b>Det anbefales å ta kontakt før barnet starter ettersom det er stor pågang på barnepartiet og ventelister er sannsynlig.</b></p>
         </div>
 
     )
@@ -80,6 +79,7 @@ function Barneparti() {
                         <Priser/>
                     </Route>
                 </HashRouter>
+                <p><b>Barnepartiet er på dette tidspunktet fullt. Ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å sette barnet på venteliste.</b></p>
             </div>
         </div>
     )

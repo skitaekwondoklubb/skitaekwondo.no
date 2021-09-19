@@ -12,6 +12,7 @@ function Arrangementer() {
                 <p>Følgende arrangementer er på agendaen høsten 2021:</p>
                 <h2>Ski Taekwondo Klubbs kamphelg</h2>
                 <h3>Dato: 25. - 26. september 2021.</h3>
+                <h3>Dette arrangementet er kun for utøvere i Ski Taekwondo Klubb</h3>
                 <h3>Pris: Gratis</h3>
                 <img src={arrangementPic1} alt="Kamp!"/>
                 <p>Team Ski - Ski Taekwondo klubb sin konkurransegruppe starter opp et utviklings parti i kamp denne høsten, med kick off lørdag 24. og søndag 25.september
