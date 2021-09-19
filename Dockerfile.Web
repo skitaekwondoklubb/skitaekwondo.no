@@ -1,18 +1,20 @@
-# ---- Build ----
-FROM node:latest AS build
-WORKDIR /code
+# syntax=docker/dockerfile:1
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+WORKDIR /buildz
 
-# Install build dependencies
-COPY ./web/package.json ./
-RUN npm install
+# Install Node
+RUN apt-get update -yq 
+RUN apt-get install curl gnupg -yq 
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
 
-# Build
-COPY ./web ./
-RUN cp ./.env.development ./.env
-RUN npm run build
- 
+# Copy everything else and build
+COPY ./SkiTKD.Web ./web/
+COPY ./data ./data/
+RUN dotnet publish -c Release -o out ./web/*.csproj
 
-# ---- Release ----
-FROM nginx:latest as production
-# Copy production build
-COPY --from=build ./code/build /usr/share/nginx/html/
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+WORKDIR /app
+COPY --from=build-env /buildz/out .
+ENTRYPOINT ["dotnet", "SkiTKD.Web.dll"]

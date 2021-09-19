@@ -27,7 +27,7 @@ namespace SkiTKD.Data.Repositories
 
         public RegistreringRepository(IConfiguration config) {
             clientId = config["ClientId"];
-            user = config["User"];
+            user = config["ExcelUser"];
             path = config["RegistrationPath"];
             password = config["Pass"];
         }
@@ -67,7 +67,6 @@ namespace SkiTKD.Data.Repositories
         public async Task<bool> AddRegistrationToExcel(Registration registration)
         {
             var registrationEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{path}:/workbook/tables/Table1/rows/add";
-            var ledsagerEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{path}:/workbook/tables/Table2/rows/add";
 
             string[][] regData = { registration.ConvertToExcel() }; // Only one.
             await SendToExcel(registrationEndpoint, regData);

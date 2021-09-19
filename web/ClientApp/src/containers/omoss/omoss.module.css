@@ -1,0 +1,78 @@
+:local .omOssGrid {
+    display: grid;
+    grid-template-columns: 600px 40vw;
+    margin-top: 2em;
+    gap: 10%;
+}
+
+:local .picture {
+    display: flex;
+    justify-content: center;
+}
+
+:local .picture img {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: 20vh;
+}
+
+:local .subButtons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+:local .subButtons button {
+    font-size: 20px;
+    padding: 15px 25px 15px 25px;
+    width: 200px;
+    border-radius: 8px;
+}
+
+:local .buttonActive button {
+    color: white;
+    background-color: #eb1a52;
+}
+
+:local .textSide {
+    grid-column: 2;
+}
+
+@media only screen and (max-width: 1080px) {
+    :local .omOssGrid {
+        grid-template-columns: 100%;
+        margin-left: 10%;
+        margin-right: 10%;
+        gap: 0%
+    }
+
+    :local .textSide {
+        grid-column: 1;
+    }
+
+    :local .subButtons {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+    :local .picture {
+        margin-bottom: 3vh;
+    }
+
+    :local .picture img {
+        height: auto;
+        width: 30vw;
+        position: relative;
+        top: 0vh;
+    }
+
+    :local .textSide h1 {
+        font-size: 6vw;
+    }
+
+    :local .textSide p {
+        font-size: 5vw;
+    }
+}

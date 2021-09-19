@@ -1,9 +1,6 @@
 {
 	"folders": [
-		{
-			"name": "Api",
-			"path": "./api"
-		},
+
 		{
 			"name": "Data",
 			"path": "./data"
@@ -14,7 +11,7 @@
 		},	
 		{
 			"name": "Web",
-			"path": "./web"
+			"path": "./SkiTKD.Web"
 		},
 		{
 			"name": "Root",
