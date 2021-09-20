@@ -61,8 +61,8 @@ function Pensum() {
             <p>Traditional Taekwondo Union har også informasjon om krav til både cupgradering og dangradering.</p>
             <div className={styles.pensumGrid}>
                 <button onClick={() => window.open("/Ski-TKD-Pensumpdf.pdf")}>Ski Taekwondo Klubb pensumhefte</button>
-                <button onClick={() => window.open("https://www.ttu.no/kup-pensum.139681.no.html")}>TTU krav cupgradering</button>
-                <button onClick={() => window.open("https://www.ttu.no/dan-pensum.139682.no.html")}>TTU krav dangradering</button>
+                <button onClick={() => window.open("https://www.ttu.no/cup-pensum.414084.no.html")}>TTU krav cupgradering</button>
+                <button onClick={() => window.open("https://www.ttu.no/dan-pensum.414086.no.html")}>TTU krav dangradering</button>
             </div>
         </div>
     )

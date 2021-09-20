@@ -1,6 +1,16 @@
 # Ski Taekwondo Klubb
 Dette er Ski Taekwondo Klubb sin nettside. Den er laget for å vise statisk informasjon om klubben og for registrering av medlemskap eller til vinterleir.
 
+## Gjenstående arbeid:
+Det gjenstår en del arbeid.
+
+- Mye CSS må sammenslås og renses. For mye copy paste
+- Refaktorering av en del av registreringen.
+- Generell cleanup.
+- Vinterleir er ikke ferdigstilt.
+- GitHub Actions for automatisk bygging
+- Automatisk deployment til Azure 
+
 ## Prosjekter
 Dette er de forskjellige prosjektene vår nettside består av:
 
@@ -11,7 +21,7 @@ Apiet er veldig simpelt C# ASP.NET web api og tar imot data som sendes til et Ex
 Et klassebibliotek for å gjøre det ovenfor. Det er splittet ut i et klassebibliotek for å gjøre det lettere å teste.
 
 ### Test
-Unit og integrasjonstester for excelhåndtering.
+Integrasjonstester for excelhåndtering.
 
 ### Web
 En React nettside som inneholder det meste.
@@ -25,39 +35,22 @@ Bygging av prosjektet er veldig lett. For både Api, data og test er det bare å
 ```bash
 dotnet build
 ```
-fra Api eller test mappen så vil den fikse seg selv.
-
-For å bygge webprosjektet må du først bruke
-```bash
-npm install
-```
-i web mappen. Deretter kan du kjøre 
-```bash
-npm build
-```
+fra Api, Web eller test mappen så vil den fikse seg selv. Husk dependencies må være installert.
 
 ## Utvikling:
-Det er et VS Code workspace med som kan brukes. Ellers er det bare 
+Det er et VS Code workspace med som kan brukes.
 ```bash
-dotnet watch run # Api
-npm start        # Web
+dotnet watch run # i api og/eller web
 ```
 
 ## Docker:
 Det er to Docker containers som brukes for å host prosjektene:
 ### Api
-Api prosjektet kjører i denne containeren. Den må ha visse hemmelige environment variables for å kunne logge inn og endre Excel skjemaet.
+Api prosjektet kjører i denne containeren. Den må ha visse environment variables for å kunne logge inn og endre Excel skjemaet.
+Se appsettings.json for hvilke environment variables denne må ha.
 
 ### Web
 Frontend prosjektet kjører i en egen container og kan kalle Api containeren for å sende data.
-
-## Gjenstående arbeid:
-Det gjenstår en del arbeid.
-
-- Stock bilder skal byttes ut med bilder av våre utøvere.
-- Apiet er ikke ferdig og må sikres.
-- GitHub Actions for automatisk bygging
-- Automatisk deployment til Azure 
 
 ## Kontakt:
 For videre info kan man kontakte oss! Vår epost står på nettsiden.
