@@ -24,6 +24,8 @@ function Treningstider() {
             <p>Tirsdag og torsdag: 18:00 - 19.30</p>
             <h2>Rødt og svart belte:</h2>
             <p>Mandag og onsdag: 19:30 - 21:00.</p>
+            <h2>Teknikktrening</h2>
+            <p>Tirsdag 19.30 - 21:00</p>
         </div>
     )
 }
