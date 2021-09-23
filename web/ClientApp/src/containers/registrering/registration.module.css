@@ -69,10 +69,9 @@
 
 :local .disclaimer {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     font-size: 0.9em;
-    margin-bottom: 2em;
     cursor: pointer;
 }
 

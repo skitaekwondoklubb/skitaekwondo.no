@@ -23,6 +23,7 @@ export function Done() {
 
 export function Welcome(props: StepProps) {
     const [accept, setAccept] = useState(false);
+    const [acceptBetingelser, setAcceptBetingelser] = useState(false);
 
     return (
         <div>
@@ -30,13 +31,19 @@ export function Welcome(props: StepProps) {
             <p>Vi vil trenge en del informasjon iløpet av registreringsprosessen og vil lagre dette digitalt.</p>
             <p>Denne informasjonen vil <b>kun</b> brukes av Ski Taekwondo Klubb for å arrangere vinterleir. Ski Taekwondo Klubb deler ingen
                 informasjon med tredjeparter.</p>
+               
             <p>Etter vinterleieren er gjennomført vil digital personlig identifiserbar informasjon anonymiseres eller slettes.</p>
+            <p>Vi tar bilder under arrangementet for bruk på nettsiden, Facebook o.l. Dersom du/ditt barn ikke ønsker å bli tatt bilde av må dette meddeles mot slutten av registreringen.</p>
             <div className={styles.disclaimer} onClick={() => setAccept(!accept)}>
                 <input type={"checkbox"} checked={accept} onClick={() => setAccept(!accept)} />
                 <p>Jeg godkjenner at Ski Taekwondo Klubb bruker denne informasjonen for å arrangere vinterleir.</p>
             </div>
+            <div className={styles.disclaimer} onClick={() => setAcceptBetingelser(!acceptBetingelser)}>
+                <input type={"checkbox"} checked={acceptBetingelser} onClick={() => setAccept(!acceptBetingelser)} />
+                <p>Jeg godkjenner <a href={`/Salgsbetingelser.pdf`} target="_blank" rel="noreferrer">Ski Taekwondo Klubbs salgsbetingelser.</a></p>
+            </div>
             <div className={styles.navigationButtons}>
-                <button className={styles.nextButton} disabled={!accept} onClick={() => props.setCurrentStep(props.step+1)}>Neste</button>
+                <button className={styles.nextButton} disabled={!accept || !acceptBetingelser} onClick={() => props.setCurrentStep(props.step+1)}>Neste</button>
             </div>
         </div>
     )

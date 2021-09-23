@@ -40,7 +40,8 @@ function Arrangementer() {
                 <p>Her blir det mye fart og moro i Stil Arena på Langhus! Utøvere fra TTU klubber over hele landet kommer for å delta på vinterleir med oss.</p>
                 <p>Ypperlig sted for å møte flere som elsker taekwondo og for å få helt unike treninger med mastere fra hele Norge!</p>
                 <p>Det vil også være gradering på søndagen den 5. desember i Stil Arena.</p>
-                <p>Registrering til vinterleir vil være oppe om ikke alt for lenge. Vi sender ut melding når påmeldingen er klar.</p>
+                <Link to="/vinterleirregistrering"><button className={`${styles.registrationButton} ${styles.spaceButtons}`}>Registrering til vinterleir</button></Link>
+                <Link to="/vinterleir"><button className={`${styles.registrationButton} ${styles.spaceButtons}`}>Mer informasjon om vinterleir</button></Link>
             </div>
         </div>
     )

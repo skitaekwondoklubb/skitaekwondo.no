@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StepProps, Steps } from "../../models/steps";
 import styles from './registration.module.css';
-//import Vippshurtigkasse from "./vipps_hurtigkasse.svg";
+import Vippsbutton from "../betalmedvipps.svg";
 
 function Gradering(props: {gradering: boolean }) {
     if(props.gradering) {
@@ -108,7 +108,7 @@ function Payment(props: StepProps) {
             <div className={styles.paymentButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
                 <button className={styles.cashCard} onClick={() => setPayLater(true)}>Kort/Kontant</button>
-                {/* <img src={Vippshurtigkasse} onClick={() => setPayVipps(true)}/> */}
+                <img src={Vippsbutton} onClick={() => setPayVipps(true)}/>
             </div>
         </div>
     )

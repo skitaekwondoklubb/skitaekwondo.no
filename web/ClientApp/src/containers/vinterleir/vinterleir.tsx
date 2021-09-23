@@ -11,7 +11,7 @@ function Information(props: { history: any }) {
             <p>Det er en ypperlig måte å bli kjent med andre utøvere fra hele Norge og trene med helt andre flinke mastere fra andre klubber og utøvere!</p>
             <p>Man kan overnatte i salen dersom man ønsker det og vi har frokost, lunsj og middag for alle utøvere. Vi har også en kiosk for kaffe, mini pizza eller andre godsaker.</p>
             <p>Så kom bli med oss i Follo Stil Arena og bli med på en helg fylt med moro, spenning og god trening!</p>
-            <button className={styles.registrationButton} onClick={() => props.history.push("/registrering")}>Registrering til vinterleir 2021</button>
+            <button className={styles.registrationButton} onClick={() => props.history.push("/vinterleirregistrering")}>Registrering til vinterleir 2021</button>
         </div>
 
     )
