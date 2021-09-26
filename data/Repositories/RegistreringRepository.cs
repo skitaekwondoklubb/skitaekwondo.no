@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mail;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,7 +70,11 @@ namespace SkiTKD.Data.Repositories
             var registrationEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{path}:/workbook/tables/Table1/rows/add";
 
             string[][] regData = { registration.ConvertToExcel() }; // Only one.
-            await SendToExcel(registrationEndpoint, regData);
+            var succeeded = await SendToExcel(registrationEndpoint, regData);
+
+            if(succeeded) {
+                SendEmail(registration);
+            }
 
             return true;
         }
@@ -101,6 +106,36 @@ namespace SkiTKD.Data.Repositories
                     }
                 }
              }
+        }
+
+        public bool SendEmail(Registration reg) {
+            int total = 800 + (reg.Pizza.Equals("Vil ikke ha pizza") ? 0 : 80);
+
+            SmtpClient smtpClient = new SmtpClient("smtp-mail.outlook.com", 587);
+            smtpClient.Credentials = new System.Net.NetworkCredential(user, password);
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtpClient.EnableSsl = true;
+            MailMessage mail = new MailMessage(user, reg.Email);
+            mail.Subject = "Du er herved registrert til danseminar";
+            mail.Body = @$"
+                <h1>Takk for at du registrerte deg til danseminar!</h1>
+                <p>Hei {reg.FirstName}, du er herved registrert til Ski Taekwondo Klubb sitt danseminar 22-24. oktober.<p>
+                <p>Ikke glem å betale {total}kr til Vipps 15550. Husk <u><b>Navn</u></b> og <u><b>Klubb</u></b> i meldingsfeltet når du betaler.</p>
+                <p>For avbestilling, ta kontakt med oss på <a href='mailto: kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a></p>
+                <p>Med vennlig hilsen<p>
+                <p>Ski Taekwondo Klubb</p>
+            ";
+            mail.BodyEncoding = System.Text.Encoding.UTF8;
+            mail.IsBodyHtml = true;
+            try {
+                smtpClient.Send(mail);
+                return true;
+            }
+            catch {
+                Console.WriteLine("Klarte ikke levere mail!");
+            }
+
+            return false;
         }
     }
 }

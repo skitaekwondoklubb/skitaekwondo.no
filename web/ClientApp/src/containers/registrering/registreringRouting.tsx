@@ -7,8 +7,12 @@ import Allergies from "./allergiesform";
 import EmailTelephone from "./emailtelephoneform";
 import FoodPreference from "./foodpreferenceform";
 import OtherInformation from "./otherinformationform";
+import TeoriForm from "./teoriform";
 import Pizza from "./pizzaform";
 import { Done, RegistrationStep, Welcome } from "./registrering";
+import ClubGrade from "./clubgradeform";
+import Sleepover from "./sleepoverform";
+import Payment from "./payment";
 
 function RegistrationRouting() {
     const [currentStep, setCurrentStep] = useState(Steps.Welcome);
@@ -20,7 +24,13 @@ function RegistrationRouting() {
         telephone: "",
         allergies: "",
         otherInfo: "",
-        vegan: false
+        vegan: false,
+        theory: false,
+        physical: false,
+        club: "",
+        grade: null,
+        gradering: false,
+        pizza: ""
     });
     const currentProps = { 
         step: currentStep,
@@ -56,24 +66,25 @@ function RegistrationRouting() {
 
     switch (currentStep) {
         case Steps.NameAge:
-            return <NameAgeForm {... currentProps } prevStep={Steps.Welcome} nextStep={Steps.EmailTelephone} 
-                />
+            return <NameAgeForm {... currentProps } prevStep={Steps.Welcome} nextStep={Steps.EmailTelephone} />
         case Steps.EmailTelephone:
-            return <EmailTelephone {... currentProps } prevStep={Steps.NameAge} nextStep={Steps.Allergies}
-                />
+            return <EmailTelephone {... currentProps } prevStep={Steps.NameAge} nextStep={Steps.ClubGrade} />
+        case Steps.ClubGrade:
+            return <ClubGrade { ... currentProps } prevStep={Steps.EmailTelephone} nextStep={Steps.Teori} />
+        case Steps.Teori: 
+            return <TeoriForm { ... currentProps } prevStep={Steps.ClubGrade} nextStep={Steps.Sleepover} />
+        case Steps.Sleepover: 
+            return <Sleepover { ... currentProps } prevStep={Steps.Teori} nextStep={Steps.Allergies} />
         case Steps.Allergies:
-            return <Allergies {... currentProps } prevStep={Steps.EmailTelephone} nextStep={Steps.Pizza}
-                />
+            return <Allergies {... currentProps } prevStep={Steps.Sleepover} nextStep={Steps.Pizza} />
         case Steps.Pizza:
             return <Pizza {... currentProps } prevStep={Steps.Allergies} nextStep={Steps.FoodPreference}/>
         case Steps.FoodPreference:
-            return <FoodPreference {... currentProps } prevStep={Steps.Pizza} nextStep={Steps.OtherInformation}
-                />
+            return <FoodPreference {... currentProps } prevStep={Steps.Pizza} nextStep={Steps.OtherInformation} />
         case Steps.OtherInformation:
-            return <OtherInformation {... currentProps } prevStep={Steps.FoodPreference} nextStep={Steps.Check}
-                />
-        case Steps.Check: 
-            return <RegistrationStep {... currentProps } prevStep={Steps.OtherInformation} nextStep={Steps.Done} />
+            return <OtherInformation {... currentProps } prevStep={Steps.FoodPreference} nextStep={Steps.Payment} />
+        case Steps.Payment: 
+            return <Payment {... currentProps } prevStep={Steps.OtherInformation} nextStep={Steps.Done} />
         case Steps.Done:
             return <Done />
         default:

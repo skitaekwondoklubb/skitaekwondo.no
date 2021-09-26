@@ -4,10 +4,11 @@ import { StepProps, Steps } from "../../models/steps";
 import { GradeAutocomplete } from "./gradeautocomplete";
 import ClubAutocomplete from "./clubautocomplete";
 import { Grade } from "../../models/registrationModels";
+import { ttuClubs } from '../../services/clubService';
 
 
 function ClubGrade(props: StepProps) {
-    const [clubs, setClubs] = useState(["Ski Taekwondo Klubb", "Hamar Taekwondo Klubb", "Bergen Taekwondo Klubb"]);
+    const [clubs, setClubs] = useState(ttuClubs);
     const [club, setClub] = useState<string>(props?.registration?.club ?  props.registration.club : "");
     const [grade, setGrade] = useState<Grade | null>(
         props?.registration?.grade 
@@ -27,12 +28,16 @@ function ClubGrade(props: StepProps) {
 
     function goBack() {
         save();
-        props.setCurrentStep(Steps.EmailTelephone);
+        if(typeof(props.prevStep) === "number") {
+            props.setCurrentStep(props.prevStep);
+        }
     }
 
     function nextStep() {
         save();
-        props.setCurrentStep(Steps.Sleepover);
+        if(typeof(props.nextStep) === "number") {
+            props.setCurrentStep(props.nextStep);
+        }
     }
 
     return (
@@ -46,7 +51,7 @@ function ClubGrade(props: StepProps) {
                 <GradeAutocomplete currentSelection={grade} setGrade={setGrade}/>
                 <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setGradering(!gradering)}>
                     <input type="checkbox" checked={gradering} onChange={x => setGradering(x.currentTarget.checked)}/>
-                    <span>Delta på gradering under vinterleir</span>
+                    <span>Har planer om å dangradere i år</span>
                 </div>
             </div>
             <div className={styles.navigationButtons}>

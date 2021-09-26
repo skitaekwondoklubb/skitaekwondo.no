@@ -15,21 +15,25 @@ function Sleepover(props: StepProps) {
 
     function goBack() {
         save();
-        props.setCurrentStep(Steps.ClubGrade);
+        if(typeof(props.prevStep) === "number") {
+            props.setCurrentStep(props.prevStep);
+        }
     }
 
     function nextStep() {
         save();
-        props.setCurrentStep(Steps.Ledsager);
+        if(typeof(props.nextStep) === "number") {
+            props.setCurrentStep(props.nextStep);
+        }
     }
 
     return (
         <div className="slideLeft">
-            <p hidden={!isSkiTaekwondoKlubb}><b>Utøvere i Ski Taekwondo Klubb må være minst 12 år for å kunne overnatte i salen.</b></p>
+            <h3 hidden={!isSkiTaekwondoKlubb}><b>Utøvere i Ski Taekwondo Klubb får ikke sove i dojangen.</b></h3>
             <p>Overnatting i salen er gratis for alle utøvere, men krever egne sovesaker slik som for eksempel sovepose, madrass eller lignende.</p>
             <div className={`${styles.registrationForm}`} >
-                <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setSleepover(!sleepover)}>
-                    <input disabled={isSkiTaekwondoKlubb && props.registration.age < 12} 
+                <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={(x) => { isSkiTaekwondoKlubb ? setSleepover(false) : setSleepover(!sleepover); }} >
+                    <input disabled={isSkiTaekwondoKlubb} 
                         type={"checkbox"} checked={sleepover} 
                         onChange={(x) => setSleepover(x.currentTarget.checked)}
                     />

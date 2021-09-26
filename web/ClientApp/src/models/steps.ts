@@ -12,6 +12,7 @@ export enum Steps {
     Allergies,
     FoodPreference,
     Pizza,
+    Teori,
     OtherInformation,
     Payment,
     Check,

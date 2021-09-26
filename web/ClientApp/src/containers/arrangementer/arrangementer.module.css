@@ -15,8 +15,8 @@
 :local .picture img {
     object-fit: none;
     object-position: 0px -50px;
-    max-height: 90vh;
-    width: 600px;
+    max-height: 50vh;
+    width: 400px;
     overflow:hidden;
 }
 
@@ -25,7 +25,7 @@
 }
 
 :local .textSide img {
-    max-width: 30vw;
+    max-width: 20vw;
     border-radius: 8px;
 }
 
