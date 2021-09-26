@@ -26,7 +26,7 @@ namespace SkiTKD.Data.Models {
                 Sleepover ? "Ja" : "Nei",
                 Allergies, Pizza,
                 Vegan ? "Ja" : "Nei",
-                OtherInfo
+                OtherInfo, "Nei"
             };
             return reg;
         }
