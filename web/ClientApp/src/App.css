@@ -25,13 +25,13 @@
   width: 100%;
   height: 100%;
   background-color: rgba( 0, 0, 0, 0.6);
-  z-index: 50;
+  z-index: 1500;
 }
 
 .loader {
   position: absolute;
-  left: 50vw;
-  top: 50vh;
+  left: 50%;
+  top: 50%;
   z-index: 100;
   border: 16px solid white; /* Light grey */
   border-top: 16px solid #eb1a52; /* Blue */
@@ -72,5 +72,17 @@
   }
   100% {
       opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 1080px) { 
+  .loader {
+    top: 25%;
+    left: 25%;
+  }
+
+  .loadingBG {
+    height: 125%;
+    
   }
 }

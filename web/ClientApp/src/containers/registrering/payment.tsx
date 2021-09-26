@@ -3,6 +3,7 @@ import { StepProps, Steps } from "../../models/steps";
 import { sendRegistration } from "../../services/registrationService";
 import { PizzaAlternatives } from "./pizzaform";
 import styles from './registration.module.css';
+import Loading from '../loading/loading';
 //import Vippshurtigkasse from "./vipps_hurtigkasse.svg";
 
 function Gradering(props: {gradering: boolean }) {
@@ -77,13 +78,11 @@ function PayLater(props: ActualPaymentProps) {
             <p>Hvis man ikke har Vipps kan man ta kontakt med oss for andre betalingsmuligheter.</p>
             <p>Din totale sum ble på: <b><u>{props.total}kr</u></b>.</p>
             <p>Trykk fullfør for å registrere deg til danseminar eller gå tilbake for å endre ting først.</p>
-            <div className={styles.navigationButtons} hidden={loading === true}>
+            <div className={styles.navigationButtons}>
                 <button className={styles.backButton} onClick={props.goBack}>Tilbake</button>
                 <button className={styles.nextButton} onClick={nextStep}>Fullfør registrering</button>
             </div>
-            <div className="loadingBG" hidden={!loading}>
-                <div className="loader" />
-            </div>
+            <Loading loading={loading} />
         </div>
     )
 }
