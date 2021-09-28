@@ -3,7 +3,7 @@ import styles from './registration.module.css';
 import { StepProps, Steps } from "../../models/steps";
 
 function Allergies(props: StepProps) {
-    const [allergies, setAllergies] = useState("");
+    const [allergies, setAllergies] = useState(props.registration.allergies);
 
     function save() {
         let registration = {... props.registration};

@@ -3,7 +3,7 @@ import styles from './registration.module.css';
 import { StepProps, Steps } from "../../models/steps";
 
 function OtherInformation(props: StepProps) {
-    const [otherInfo, setOtherInfo] = useState("");
+    const [otherInfo, setOtherInfo] = useState(props.registration.otherInfo);
 
     function save() {
         let registration = {... props.registration};
