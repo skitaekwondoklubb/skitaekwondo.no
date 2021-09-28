@@ -8,7 +8,7 @@ import EmailTelephone from "./emailtelephoneform";
 import FoodPreference from "./foodpreferenceform";
 import OtherInformation from "./otherinformationform";
 import TeoriForm from "./teoriform";
-import Pizza from "./pizzaform";
+import Pizza, { PizzaAlternatives } from "./pizzaform";
 import { Done, RegistrationStep, Welcome } from "./registrering";
 import ClubGrade from "./clubgradeform";
 import Sleepover from "./sleepoverform";
@@ -30,7 +30,7 @@ function RegistrationRouting() {
         club: "",
         grade: null,
         gradering: false,
-        pizza: ""
+        pizza: PizzaAlternatives.None
     });
     const currentProps = { 
         step: currentStep,

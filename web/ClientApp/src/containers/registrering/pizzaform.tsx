@@ -56,17 +56,17 @@ function Pizza(props: StepProps) {
 
     return (
         <div className="slideLeft">
-            <p>Vi kommer til å bestille pizza på arrangementet. For å vite hvor mange pizzaer vi skal bestille vil vi vite om du skal spise med oss på arrangementet.</p>
+            <p>Vi kommer til å bestille pizza på fredag under arrangementet. For å vite hvor mange pizzaer vi skal bestille vil vi vite om du skal spise med oss på arrangementet.</p>
             <p>Pizza koster 80,- ekstra.</p>
-            <p>Dersom du ønsker pizza, men ikke ønsker å spisen noen av de nedenfor, skriv i annet feltet.</p>
+            <p>Dersom du ønsker pizza, men ikke ønsker å spise noen av de nedenfor, skriv i annet feltet.</p>
             <p>Vil du ha pizza på arrangementet?</p>
             <div className={`${styles.largeSpan} ${styles.radioButtons}`}>
-                <input type={"radio"} value={PizzaAlternatives.None} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Ønsker ikke pizza
-                <input type={"radio"} value={PizzaAlternatives.PigStyle} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Skinke, salami, ost
-                <input type={"radio"} value={PizzaAlternatives.OlaN} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Marinert biff, champignon, paprika, ost
-                <input type={"radio"} value={PizzaAlternatives.ElPollo} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Bacon, kjøttboller, marinert kylling, jalapeños, ost
-                <input type={"radio"} value={PizzaAlternatives.Vegan} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Vegansk alternativ
-                <input type={"radio"} value={PizzaAlternatives.Other} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Annen
+                <input type={"radio"} checked={pizza === PizzaAlternatives.None} value={PizzaAlternatives.None} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Ønsker ikke pizza
+                <input type={"radio"} checked={pizza === PizzaAlternatives.PigStyle} value={PizzaAlternatives.PigStyle} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Skinke, salami, ost
+                <input type={"radio"} checked={pizza === PizzaAlternatives.OlaN} value={PizzaAlternatives.OlaN} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Marinert biff, champignon, paprika, ost
+                <input type={"radio"} checked={pizza === PizzaAlternatives.ElPollo} value={PizzaAlternatives.ElPollo} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Bacon, kjøttboller, marinert kylling, jalapeños, ost
+                <input type={"radio"} checked={pizza === PizzaAlternatives.Vegan} value={PizzaAlternatives.Vegan} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Vegansk alternativ
+                <input type={"radio"} checked={pizza === PizzaAlternatives.Other} value={PizzaAlternatives.Other} name="pizza" onChange={(v) => setPizza(v.currentTarget.value)} /> Annen
             </div>
             <div hidden={!pizza?.startsWith(PizzaAlternatives.Other)}>
                 <h3>Skriv hvorfor du ønsker en annen type pizza:</h3>
@@ -74,7 +74,7 @@ function Pizza(props: StepProps) {
             </div>
             <div className={styles.navigationButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
-                <button className={styles.nextButton} onClick={nextStep}>Neste</button>
+                <button className={styles.nextButton} disabled={pizza == null && pizza !== ""} onClick={nextStep}>Neste</button>
             </div>
         </div>
     )
