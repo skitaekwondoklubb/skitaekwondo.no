@@ -66,7 +66,7 @@ function PayLater(props: ActualPaymentProps) {
         <div className="slideLeft">
             <div className={styles.error} hidden={error === ""}>
                 <h2>Oisann! Noe gikk galt når vi prøvde å registrere deg.</h2>
-                <p>Prøv igjen senere eller ta kontakt med oss.</p>
+                <p>Prøv igjen senere eller ta kontakt med oss på <a href="mailto: kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a>.</p>
                 
                 <details>
                     <summary>Teknisk feilmelding:</summary>
