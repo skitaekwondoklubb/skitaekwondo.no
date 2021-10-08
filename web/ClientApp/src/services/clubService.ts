@@ -33,5 +33,6 @@ export const ttuClubs = [
     "Sunnfjord",
     "Sædalen",
     "Tynset",
-    "Ålesund"
+    "Ålesund",
+    "Sølvbyen"
 ]
