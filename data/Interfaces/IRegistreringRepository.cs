@@ -7,5 +7,6 @@ namespace SkiTKD.Data.Interfaces
     public interface IRegistreringRepository
     {
         Task<bool> AddRegistrationToExcel(Registration registration);
+        bool SendEmail(Registration reg);
     }
 }

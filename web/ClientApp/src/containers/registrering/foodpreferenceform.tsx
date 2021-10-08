@@ -3,7 +3,7 @@ import styles from './registration.module.css';
 import { StepProps, Steps } from "../../models/steps";
 
 function FoodPreference(props: StepProps) {
-    const [isVegan, setIsVegan] = useState(false);
+    const [isVegan, setIsVegan] = useState(props.registration.vegan);
 
     function save() {
         let registration = {... props.registration};

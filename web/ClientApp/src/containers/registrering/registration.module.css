@@ -97,6 +97,15 @@
     font-size: 1.4em;
 }
 
+:local .radioButtons {
+    display: grid;
+    grid-template-columns: 0.1fr 1fr;
+    justify-content: left;
+    align-content: left;
+    font-size: 1.4em;
+    gap: 5px;
+}
+
 :local .clickable {
     cursor: pointer;
 }
@@ -120,6 +129,14 @@
     font-size: 20px;
     border-radius: 10px;
 }
+
+:local .otherInput {
+    border: 1px solid slategray;
+    padding: 0.3em;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
 
 :local .ageInput {
     justify-self: left;
@@ -176,7 +193,8 @@
 
 :local .paymentButtons {
     display: grid;
-    grid-template-columns: 0.2fr 0.3fr 0.2fr 0.3fr;
+    /* grid-template-columns: 0.2fr 0.3fr 0.2fr 0.3fr; */
+    grid-template-columns: 0.2fr 0.5fr 0.3fr;
     gap: 20px;
     padding-top: 1em;
     margin-top: 2em;
@@ -228,6 +246,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 :local .done h2 {
@@ -239,7 +258,12 @@
     font-size: 1.5em;
 }
 
-
+:local .error {
+    background: #eb1a52;
+    color: white;
+    padding: 1px 20px 10px 20px;
+    border-radius: 20px;
+}
 
 @media only screen and (max-width: 1080px) {
 

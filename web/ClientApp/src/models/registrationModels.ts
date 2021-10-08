@@ -13,7 +13,9 @@ export interface Registration {
     sleepover?: boolean;
     hasLedsager?: boolean;
     ledsagere?: Array<Ledsager>;
-    pizza?: boolean;
+    pizza?: string;
+    theory?: boolean;
+    physical?: boolean;
 }
 
 export interface Ledsager {

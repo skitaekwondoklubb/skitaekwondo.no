@@ -18,6 +18,40 @@
   animation: fadeIn 1.3s ease-in;
 }
 
+.loadingBG {
+  position: absolute;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba( 0, 0, 0, 0.6);
+  z-index: 1500;
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 100;
+  border: 16px solid white; /* Light grey */
+  border-top: 16px solid #eb1a52; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { 
+    transform: rotate(0deg);
+  }
+  100% { 
+    transform: rotate(360deg); 
+    
+  }
+}
+
+
 @keyframes slide-left {
   from {
       opacity: 0;
@@ -38,5 +72,17 @@
   }
   100% {
       opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 1080px) { 
+  .loader {
+    top: 25%;
+    left: 25%;
+  }
+
+  .loadingBG {
+    height: 125%;
+    
   }
 }
