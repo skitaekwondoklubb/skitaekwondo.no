@@ -5,6 +5,7 @@ export enum Steps {
     NameAge,
     EmailTelephone,
     ClubGrade,
+    Gradering,
     Sleepover, 
     Ledsager,
     LedsagerAdd,

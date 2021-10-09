@@ -3,7 +3,7 @@ export function setCookie(cname: string, cvalue: any, exdays: number) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = 'expires='+ d.toUTCString();
-    document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+    document.cookie = cname + '=' + btoa(cvalue) + ';' + expires + ';path=/';
 }
 
 export function getCookie(cname: string) {
@@ -16,7 +16,7 @@ export function getCookie(cname: string) {
             c = c.substring(1);
         }
         if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
+            return atob(c.substring(name.length, c.length));
         }
     }
     return '';

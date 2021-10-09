@@ -35,7 +35,8 @@ function NameAgeForm(props: StepProps) {
         let registration = props.registration;
         registration.firstName = firstName;
         registration.lastName = lastName;
-        registration.age = age;
+        if(age != null)
+            registration.age = age;
 
         props.setRegistration(registration);
     }
@@ -62,12 +63,12 @@ function NameAgeForm(props: StepProps) {
                 <p>Etternavn:</p>
                 <input value={lastName} onChange={x => validateLastName(x.currentTarget.value)} />
                 <p>Alder:</p>
-                <input className={styles.ageInput} value={age} onChange={x => validateAge(x.currentTarget.value)} type="number" />
+                <input className={styles.ageInput} value={age == null ? 0 : age} onChange={x => validateAge(x.currentTarget.value)} type="number" />
             </div>
             <div className={styles.navigationButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
                 <button className={styles.nextButton}
-                    disabled={firstName === "" || lastName === "" || firstNameError !== "" || lastNameError !== "" || ageError !== ""} 
+                    disabled={firstName === "" || lastName === "" || firstNameError !== "" ||  age == null || age === 0 || lastNameError !== "" || ageError !== ""} 
                     onClick={nextStep}>Neste</button>
             </div>
         </div>

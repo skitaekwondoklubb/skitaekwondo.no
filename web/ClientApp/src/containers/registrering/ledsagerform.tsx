@@ -36,7 +36,7 @@ function Ledsager(props: StepProps) {
         <div className="slideLeft">
             <p>Ledsagere er egne foreldere, foresatte eller annen ansvarlig som vil være sammen med utøver under hele vinterleiren og
                 ønsker overnatting, frokost, lunsj og/eller middag.</p>
-            <p>På grunn av denne kostnaden vil ledsagere måtte betale slik som utøvere. Dette vil dermed bli lagt til i prisen til slutt.</p>
+            <p>På grunn av denne kostnaden vil ledsagere måtte betale 500,-. Dette vil dermed bli lagt til i prisen til slutt.</p>
             <p><b>Foreldre eller andre som kun ønsker å se på, men <u>ikke</u> skal ha frokost, lunsj, middag eller overnatting trenger ikke oppføres.</b></p>
             <div className={styles.registrationForm}>
                 <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setHasLedsager(!hasLedsager)}>

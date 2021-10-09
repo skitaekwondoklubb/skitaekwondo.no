@@ -8,6 +8,7 @@ import EmailTelephone from "../registrering/emailtelephoneform";
 import FoodPreference from "../registrering/foodpreferenceform";
 import AddLedsager from "../registrering/ledsageraddform";
 import Ledsager from "../registrering/ledsagerform";
+import Gradering from "../registrering/graderingform";
 import LedsagerManagement from "../registrering/ledsagermanagement";
 import OtherInformation from "../registrering/otherinformationform";
 import Payment from "../registrering/payment";
@@ -21,7 +22,7 @@ function RegistrationRouting() {
     const [registration, setRegistration] = useState<Registration>({
         firstName: "",
         lastName: "",
-        age: 18,
+        age: 0,
         email: "",
         telephone: "",
         allergies: "",
@@ -76,10 +77,13 @@ function RegistrationRouting() {
             return <EmailTelephone {... currentProps } prevStep={Steps.NameAge} nextStep={Steps.ClubGrade}
                 />
         case Steps.ClubGrade:
-            return <ClubGrade {... currentProps} prevStep={Steps.EmailTelephone} nextStep={Steps.Sleepover}
+            return <ClubGrade {... currentProps} prevStep={Steps.EmailTelephone} nextStep={Steps.Gradering}
+                />
+        case Steps.Gradering:
+            return <Gradering {... currentProps} prevStep={Steps.ClubGrade} nextStep={Steps.Sleepover}
                 />
         case Steps.Sleepover:
-            return <Sleepover {... currentProps } prevStep={Steps.ClubGrade} nextStep={Steps.Ledsager}
+            return <Sleepover {... currentProps } prevStep={Steps.Gradering} nextStep={Steps.Ledsager}
                 />
         case Steps.Ledsager:
             return <Ledsager {... currentProps } prevStep={Steps.Sleepover} nextStep={[Steps.LedsagerManagement, Steps.Allergies]}

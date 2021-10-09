@@ -29,7 +29,7 @@ function Sleepover(props: StepProps) {
 
     return (
         <div className="slideLeft">
-            <h3 hidden={!isSkiTaekwondoKlubb}><b>Utøvere i Ski Taekwondo Klubb får ikke sove i dojangen.</b></h3>
+            <h3 hidden={!isSkiTaekwondoKlubb}><b>Utøvere i Ski Taekwondo Klubb får ikke sove i hallen.</b></h3>
             <p>Overnatting i salen er gratis for alle utøvere, men krever egne sovesaker slik som for eksempel sovepose, madrass eller lignende.</p>
             <div className={`${styles.registrationForm}`} >
                 <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={(x) => { isSkiTaekwondoKlubb ? setSleepover(false) : setSleepover(!sleepover); }} >

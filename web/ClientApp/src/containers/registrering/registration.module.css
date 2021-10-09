@@ -93,6 +93,19 @@
     transform: scale(1.5);
 }
 
+:local .instructor {
+    padding: 15px;
+    max-width: fit-content;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    font-size: 1.2em;
+    border: 1px solid gray;
+}
+
+:local .masterDisclaimer {
+}
+
 :local .checkboxLine span {
     font-size: 1.4em;
 }
@@ -157,6 +170,7 @@
     justify-self: center;
     align-self: center;
 }
+
 
 :local .addLedsagerButton:hover {
     border-color: rgb(0, 90, 230);

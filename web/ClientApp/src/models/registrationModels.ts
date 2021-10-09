@@ -1,3 +1,4 @@
+import { Instructor } from './instructor';
 export interface Registration {
     firstName: string;
     lastName: string;
@@ -10,6 +11,7 @@ export interface Registration {
     club?: string;
     grade?: Grade | null;
     gradering?: boolean;
+    instructor?: Instructor;
     sleepover?: boolean;
     hasLedsager?: boolean;
     ledsagere?: Array<Ledsager>;

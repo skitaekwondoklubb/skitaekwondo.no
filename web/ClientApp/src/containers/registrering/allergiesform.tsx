@@ -19,9 +19,7 @@ function Allergies(props: StepProps) {
             props.setCurrentStep(Steps.LedsagerManagement);
         }
         else {
-            if(typeof(props.prevStep) === "number") {
-                props.setCurrentStep(props.prevStep);
-            }
+            props.setCurrentStep(Steps.Ledsager);
         }
     }
     function nextStep() {

@@ -5,28 +5,51 @@ import { PizzaAlternatives } from "./pizzaform";
 import styles from './registration.module.css';
 import Vippsbutton from "../betalmedvipps.svg";
 import Loading from '../loading/loading';
+import { Registration } from "../../models/registrationModels";
+import { Instructor } from "../../models/instructor";
 //import Vippshurtigkasse from "./vipps_hurtigkasse.svg";
 
-function Gradering(props: {gradering: boolean }) {
-    if(props.gradering) {
+function Gradering(props: {gradering: boolean, dangradering: boolean }) {
+    if(props.gradering && !props.dangradering ) {
         return (
-            <CheckoutRow article={`Gradering`} price={300}/>
+            <CheckoutRow article={`Gradering`} price={"300"}/>
         )
     }
     return <div/>
+}
+
+function VinterleirForUtover(props: { firstName: string, lastName: string, age: number}) {
+    if(props.age <= 12) {
+        return <CheckoutRow article={`Vinterleir (barn): ${props.firstName} ${props.lastName}`} price={"825"}/>
+    }
+    
+    return <CheckoutRow article={`Vinterleir (voksen): ${props.firstName} ${props.lastName}`} price={"975"}/>
 }
 
 
 function Pizza(props: {pizza: string }) {
     if(props.pizza !== PizzaAlternatives.None) {
         return (
-            <CheckoutRow article={`Pizza`} price={80}/>
+            <CheckoutRow article={`Pizza`} price={"80"}/>
         )
     }
     return <div/>
 }
 
-function CheckoutRow(props: { article: string, price: number }) {
+function InstructorStatus(props: { instructor?: Instructor }) {
+    if(props.instructor === Instructor.SkiFullTimeInstructor) {
+        return <CheckoutRow article={`Hovedinstruktør ved Ski Taekwondo Klubb`} price={"-975"}/>
+    }
+    else if(props.instructor === Instructor.SkiHelperInstructor) {
+        return <CheckoutRow article={`Hjelpeinstruktør ved Ski Taekwondo Klubb`} price={`-475`}/>
+    }
+    else if(props.instructor === Instructor.InstructorAtVinterleir) {
+        return <CheckoutRow article={`Instruktør på vinterleir`} price={"-975"}/>
+    }
+    return <></>
+}
+
+function CheckoutRow(props: { article: string, price: string }) {
     return (
         <div className={styles.checkout}>
             <span>{props.article}</span>
@@ -106,14 +129,32 @@ function Vipps(props: ActualPaymentProps) {
     )
 }
 
+function GetTotal(registration: Registration) {
+    let total = 975;
+    if(registration.age != null && registration.age <= 12) {
+        total -= 150;
+    }
+    else if(registration.instructor === Instructor.SkiFullTimeInstructor) {
+        total = 0;
+    }
+    else if(registration.instructor === Instructor.SkiHelperInstructor) { 
+        total -= 475;
+    }
+    if(registration.gradering === true && registration.grade?.dan === false && registration.grade.grade !== 1) {
+        total += 300;
+    }
+
+    for (const ledsager of (registration.ledsagere != null ? registration.ledsagere : [])) {
+        total += 500;
+    }
+
+    return total;
+}
+
 function Payment(props: StepProps) {
     const [payLater, setPayLater] = useState(false);
     const [payVipps, setPayVipps] = useState(false);
-    const total = 800 + (props.registration.pizza !== PizzaAlternatives.None ? 80 : 0) + (
-        props?.registration?.ledsagere 
-        ? props.registration.ledsagere.filter(x => !x.alreadyRegistred).length * 1100
-        : 0
-    )
+    const total = GetTotal(props.registration);
 
     function goBack() {
         props.setCurrentStep(Steps.OtherInformation);
@@ -134,13 +175,18 @@ function Payment(props: StepProps) {
         <div className="slideLeft">
             <p>Din registrering:</p>
             <div>
-                <CheckoutRow article={`Danseminar for utøver: ${props.registration.firstName} ${props.registration.lastName}`} price={800}/>
-                {/* <Gradering gradering={props.registration.gradering != null && props.registration.gradering === true} /> */}
-                <Pizza pizza={props.registration.pizza ? props.registration.pizza : ""}/>
+                <VinterleirForUtover age={props.registration.age} firstName={props.registration.firstName} lastName={props.registration.lastName}/>
+                <InstructorStatus instructor={props.registration.instructor}/>
+                <Gradering 
+                    gradering={props.registration.gradering != null && props.registration.gradering === true} 
+                    dangradering={props.registration.grade != null && (props.registration.grade.dan === true 
+                        || (props.registration.grade.dan === false && props.registration.grade.grade === 1))
+                    }
+                />
                 {
                     props?.registration?.ledsagere ? props.registration.ledsagere.map((ledsager) => {
                         return (
-                            <CheckoutRow article={`Ledsager: ${ledsager.firstName} ${ledsager.lastName}`} price={ledsager.alreadyRegistred ? 0 : 1100}/>
+                            <CheckoutRow article={`Ledsager: ${ledsager.firstName} ${ledsager.lastName}`} price={`${ledsager.alreadyRegistred ? 0 : 500}`}/>
                         )
                     })
                     : ""
