@@ -353,3 +353,4 @@ web/build/*
 *.*ocal.json
 *.local.env
 *.Local.json
+*.keys
