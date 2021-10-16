@@ -27,7 +27,7 @@ namespace SkiTKD.Data.Repositories
 
         public VinterleirRepository(IConfiguration config) {
             clientId = config["ClientId"];
-            user = config["User"];
+            user = config["ExcelUser"];
             path = config["Path"];
             password = config["Pass"];
         }
@@ -64,14 +64,37 @@ namespace SkiTKD.Data.Repositories
             return client;
         }
 
-        public async Task<bool> AddRegistrationToExcel(VinterleirRegistration registration)
+        public async Task<bool> AddRegistrationToExcel(VinterleirRegistration registration, string vippsOrderId)
         {
+            if(string.IsNullOrEmpty(vippsOrderId)) {
+                registration.OrderId = vippsOrderId;
+                registration.PaymentMethod = "Vipps";
+                registration.HasPaidYet = false;
+            }
+            else {
+                registration.OrderId = "";
+                registration.PaymentMethod = "Kort";
+                registration.HasPaidYet = false;
+            }
+
             var registrationEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{path}:/workbook/tables/Table1/rows/add";
             var ledsagerEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{path}:/workbook/tables/Table2/rows/add";
 
             string[][] regData = { registration.ConvertToExcel() }; // Only one.
             await SendToExcel(registrationEndpoint, regData);
             if(registration.HasLedsager) {
+                foreach (var ledsager in registration.Ledsagere)
+                {
+                    if(string.IsNullOrEmpty(vippsOrderId)) {
+                        ledsager.OrderId = vippsOrderId;
+                        ledsager.PaymentMethod = "Vipps";
+                    }
+                    else {
+                         ledsager.OrderId = "";
+                        ledsager.PaymentMethod = "Kort";
+                    }
+                }
+
                 string[][] ledsagerReg = registration.ConvertLedsagereToExcel();
                 await SendToExcel(ledsagerEndpoint, ledsagerReg);
             }
@@ -107,10 +130,67 @@ namespace SkiTKD.Data.Repositories
                 }
              }
         }
+
+        public async Task<ExcelModel> ReadFromExcel(string endpoint) {
+            using (var client = new HttpClient())
+            {
+                using (var request = new HttpRequestMessage(HttpMethod.Get, endpoint))
+                {
+                    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await GetToken());
+
+                    using (var response = await client.SendAsync(request))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var info = await response.Content.ReadAsStringAsync();
+                            var data = JsonConvert.DeserializeObject<RawExcelModel>(info);
+                            return new ExcelModel(data.value);
+                        }
+
+                        throw new Exception(response.ReasonPhrase);
+                    }
+                }
+             }
+        }
+
+        public async Task<bool> UpdatePaidStatus(string endpoint, ExcelRow row) {
+            using (var client = new HttpClient())
+            {
+                using (var request = new HttpRequestMessage(HttpMethod.Patch, endpoint))
+                {
+                    row.HasPaid = "Ja";
+                    var userInfoRequest = new ExcelUpdateRequest();
+                    string[][] data = { row.ConvertToExcel() };
+                    userInfoRequest.values = data;
+
+                    // Serialize the information in the UserInfoRequest object
+                    string jsonBody = JsonConvert.SerializeObject(userInfoRequest);
+                    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await GetToken());
+                    request.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                    using (var response = await client.SendAsync(request))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            return true;
+                        }
+
+                        throw new Exception(response.ReasonPhrase);
+                    }
+                }
+             }
+        }
     }
 
     public class ExcelRequest {
         public string index { get; set; }
+        public string[][] values { get; set; }
+    }
+
+
+    public class ExcelUpdateRequest {
         public string[][] values { get; set; }
     }
 }

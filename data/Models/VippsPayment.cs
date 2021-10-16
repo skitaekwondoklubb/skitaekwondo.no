@@ -4,45 +4,35 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace SkiTKD.Data.Models {
-    public class VippsPaymentRequestHeader {
-        public string Authorization { get; set; }
-        public string ContentType { get; set; }
-        public string OcpApimSubscriptionKey { get; set; }
-        public string MerchantSerialNumber { get; set; }
-        public string VippsSystemName { get; set; }
-        public string VippsSystemVersion { get; set; }
-    }
-
     public class VippsPaymentRequestBody {
-        public CustomerInfo CustomerInfo { get; set; }
-        public MerchantInfo MerchantInfo { get; set; }
-        public Transaction Transaction { get; set; }
+        public CustomerInfo customerInfo { get; set; }
+        public MerchantInfo merchantInfo { get; set; }
+        public Transaction transaction { get; set; }
     }
 
     public class VippsPaymentResponse {
-        public string OrderId { get; set; }
-        public string Url { get; set; }
+        public string orderId { get; set; }
+        public string url { get; set; }
     }
 
     public class CustomerInfo {
-        public string? MobileNumber { get; set; }
+        public string? mobileNumber { get; set; }
     }
     public class MerchantInfo {
-        public string CallbackPrefix { get; set; }
-        public string FallBack { get; set; }
-        public string MerchantSerialNumber { get; set; }
-        public string AuthToken { get; set; }
-        public string? ConsentRemovalPrefix { get; set; }
-        public bool? IsApp { get; set; }
-        public string? PaymentType { get; set; }
+        public string callbackPrefix { get; set; }
+        public string fallBack { get; set; }
+        public string merchantSerialNumber { get; set; }
+        public string authToken { get; set; }
     }
 
     public class Transaction {
-        public int Amount { get; set; }
-        public string OrderId { get; set; }
-        public string TransactionText { get; set; }
-        public bool? SkipLandingPage { get; set; }
-        public string? Scope { get; set; }
-        public bool? UseExplicitCheckoutFlow { get; set; }
+        public int amount { get; set; }
+        public string orderId { get; set; }
+        public string transactionText { get; set; }
+    }
+
+    public class PaymentTypes {
+        public static string Regular = "eComm Regular Payment";
+        public static string Express = "eComm Express Payment";
     }
 }

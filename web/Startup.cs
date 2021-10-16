@@ -31,8 +31,10 @@ namespace SkiTKD.Web
                 configuration.RootPath = "ClientApp/build";
             });
 
+            services.AddSingleton<IVippsTokenService, VippsTokenService>();
             services.AddTransient<IVinterleirRepository, VinterleirRepository>();
             services.AddTransient<IRegistreringRepository, RegistreringRepository>();
+            services.AddTransient<IVippsRepository, VippsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

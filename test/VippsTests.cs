@@ -13,12 +13,14 @@ namespace SkiTKD.Test
     {
         private IConfiguration configuration;
         private IVippsRepository _repo;
+        private IVippsTokenService _tokenService;
 
         [SetUp]
         public void Setup()
         {
             InitConfiguration();
-            _repo = new VippsRepository(configuration);
+            _tokenService = new VippsTokenService(configuration);
+            _repo = new VippsRepository(configuration, _tokenService);
         }
 
         public void InitConfiguration()
@@ -34,7 +36,7 @@ namespace SkiTKD.Test
         [Test]
         public void GetToken()
         {
-            var accessT = _repo.TestGetTokenResponse().GetAwaiter().GetResult();
+            var accessT = _tokenService.GetToken().GetAwaiter().GetResult();
             Assert.IsNotNull(accessT);
             Assert.IsNotEmpty(accessT.access_token);
         }
@@ -43,20 +45,19 @@ namespace SkiTKD.Test
         public void PayUp()
         {
             var payment = new VippsPaymentRequestBody {
-                CustomerInfo = new CustomerInfo {
-                    MobileNumber = "93542486"
+                customerInfo = new CustomerInfo {
+                    mobileNumber = "93542486"
                 },
-                MerchantInfo = new MerchantInfo {
-                    AuthToken = "",
-                    CallbackPrefix = configuration["Vipps:HomePrefix"],
-                    FallBack = "https://127.0.0.1/vinterleir",
-                    IsApp = false,
-                    MerchantSerialNumber = configuration["Vipps:MSN"]
+                merchantInfo = new MerchantInfo {
+                    authToken = "",
+                    callbackPrefix = configuration["Vipps:HomePrefix"],
+                    fallBack = "https://127.0.0.1/vinterleir",
+                    merchantSerialNumber = configuration["Vipps:MSN"]
                 },
-                Transaction = new Transaction {
-                    Amount = 1000,
-                    OrderId = "SKITKD-TEST-" + new Guid().ToString(),
-                    TransactionText = "TEST BETALING TIL LEIR"
+                transaction = new Transaction {
+                    amount = 1000,
+                    orderId = "SKITKD-TEST-" + new Guid().ToString(),
+                    transactionText = "TEST BETALING TIL LEIR"
                 }
             };
 

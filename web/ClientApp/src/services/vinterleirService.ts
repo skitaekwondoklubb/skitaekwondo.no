@@ -1,4 +1,4 @@
-import { Grade } from '../models/registrationModels';
+import { Grade, Registration } from '../models/registrationModels';
 
 export function getGrades() {
     const colors = [
@@ -43,4 +43,26 @@ export function getGrades() {
     }
 
     return list;
+}
+
+export async function askForVippsPurchase(reg: Registration): Promise<string> {
+    try {
+        const response = await fetch(`api/Vipps/BetalMedVipps`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reg)
+        }).catch((err) => {
+            throw new Error(err);
+        })
+
+        const resp = response.text();
+        
+        return resp;
+    }
+    catch(err) {
+        throw new Error(err as string);
+    }
+
 }

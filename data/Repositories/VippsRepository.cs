@@ -14,72 +14,48 @@ namespace SkiTKD.Data.Repositories
 {
     public class VippsRepository : IVippsRepository
     {
-        private readonly string clientId;
-        private readonly string clientSecret;
-        private readonly string subscription;
-        private readonly string msn;
-        private readonly string systemName;
-        private readonly string systemVersion;
-        private readonly string vippsEndpoint;
-        private static VippsAccessTokenResponse vippsToken;
+        private readonly string _subscription;
+        private readonly string _msn;
+        private readonly string _systemName;
+        private readonly string _systemVersion;
+        private readonly string _vippsEndpoint;
+        private readonly string _callbackPrefix;
+        private IVippsTokenService _vippsTokenService;
 
-        public VippsRepository(IConfiguration config) {
-            clientId = config["Vipps:ClientId"];
-            clientSecret = config["Vipps:ClientSecret"];
-            subscription = config["Vipps:Subscription"];
-            msn = config["Vipps:MSN"];
-            systemVersion = config["Vipps:System:Version"];
-            systemName = config["Vipps:System:Name"];
-            vippsEndpoint = config["Vipps:Endpoint"];
+        public VippsRepository(IConfiguration config, IVippsTokenService tokenService) {
+  
+            _subscription = config["Vipps:Subscription"];
+            _msn = config["Vipps:MSN"];
+            _systemVersion = config["Vipps:System:Version"];
+            _systemName = config["Vipps:System:Name"];
+            _vippsEndpoint = config["Vipps:Endpoint"];
+            _callbackPrefix = config["Vipps:CallbackPrefix"];
+            _vippsTokenService = tokenService;
         }
 
-        private async Task<VippsAccessTokenResponse> GetToken() {
-            using (var client = new HttpClient())
-            {
-                using (var request = new HttpRequestMessage(HttpMethod.Post, $"{vippsEndpoint}/accesstoken/get"))
-                {
-                    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    request.Headers.Add("client_id", clientId);
-                    request.Headers.Add("client_secret", clientSecret);
-                    request.Headers.Add("Ocp-Apim-Subscription-Key", subscription);
+        private async Task<string> GetAccessToken() {
+            var token = await _vippsTokenService.GetToken();
 
-                    using (var response = await client.SendAsync(request))
-                    {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var responseData = await response.Content.ReadAsStringAsync();
-                            var accessTokenResponse = JsonConvert.DeserializeObject<VippsAccessTokenResponse>(responseData);
-                            vippsToken = accessTokenResponse;
-                            return accessTokenResponse;
-                        }
-
-                        throw new Exception($"VIPPS ACCESS TOKEN: {response.ReasonPhrase}");
-                    }
-                }
-             }
-        }
-
-        public async Task<VippsAccessTokenResponse> TestGetTokenResponse()
-        {
-            return await GetToken();
+            if(token == null) {
+                throw new NullReferenceException("Klarte ikke koble til Vipps. Vi fikk ikke token fra Vipps etter forespørsel.");
+            }
+            
+            return token.access_token;
         }
 
         public async Task<string> Payments(VippsPaymentRequestBody body) {
-            if(vippsToken == null || DateTimeOffset.FromUnixTimeSeconds(vippsToken.expires_on).UtcDateTime > DateTime.UtcNow) {
-                await GetToken();
-            }
 
             using (var client = new HttpClient())
             {
-                using (var request = new HttpRequestMessage(HttpMethod.Post, $"{vippsEndpoint}/ecomm/v2/payments"))
+                using (var request = new HttpRequestMessage(HttpMethod.Post, $"{_vippsEndpoint}/ecomm/v2/payments"))
                 {
                     string jsonBody = JsonConvert.SerializeObject(body);
                     request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", vippsToken.access_token);
-                    request.Headers.Add("Merchant-Serial-Number", msn);
-                    request.Headers.Add("Vipps-System-Name", systemName);
-                    request.Headers.Add("Vipps-System-Version", systemVersion);
-                    request.Headers.Add("Ocp-Apim-Subscription-Key", subscription);
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
+                    request.Headers.Add("Merchant-Serial-Number", _msn);
+                    request.Headers.Add("Vipps-System-Name", _systemName);
+                    request.Headers.Add("Vipps-System-Version", _systemVersion);
+                    request.Headers.Add("Ocp-Apim-Subscription-Key", _subscription);
                     request.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
                     using (var response = await client.SendAsync(request))
@@ -88,13 +64,34 @@ namespace SkiTKD.Data.Repositories
                         {
                             var responseData = await response.Content.ReadAsStringAsync();
                             var paymentResponse = JsonConvert.DeserializeObject<VippsPaymentResponse>(responseData);
-                            return paymentResponse.Url;
+                            return paymentResponse.url;
                         }
 
-                        throw new Exception($"VIPPS ACCESS TOKEN: {response.ReasonPhrase}");
+                        throw new Exception($"Vipps ga feilmelding: {response.ReasonPhrase} {await response.Content.ReadAsStringAsync()}");
                     }
                 }
             }
+        }
+
+        public async Task<VippsPaymentRequestBody> VinterleirToVippsRequest(VinterleirRegistration reg) {
+            var requestBody = new VippsPaymentRequestBody {
+                customerInfo = new CustomerInfo {
+                    mobileNumber = reg.Telephone
+                },
+                merchantInfo = new MerchantInfo {
+                    authToken = await GetAccessToken(),
+                    callbackPrefix = $"{_callbackPrefix}/Vipps",
+                    fallBack = $"{_callbackPrefix}/vinterleir",
+                    merchantSerialNumber = _msn,
+                },
+                transaction = new Transaction {
+                    amount = 975,
+                    orderId = Guid.NewGuid().ToString(),
+                    transactionText = "Vinterleir for utøver",
+                }
+            };
+
+            return requestBody;
         }
     }
 }

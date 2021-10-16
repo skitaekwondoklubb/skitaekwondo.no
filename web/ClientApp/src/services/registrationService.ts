@@ -15,7 +15,7 @@ export async function sendRegistration(reg: Registration): Promise<boolean> {
         return response.json();
     }
     catch(err) {
-        throw new Error(err);
+        throw new Error(`${err}`);
     }
 
 }

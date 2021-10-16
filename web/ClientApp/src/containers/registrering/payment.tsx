@@ -7,6 +7,7 @@ import Vippsbutton from "../betalmedvipps.svg";
 import Loading from '../loading/loading';
 import { Registration } from "../../models/registrationModels";
 import { Instructor } from "../../models/instructor";
+import { askForVippsPurchase } from "../../services/vinterleirService";
 //import Vippshurtigkasse from "./vipps_hurtigkasse.svg";
 
 function Gradering(props: {gradering: boolean, dangradering: boolean }) {
@@ -42,9 +43,6 @@ function InstructorStatus(props: { instructor?: Instructor }) {
     }
     else if(props.instructor === Instructor.SkiHelperInstructor) {
         return <CheckoutRow article={`Hjelpeinstruktør ved Ski Taekwondo Klubb`} price={`-475`}/>
-    }
-    else if(props.instructor === Instructor.InstructorAtVinterleir) {
-        return <CheckoutRow article={`Instruktør på vinterleir`} price={"-975"}/>
     }
     return <></>
 }
@@ -160,6 +158,14 @@ function Payment(props: StepProps) {
         props.setCurrentStep(Steps.OtherInformation);
     }
 
+    async function payWithVipps() {
+        console.log("ASKING FOR VIPPS");
+        const ask = await askForVippsPurchase(props.registration);
+        console.log("ASKING...");
+        window.location.assign(ask);
+        console.log("ASKED: " + ask);
+    }
+
     if(payLater) {
         return (
             <PayLater {... props} total={total} goBack={() => setPayLater(false)} />
@@ -198,8 +204,8 @@ function Payment(props: StepProps) {
             </div>
             <div className={styles.paymentButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
-                <button className={styles.cashCard} onClick={() => setPayLater(true)}>Kort/Kontant</button>
-                <img src={Vippsbutton} onClick={() => setPayVipps(true)}/>
+                <button className={styles.cashCard} onClick={() => {setPayLater(true)}}>Kort/Kontant</button>
+                <img src={Vippsbutton} onClick={payWithVipps}/>
             </div>
         </div>
     )

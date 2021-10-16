@@ -6,7 +6,8 @@ using System.Text;
 namespace SkiTKD.Data.Models {
       public class VinterleirRegistration : Person {
         public string Club { get; set; }
-        public string Grade { get; set; }
+        public GradeObj Grade { get; set; }
+        public InstructorType Instructor { get; set; }
         public bool Gradering { get; set; }
         public bool HasLedsager { get; set; }
         public List<Ledsager> Ledsagere { get; set; }
@@ -35,20 +36,46 @@ namespace SkiTKD.Data.Models {
             return builder.ToString();
         }
 
+        public string GetInstructorType() {
+            if(Club != "Ski Taekwondo Klubb") { // Ensure no one fucks with the data and sets another club with instructor.
+                return "Nei";
+            }
+
+            switch (Instructor)
+            {
+                case InstructorType.NotInstructor:
+                    return "Nei";
+                case InstructorType.SkiHelperInstructor:
+                    return "Hjelpeinstruktør";
+                case InstructorType.SkiFullTimeInstructor:
+                    return "Ja";
+                default:
+                    return "Nei";
+            }
+        }
+
         public string[] ConvertToExcel() {
             string[] reg = { 
                 FirstName, LastName, $"{Age}", 
                 Telephone, Email, 
-                Club, Grade,
+                Club, Grade.Name,
+                GetInstructorType(), 
                 Gradering   ? "Ja" : "Nei",
                 Sleepover   ? "Ja" : "Nei",
                 Vegan       ? "Ja" : "Nei",
                 HasLedsager ? "Ja" : "Nei",
                 HasLedsager ? ConvertLedsagereToString() : "Ingen",
                 Allergies, OtherInfo,
-                PaymentMethod, OrderId
+                PaymentMethod, OrderId,
+                HasPaidYet ? "Ja" : "Nei"
             };
             return reg;
+        }
+
+        public enum InstructorType {
+            NotInstructor,          // Not instructor
+            SkiFullTimeInstructor,  // Only Ski Taekwondo Klubb
+            SkiHelperInstructor,    // Only Ski Taekwondo Klubb
         }
     }
 

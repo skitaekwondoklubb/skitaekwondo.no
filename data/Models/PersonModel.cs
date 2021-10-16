@@ -8,8 +8,11 @@ namespace SkiTKD.Data.Models {
         public string Telephone { get; set; }
         public string Email { get; set; }
         public bool Sleepover { get; set; }
+
+        // Vipps specific
         public virtual string PaymentMethod { get; set; }
         public virtual string OrderId { get; set; }
+        public virtual bool HasPaidYet { get; set; }
     }
 
     public class Ledsager : Person {

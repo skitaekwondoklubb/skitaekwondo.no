@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using SkiTKD.Data.Interfaces;
@@ -45,7 +46,12 @@ namespace SkiTKD.Test
                 LastName = "Taekwondosen",
                 Age = 42,
                 Club = "Ski Taekwondo Klubb",
-                Grade = "10. Dan",
+                Grade = new GradeObj {
+                    Color = "Hvitt",
+                    Dan = false,
+                    Grade = 10,
+                    Name = "10. cup"
+                },
                 Email = "taekwondo@sted.no",
                 Gradering = true,
                 HasLedsager = false,
@@ -59,7 +65,7 @@ namespace SkiTKD.Test
                 Vegan = true
             };
 
-            var f = _repo.AddRegistrationToExcel(testRegistration).GetAwaiter().GetResult();
+            var f = _repo.AddRegistrationToExcel(testRegistration, null).GetAwaiter().GetResult();
             Assert.IsTrue(f);
         }
 
@@ -72,7 +78,12 @@ namespace SkiTKD.Test
                 LastName = "Taekwondosen",
                 Age = 42,
                 Club = "Ski Taekwondo Klubb",
-                Grade = "10. Dan",
+                Grade = new GradeObj {
+                    Color = "Ingen",
+                    Dan = false,
+                    Grade = 10,
+                    Name = "Ingen grad"
+                },
                 Email = "taekwondo@sted.no",
                 Gradering = true,
                 HasLedsager = true,
@@ -99,8 +110,22 @@ namespace SkiTKD.Test
                 Vegan = true
             };
 
-            var f = _repo.AddRegistrationToExcel(testRegistration).GetAwaiter().GetResult();
+            var f = _repo.AddRegistrationToExcel(testRegistration, null).GetAwaiter().GetResult();
             Assert.IsTrue(f);
+        }
+
+        [Test]
+        public void TestRead() {
+            var f = _repo.ReadFromExcel($"https://graph.microsoft.com/v1.0/me/drive/root:{configuration["Path"]}:/workbook/tables/Table1/rows").GetAwaiter().GetResult();
+            Assert.IsNotNull(f);
+        }
+
+        [Test]
+        public void TestUpdate() {
+            var people = _repo.ReadFromExcel($"https://graph.microsoft.com/v1.0/me/drive/root:{configuration["Path"]}:/workbook/tables/Table1/rows").GetAwaiter().GetResult();
+
+            var f = _repo.UpdatePaidStatus($"https://graph.microsoft.com/v1.0/me/drive/root:{configuration["Path"]}:/workbook/tables/Table1/rows/$/ItemAt(index={people.People.Last().Index})", people.People.Last()).GetAwaiter().GetResult();
+            Assert.IsNotNull(f);
         }
     }
 }
