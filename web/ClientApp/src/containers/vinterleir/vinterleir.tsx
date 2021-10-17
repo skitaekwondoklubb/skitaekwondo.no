@@ -20,25 +20,9 @@ function Information(props: { history: any }) {
 function Schedule() {
     return (
         <div>
-            <p>Se full timeplan her: <b>{`<`}Timeplan fortsatt under arbeid{`>`}</b></p>
-            <div className={styles.scheduleGrid}>
-                <div>
-                    <h2 >Fredag 3. desember:</h2>
-                    <p>Registrering:</p>
-                    <p>17:00 - 19:00</p>
-                    <p>Trening:</p>
-                    <p>19:00-20:00</p>
-                    <p>Dangradering</p>
-                    <p>19:15 - Ukjent</p>
-                </div>
-                <div>
-                    <h2>Lørdag 4. desember:</h2>
-                    <p>Frokost:</p>
-                    <p>08:00 - 09:00</p>
-                    <p>Trening:</p>
-                    <p>..........</p>
-                </div>
-            </div>
+            <p>Timeplan er klart om ikke alt for lenge!</p>
+            <p>Vi kommer tilbake med mer informasjon så snart dagsplanene er satt i stein.</p>
+            <p>Se vår flyer for mer informasjon.</p>
         </div>
     )
 }
@@ -47,8 +31,9 @@ function Priser() {
     return (
         <div>
             <p>Her er prisene for vinterleiren 2021:</p>
-            <h2>820,- for utøvere 12 år eller yngere.</h2>
+            <h2>825,- for utøvere 12 år eller yngere.</h2>
             <h2>950,- for utøvere over 12 år.</h2>
+            <h2>350,- for cupgradering.</h2>
             <h2>500,- for ledsagere som ønsker mat eller overnatting i hallen.</h2>
             <p>Betaling er enten igjennom Vipps eller med kort/kontant.</p>
             <p>Vipps kan gjøres direkte fra registreringssiden! Bare velg Vipps og betal direkte.</p>

@@ -18,17 +18,14 @@ function Arrangementer() {
                 <p>Ski Taekwondo Klubb kommer til å holde danseminar fra 22. oktober til 24. oktober i lokalene våre i Ski!</p>
                 <p>Det er muligheter å ta fysisk test og teori til dangradering på dette arrangementet.</p>
                 <p><a href="/InvitasjonDanSeminarSki2021.pdf" target="_blank" rel="noreferrer">Se vår flyer for mer informasjon.</a></p>
-                <Link to="/registrering">
-                    <button className={styles.registrationButton}>Registrering til danseminar</button>
-                </Link>
                 <hr/>
                 <h2>Vinterleir i Ski Taekwondo Klubb</h2>
                 <h3>Dato: 3-5. desember 2021.</h3>
-                <h3>Pris: Under utvikling</h3>
+                <h3>Pris: 950,- for voksen, 825,- for barn.</h3>
                 <p>Vårt årlige vinterleir skal holdes i år etter et opphold i 2020!</p>
                 <p>Her blir det mye fart og moro i Stil Arena på Langhus! Utøvere fra TTU klubber over hele landet kommer for å delta på vinterleir med oss.</p>
                 <p>Ypperlig sted for å møte flere som elsker taekwondo og for å få helt unike treninger med mastere fra hele Norge!</p>
-                <p>Det vil også være gradering på søndagen den 5. desember i Stil Arena.</p>
+                <p>Dangradering er fredag 3. desember. Det vil også være cupgradering på søndagen den 5. desember i Stil Arena.</p>
                 <Link to="/vinterleirregistrering"><button className={`${styles.registrationButton} ${styles.spaceButtons}`}>Registrering til vinterleir</button></Link>
                 <Link to="/vinterleir"><button className={`${styles.registrationButton} ${styles.spaceButtons}`}>Mer informasjon om vinterleir</button></Link>
             </div>

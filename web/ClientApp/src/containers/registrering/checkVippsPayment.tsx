@@ -8,6 +8,7 @@ import { Steps } from "../../models/steps";
 
 export function Done() {
     useEffect(() => {
+        console.log("DELETING FUCKING COOKIES!!!");
         deleteAllCookies();
     }, [])
 
@@ -86,6 +87,7 @@ function CheckVippsPayment(props: CheckVippsPaymentProps) {
         return (
             <div>
                 <div className={styles.done}>
+                    <h1>Registrering til vinterleir</h1>
                     <h2>Vipps ordre ble ikke betalt.</h2>
                     <p>Hvis dette er feil, ta kontakt med oss og legg ved ordrenummeret under:</p>
                     <h2>Ordrenr: {props.orderId}</h2>
@@ -105,6 +107,7 @@ function CheckVippsPayment(props: CheckVippsPaymentProps) {
     if(error) {
         return (
             <div className={styles.done}>
+                <h1>Registrering til vinterleir</h1>
                 <h2>Beklager! Noe gikk galt når vi registrerte deg.</h2>
                 <p>Det er godt mulig at det likevel gikk igjennom, så hvis du fikk en epost bekreftelse ta kontakt med oss.</p>
                 <p>Din ordreId: {props.orderId}</p>
@@ -119,7 +122,8 @@ function CheckVippsPayment(props: CheckVippsPaymentProps) {
     }
 
     return (
-        <div>
+        <div className={styles.done}>
+            <h1>Registrering til vinterleir</h1>
             <Done/>
         </div>
     )
