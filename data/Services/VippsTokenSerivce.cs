@@ -21,10 +21,10 @@ namespace SkiTKD.Data.Repositories
         private static VippsAccessTokenResponse _vippsToken;
 
         public VippsTokenService(IConfiguration config) {
-            _clientId = config["Vipps:ClientId"];
-            _clientSecret = config["Vipps:ClientSecret"];
-            _subscription = config["Vipps:Subscription"];
-            _vippsEndpoint = config["Vipps:Endpoint"];
+            _clientId = config["VippsClientId"];
+            _clientSecret = config["VippsClientSecret"];
+            _subscription = config["VippsSubscription"];
+            _vippsEndpoint = config["VippsEndpoint"];
         }
 
         public async Task<VippsAccessTokenResponse> GetToken() {

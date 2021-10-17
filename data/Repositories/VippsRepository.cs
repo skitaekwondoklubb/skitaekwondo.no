@@ -24,12 +24,12 @@ namespace SkiTKD.Data.Repositories
 
         public VippsRepository(IConfiguration config, IVippsTokenService tokenService) {
   
-            _subscription = config["Vipps:Subscription"];
-            _msn = config["Vipps:MSN"];
-            _systemVersion = config["Vipps:System:Version"];
-            _systemName = config["Vipps:System:Name"];
-            _vippsEndpoint = config["Vipps:Endpoint"];
-            _callbackPrefix = config["Vipps:CallbackPrefix"];
+            _subscription = config["VippsSubscription"];
+            _msn = config["VippsMSN"];
+            _systemVersion = config["VippsVersion"];
+            _systemName = config["VippsName"];
+            _vippsEndpoint = config["VippsEndpoint"];
+            _callbackPrefix = config["VippsCallbackPrefix"];
             _vippsTokenService = tokenService;
         }
 
