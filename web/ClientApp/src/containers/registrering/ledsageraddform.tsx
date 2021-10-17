@@ -78,14 +78,14 @@ function AddLedsager(props: StepProps) {
         }
 
         registration.ledsagere.push({
-            id: 0,
+            id: "",
             firstName: firstName,
             lastName: lastName,
             age: age,
             telephone: telephone,
             email: email,
             sleepover: sleepover,
-            alreadyRegistred: registeredPreviously,
+            alreadyRegistered: registeredPreviously,
         })
 
         props.setRegistration(registration);

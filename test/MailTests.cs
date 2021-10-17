@@ -12,12 +12,14 @@ namespace SkiTKD.Test
     {
         private IConfiguration configuration;
         private IRegistreringRepository _repo;
+        private IGraphTokenService _tokenService;
 
         [SetUp]
         public void Setup()
         {
             InitConfiguration();
-            _repo = new RegistreringRepository(configuration);
+            _tokenService = InitTokenService();
+            _repo = new RegistreringRepository(configuration, _tokenService);
         }
 
         public void InitConfiguration()
@@ -27,6 +29,10 @@ namespace SkiTKD.Test
                 .AddJsonFile("appsettings.local.json")
                 .Build();
             configuration = config;
+        }
+
+        public IGraphTokenService InitTokenService() {
+            return new GraphTokenService(configuration);
         }
 
 

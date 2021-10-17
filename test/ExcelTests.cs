@@ -12,13 +12,15 @@ namespace SkiTKD.Test
     public class Tests
     {
         private IConfiguration configuration;
+        private IGraphTokenService _tokenService;
         private IVinterleirRepository _repo;
 
         [SetUp]
         public void Setup()
         {
             InitConfiguration();
-            _repo = new VinterleirRepository(configuration);
+            _tokenService = InitGraphTokenService();
+            _repo = new VinterleirRepository(configuration, _tokenService);
         }
 
         public void InitConfiguration()
@@ -28,6 +30,11 @@ namespace SkiTKD.Test
                 .AddJsonFile("appsettings.local.json")
                 .Build();
             configuration = config;
+        }
+
+        public IGraphTokenService InitGraphTokenService()
+        {
+            return new GraphTokenService(configuration);
         }
 
 
@@ -92,7 +99,7 @@ namespace SkiTKD.Test
                 PaymentMethod = "Vipps",
                 Ledsagere = new List<Ledsager> {
                     new Ledsager {
-                        Id = 1,
+                        Id = "1",
                         FirstName = "Ledsager",
                         LastName = "Ledsagersen",
                         Age = 42,
@@ -116,15 +123,15 @@ namespace SkiTKD.Test
 
         [Test]
         public void TestRead() {
-            var f = _repo.ReadFromExcel($"https://graph.microsoft.com/v1.0/me/drive/root:{configuration["Path"]}:/workbook/tables/Table1/rows").GetAwaiter().GetResult();
+            var f = _repo.ReadFromExcel().GetAwaiter().GetResult();
             Assert.IsNotNull(f);
         }
 
         [Test]
         public void TestUpdate() {
-            var people = _repo.ReadFromExcel($"https://graph.microsoft.com/v1.0/me/drive/root:{configuration["Path"]}:/workbook/tables/Table1/rows").GetAwaiter().GetResult();
+            var people = _repo.ReadFromExcel().GetAwaiter().GetResult();
 
-            var f = _repo.UpdatePaidStatus($"https://graph.microsoft.com/v1.0/me/drive/root:{configuration["Path"]}:/workbook/tables/Table1/rows/$/ItemAt(index={people.People.Last().Index})", people.People.Last()).GetAwaiter().GetResult();
+            var f = _repo.UpdatePaidStatus(people.People.Last()).GetAwaiter().GetResult();
             Assert.IsNotNull(f);
         }
     }

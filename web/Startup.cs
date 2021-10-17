@@ -32,6 +32,7 @@ namespace SkiTKD.Web
             });
 
             services.AddSingleton<IVippsTokenService, VippsTokenService>();
+            services.AddSingleton<IGraphTokenService, GraphTokenService>();
             services.AddTransient<IVinterleirRepository, VinterleirRepository>();
             services.AddTransient<IRegistreringRepository, RegistreringRepository>();
             services.AddTransient<IVippsRepository, VippsRepository>();

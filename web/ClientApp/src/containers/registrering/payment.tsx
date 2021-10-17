@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { StepProps, Steps } from "../../models/steps";
-import { sendRegistration } from "../../services/registrationService";
 import { PizzaAlternatives } from "./pizzaform";
 import styles from './registration.module.css';
 import Vippsbutton from "../betalmedvipps.svg";
 import Loading from '../loading/loading';
 import { Registration } from "../../models/registrationModels";
 import { Instructor } from "../../models/instructor";
-import { askForVippsPurchase } from "../../services/vinterleirService";
+import { askForVippsPurchase, sendVinterleirRegistration } from "../../services/vinterleirService";
 //import Vippshurtigkasse from "./vipps_hurtigkasse.svg";
 
 function Gradering(props: {gradering: boolean, dangradering: boolean }) {
     if(props.gradering && !props.dangradering ) {
         return (
-            <CheckoutRow article={`Gradering`} price={"300"}/>
+            <CheckoutRow article={`Gradering`} price={"350"}/>
         )
     }
     return <div/>
@@ -67,7 +66,7 @@ function PayLater(props: ActualPaymentProps) {
 
     function nextStep() {
         setLoading(true);
-        sendRegistration(props.registration).then((success: boolean) => {
+        sendVinterleirRegistration(props.registration).then((success: boolean) => {
             if(success) {
                 props.setCurrentStep(Steps.Done);
             }
@@ -95,34 +94,14 @@ function PayLater(props: ActualPaymentProps) {
                     <small>{error}</small>
                 </details>
             </div>
-            <h2>Betaling skjer via Vipps på nummer 15550.</h2>
-            <p>Skriv <u><b>navn</b></u> og <u><b>klubb</b></u> i meldingsfeltet slik at vi vet hvilken utøver du har betalt for.</p>
-            <p>Hvis man ikke har Vipps kan man ta kontakt med oss for andre betalingsmuligheter.</p>
-            <p>Din totale sum ble på: <b><u>{props.total}kr</u></b>.</p>
-            <p>Trykk fullfør for å registrere deg til danseminar eller gå tilbake for å endre ting først.</p>
+            <h2>Betaling med kort er på vinterleiren.</h2>
+            <p>Betaling med kort skjer når du registrer oppmøte på leieren.</p>
+            <p>Trykk fullfør for å registrere deg til leieren eller gå tilbake for å endre ting først.</p>
             <div className={styles.navigationButtons}>
                 <button className={styles.backButton} onClick={props.goBack}>Tilbake</button>
                 <button className={styles.nextButton} onClick={nextStep}>Fullfør registrering</button>
             </div>
             <Loading loading={loading} />
-        </div>
-    )
-}
-
-function Vipps(props: ActualPaymentProps) {
-    function nextStep() {
-        props.setCurrentStep(Steps.Done);
-    }
-
-    return (
-        <div className="slideLeft">
-            <p>Vipps integrasjon er ikke fullført enda :( Men du kan fullføre likevel da!</p>
-            <p>Takk for at du brukte Vipps betaling umiddelbart!</p>
-            
-            <div className={styles.navigationButtons}>
-                <button className={styles.backButton} onClick={props.goBack}>Tilbake</button>
-                <button className={styles.nextButton} onClick={nextStep}>Fullfør registrering</button>
-            </div>
         </div>
     )
 }
@@ -139,11 +118,13 @@ function GetTotal(registration: Registration) {
         total -= 475;
     }
     if(registration.gradering === true && registration.grade?.dan === false && registration.grade.grade !== 1) {
-        total += 300;
+        total += 350;
     }
 
     for (const ledsager of (registration.ledsagere != null ? registration.ledsagere : [])) {
-        total += 500;
+        if(ledsager.alreadyRegistered === false) {
+            total += 500;
+        }
     }
 
     return total;
@@ -151,29 +132,39 @@ function GetTotal(registration: Registration) {
 
 function Payment(props: StepProps) {
     const [payLater, setPayLater] = useState(false);
-    const [payVipps, setPayVipps] = useState(false);
     const total = GetTotal(props.registration);
+    const [loading, setLoading] = useState(false);
 
     function goBack() {
         props.setCurrentStep(Steps.OtherInformation);
     }
 
+    function next() {
+        setLoading(true);
+        sendVinterleirRegistration(props.registration).then((success: boolean) => {
+            if(success) {
+                props.setCurrentStep(Steps.Done);
+            }
+        })
+        .finally(() => {
+            setLoading(false);
+        })
+    }
+
     async function payWithVipps() {
-        console.log("ASKING FOR VIPPS");
-        const ask = await askForVippsPurchase(props.registration);
-        console.log("ASKING...");
-        window.location.assign(ask);
-        console.log("ASKED: " + ask);
+        setLoading(true);
+        try {
+            const ask = await askForVippsPurchase(props.registration);
+            window.location.assign(ask);
+        }
+        catch {
+            setLoading(false);
+        }
     }
 
     if(payLater) {
         return (
             <PayLater {... props} total={total} goBack={() => setPayLater(false)} />
-        )
-    }
-    else if(payVipps) {
-        return (
-            <Vipps {... props } total={total} goBack={() => setPayVipps(false)}/>
         )
     }
 
@@ -192,7 +183,7 @@ function Payment(props: StepProps) {
                 {
                     props?.registration?.ledsagere ? props.registration.ledsagere.map((ledsager) => {
                         return (
-                            <CheckoutRow article={`Ledsager: ${ledsager.firstName} ${ledsager.lastName}`} price={`${ledsager.alreadyRegistred ? 0 : 500}`}/>
+                            <CheckoutRow article={`Ledsager: ${ledsager.firstName} ${ledsager.lastName}`} price={`${ledsager.alreadyRegistered ? 0 : 500}`}/>
                         )
                     })
                     : ""
@@ -204,9 +195,11 @@ function Payment(props: StepProps) {
             </div>
             <div className={styles.paymentButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
-                <button className={styles.cashCard} onClick={() => {setPayLater(true)}}>Kort/Kontant</button>
-                <img src={Vippsbutton} onClick={payWithVipps}/>
+                <button hidden={total === 0} className={styles.cashCard} onClick={() => {setPayLater(true)}}>Kort/Kontant</button>
+                <img hidden={total === 0} src={Vippsbutton} onClick={payWithVipps}/>
+                <button hidden={total !== 0} className={styles.nextButton} onClick={next}>Fullfør registrering</button>
             </div>
+            <Loading loading={loading} />
         </div>
     )
 }

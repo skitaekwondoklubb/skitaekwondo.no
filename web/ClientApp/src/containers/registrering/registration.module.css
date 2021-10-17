@@ -208,7 +208,7 @@
 :local .paymentButtons {
     display: grid;
     /* grid-template-columns: 0.2fr 0.3fr 0.2fr 0.3fr; */
-    grid-template-columns: 0.2fr 0.5fr 0.3fr;
+    grid-template-columns: 0.2fr 0.5fr 0.3fr 0.5fr;
     gap: 20px;
     padding-top: 1em;
     margin-top: 2em;
@@ -270,6 +270,19 @@
 :local .done button {
     padding: 20px;
     font-size: 1.5em;
+}
+
+:local .doneNoPayButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+:local .doneNoPayButtons button {
+    font-size: 2em;
+    padding: 10px 30px 10px 30px;
 }
 
 :local .error {

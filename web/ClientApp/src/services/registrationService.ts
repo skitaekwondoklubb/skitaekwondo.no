@@ -2,7 +2,7 @@ import { Registration } from '../models/registrationModels';
 
 export async function sendRegistration(reg: Registration): Promise<boolean> {
     try {
-        const response = await fetch(`api/Registrering/Post`, {
+        const response = await fetch(`/api/Registrering/Post`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

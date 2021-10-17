@@ -21,14 +21,14 @@ export interface Registration {
 }
 
 export interface Ledsager {
-    id: number;
+    id: string;
     firstName: string;
     lastName: string;
     age: number;
     telephone: string;
     email: string;
     sleepover: boolean;
-    alreadyRegistred: boolean;
+    alreadyRegistered: boolean;
 }
 
 export interface Grade {

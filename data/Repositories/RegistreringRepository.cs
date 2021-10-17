@@ -20,54 +20,23 @@ namespace SkiTKD.Data.Repositories
 {
     public class RegistreringRepository : IRegistreringRepository
     {
-        private readonly string clientId;
-        private readonly string user;
-        private readonly string path;
-        private readonly string password;
-        private AuthenticationResult authenticationResult;
+        private readonly string _clientId;
+        private readonly string _user;
+        private readonly string _path;
+        private readonly string _password;
+        private IGraphTokenService _tokenService;
 
-        public RegistreringRepository(IConfiguration config) {
-            clientId = config["ClientId"];
-            user = config["ExcelUser"];
-            path = config["RegistrationPath"];
-            password = config["Pass"];
-        }
-
-        private async Task<string> GetToken() {
-            // Check if token already is set;
-            if(authenticationResult != null && authenticationResult.ExpiresOn.CompareTo(DateTimeOffset.Now) > 0) {
-                return authenticationResult.AccessToken;
-            }
-
-            var clientApp = PublicClientApplicationBuilder.Create(clientId)
-            .WithAuthority("https://login.microsoftonline.com/organizations/")
-            .Build();
-
-            var scopes = new List<string>();
-            scopes.Add("https://graph.microsoft.com/.default");
-            
-            var token = (await clientApp.AcquireTokenByUsernamePassword(scopes, user, new NetworkCredential("", password).SecurePassword).ExecuteAsync());
-            authenticationResult = token;
-
-            if(token == null) {
-                throw new Exception("Did not get a token from AAD.");
-            }
-
-            return token.AccessToken;
-        }
-
-        public GraphServiceClient Login() {
-
-            var client = new GraphServiceClient("https://graph.microsoft.com/v1.0", new DelegateAuthenticationProvider(async (requestMessage) => {
-                requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", await GetToken());
-            }));
-
-            return client;
+        public RegistreringRepository(IConfiguration config, IGraphTokenService graphService) {
+            _clientId = config["ClientId"];
+            _user = config["ExcelUser"];
+            _path = config["RegistrationPath"];
+            _password = config["Pass"];
+            _tokenService = graphService;
         }
 
         public async Task<bool> AddRegistrationToExcel(Registration registration)
         {
-            var registrationEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{path}:/workbook/tables/Table1/rows/add";
+            var registrationEndpoint = $"https://graph.microsoft.com/v1.0/me/drive/root:{_path}:/workbook/tables/Table1/rows/add";
 
             string[][] regData = { registration.ConvertToExcel() }; // Only one.
             var succeeded = await SendToExcel(registrationEndpoint, regData);
@@ -92,7 +61,7 @@ namespace SkiTKD.Data.Repositories
                     // Serialize the information in the UserInfoRequest object
                     string jsonBody = JsonConvert.SerializeObject(userInfoRequest);
                     request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await GetToken());
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await _tokenService.GetToken());
                     request.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
                     using (var response = await client.SendAsync(request))
@@ -112,10 +81,10 @@ namespace SkiTKD.Data.Repositories
             int total = 800 + (reg.Pizza.Equals("Vil ikke ha pizza") ? 0 : 80);
 
             SmtpClient smtpClient = new SmtpClient("smtp-mail.outlook.com", 587);
-            smtpClient.Credentials = new System.Net.NetworkCredential(user, password);
+            smtpClient.Credentials = new System.Net.NetworkCredential(_user, _password);
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.EnableSsl = true;
-            MailMessage mail = new MailMessage(user, reg.Email);
+            MailMessage mail = new MailMessage(_user, reg.Email);
             mail.Subject = "Du er herved registrert til danseminar";
             mail.Body = @$"
                 <h1>Takk for at du registrerte deg til danseminar!</h1>

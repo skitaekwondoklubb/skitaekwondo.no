@@ -43,6 +43,7 @@ namespace SkiTKD.Data.Models {
             PaymentType = values[15];
             VippsOrderId = values[16];
             HasPaid = values[17];
+            Total = values[18];
         }
 
         public int Index { get; set; }
@@ -64,6 +65,7 @@ namespace SkiTKD.Data.Models {
         public string PaymentType { get; set; }
         public string VippsOrderId { get; set; }
         public string HasPaid { get; set; }
+        public string Total { get; set; }
 
         public string[] ConvertToExcel() {
             string[] data = { 
@@ -74,7 +76,8 @@ namespace SkiTKD.Data.Models {
                 Sleepover, Vegan,
                 HasLedsager, Ledsagere,
                 Allergies, OtherInfo,
-                PaymentType, VippsOrderId, HasPaid
+                PaymentType, VippsOrderId, HasPaid,
+                Total
             };
 
             return data;

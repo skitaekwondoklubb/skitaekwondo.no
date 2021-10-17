@@ -12,7 +12,7 @@ export function Done() {
 
     return (
         <div className={styles.done}>
-            <h2>Du er herved registrert til vinterleir 2021! :)</h2>
+            <h2>Du er herved registrert til vinterleir 2021!</h2>
             <p>Vi gleder oss til å se deg der!</p>
             <p>For endringer eller avbestilling ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a>
             </p>

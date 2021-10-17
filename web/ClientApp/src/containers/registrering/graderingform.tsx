@@ -31,10 +31,11 @@ function Gradering(props: StepProps) {
     return (
         <div className="slideLeft">
             <p>Ønsker du å prøve å gradere på vinterleiren?</p>
-            <p hidden={!isCup}>Gradering koster 300,- og tar plass på søndag for cup.</p>
+            <p hidden={!isCup}>Gradering koster 350,- og tar plass på søndag for cup.</p>
             <div hidden={isCup}>
-                <p><b>Ikke glem: Du må selv kontakte og betale til TTU for dangradering!</b></p>
-                <p hidden={isCup}>Takstein, planker o.l, tas hånd om av oss, huk av dersom du skal dangradere.</p>
+                <p><b>VIKTIG: Du må selv kontakte og betale TTU for dangradering!</b></p>
+                <p>Dangradering tar plass på fredag.</p>
+                <p>Takstein, planker o.l, tas hånd om av oss, huk av dersom du skal dangradere.</p>
             </div>
             <div className={styles.registrationForm}>
                 <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setGradering(!gradering)}>

@@ -15,6 +15,7 @@ import Arrangementer from '../containers/arrangementer/arrangementer';
 import Vinterleir from '../containers/vinterleir/vinterleir';
 import VinterleirRegistrering from '../containers/vinterleir/vinterleirregistrering';
 import Registrering from '../containers/registrering/registrering';
+import CheckVippsPayment from "../containers/registrering/checkVippsPayment";
 
 function MainRouting() {
   return (
@@ -61,6 +62,7 @@ function MainRouting() {
             <Route exact path="/vinterleirregistrering">
               <VinterleirRegistrering />
             </Route>
+            <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/>} />
           </Switch>
         </div>
     </BrowserRouter>

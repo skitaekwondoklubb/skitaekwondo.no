@@ -67,7 +67,8 @@ namespace SkiTKD.Data.Models {
                 HasLedsager ? ConvertLedsagereToString() : "Ingen",
                 Allergies, OtherInfo,
                 PaymentMethod, OrderId,
-                HasPaidYet ? "Ja" : "Nei"
+                HasPaidYet ? "Ja" : "Nei",
+                $"{Total}kr"
             };
             return reg;
         }

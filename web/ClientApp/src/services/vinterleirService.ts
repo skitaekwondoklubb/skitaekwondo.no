@@ -1,5 +1,81 @@
 import { Grade, Registration } from '../models/registrationModels';
 
+export async function sendVinterleirRegistration(reg: Registration): Promise<boolean> {
+    try {
+        const response = await fetch(`/api/Vinterleir/Post`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reg)
+        }).catch((err) => {
+            throw new Error(err);
+        })
+
+        return response.json();
+    }
+    catch(err) {
+        throw new Error(`${err}`);
+    }
+}
+
+export async function askForVippsPurchase(reg: Registration): Promise<string> {
+    try {
+        const response = await fetch(`/api/Vipps/BetalMedVipps`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reg)
+        }).catch((err) => {
+            throw new Error(err);
+        })
+
+        const resp = response.text();
+        
+        return resp;
+    }
+    catch(err) {
+        throw new Error(err as string);
+    }
+}
+
+export async function checkIfPaid(orderId: string): Promise<boolean> {
+    try {
+        const response = await fetch(`/api/Vipps/CheckIfVippsOk/${orderId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).catch((err) => {
+            throw new Error(err);
+        })
+        
+        return response.json();
+    }
+    catch(err) {
+        throw new Error(err as string);
+    }
+}
+
+export async function cancelOrder(orderId: string): Promise<boolean> {
+    try {
+        const response = await fetch(`/api/Vipps/Cancel/${orderId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).catch((err) => {
+            throw new Error(err);
+        })
+
+        return response.json();
+    }
+    catch(err) {
+        throw new Error(err as string);
+    }
+}
+
 export function getGrades() {
     const colors = [
         "Hvitt","Hvitt med gul stripe","Gult med hvit stripe",
@@ -43,26 +119,4 @@ export function getGrades() {
     }
 
     return list;
-}
-
-export async function askForVippsPurchase(reg: Registration): Promise<string> {
-    try {
-        const response = await fetch(`api/Vipps/BetalMedVipps`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(reg)
-        }).catch((err) => {
-            throw new Error(err);
-        })
-
-        const resp = response.text();
-        
-        return resp;
-    }
-    catch(err) {
-        throw new Error(err as string);
-    }
-
 }

@@ -17,6 +17,7 @@ export enum Steps {
     OtherInformation,
     Payment,
     Check,
+    Vipps,
     Done
 }
 

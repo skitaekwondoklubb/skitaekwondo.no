@@ -7,7 +7,10 @@ namespace SkiTKD.Data.Interfaces
     public interface IVinterleirRepository
     {
         Task<bool> AddRegistrationToExcel(VinterleirRegistration registration, string vippsOrderId);
-        Task<ExcelModel> ReadFromExcel(string endpoint);
-        Task<bool> UpdatePaidStatus(string endpoint, ExcelRow row);
+        Task<ExcelModel> ReadFromExcel();
+        Task<bool> UpdatePaidStatus(ExcelRow row);
+        int GetTotal(VinterleirRegistration reg);
+        Task<bool> DeleteRow(ExcelRow row);
+        bool SendEmail(string firstName, string lastName, string email);
     }
 }

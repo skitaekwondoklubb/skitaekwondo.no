@@ -47,12 +47,12 @@ function Priser() {
     return (
         <div>
             <p>Her er prisene for vinterleiren 2021:</p>
-            <h2>1000,- for utøvere.</h2>
-            <h2>800,- for følgere.</h2>
+            <h2>820,- for utøvere 12 år eller yngere.</h2>
+            <h2>950,- for utøvere over 12 år.</h2>
+            <h2>500,- for ledsagere som ønsker mat eller overnatting i hallen.</h2>
             <p>Betaling er enten igjennom Vipps eller med kort/kontant.</p>
-            <p>Vipps kan gjøres direkte fra registreringssiden! Bare velg Vipps hurtigkasse og betal direkte.</p>
-            <p>Ved kort betales det til XX.XX.XX.XX. Send mail til oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> slik at vi kan bekrefte at betalingen har skjedd.</p>
-            <p>Dersom du ønsker å betale med kontanter kan dette gjøres fysisk på vinterleiren når du registrerer ankomst.</p>
+            <p>Vipps kan gjøres direkte fra registreringssiden! Bare velg Vipps og betal direkte.</p>
+            <p>Ved kort eller kontant betales dette på leieren når man registrerer ankomst.</p>
         </div>
     )
 }

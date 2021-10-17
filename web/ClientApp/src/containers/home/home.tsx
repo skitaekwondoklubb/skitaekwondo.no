@@ -24,7 +24,7 @@ function Home() {
     const history = useHistory();
 
     const titles = [
-        "Er du tøff nok?",
+        "Hånd, fot, veien å gå",
         "Lær selvforsvar",
         "Kroppsbeherskelse"
     ]

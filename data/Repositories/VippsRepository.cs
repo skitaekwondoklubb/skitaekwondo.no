@@ -73,20 +73,21 @@ namespace SkiTKD.Data.Repositories
             }
         }
 
-        public async Task<VippsPaymentRequestBody> VinterleirToVippsRequest(VinterleirRegistration reg) {
+        public async Task<VippsPaymentRequestBody> VinterleirToVippsRequest(VinterleirRegistration reg, int total) {
+            var ordreId = Guid.NewGuid().ToString();
             var requestBody = new VippsPaymentRequestBody {
                 customerInfo = new CustomerInfo {
                     mobileNumber = reg.Telephone
                 },
                 merchantInfo = new MerchantInfo {
                     authToken = await GetAccessToken(),
-                    callbackPrefix = $"{_callbackPrefix}/Vipps",
-                    fallBack = $"{_callbackPrefix}/vinterleir",
+                    callbackPrefix = $"{_callbackPrefix}/api/Vipps",
+                    fallBack = $"{_callbackPrefix}/vipps/{ordreId}",
                     merchantSerialNumber = _msn,
                 },
                 transaction = new Transaction {
-                    amount = 975,
-                    orderId = Guid.NewGuid().ToString(),
+                    amount = total * 100, // Vipps represents total as øre.
+                    orderId = ordreId,
                     transactionText = "Vinterleir for utøver",
                 }
             };

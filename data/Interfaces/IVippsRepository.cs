@@ -7,6 +7,6 @@ namespace SkiTKD.Data.Interfaces
     public interface IVippsRepository
     {
         Task<string> Payments(VippsPaymentRequestBody body);
-        Task<VippsPaymentRequestBody> VinterleirToVippsRequest(VinterleirRegistration reg);
+        Task<VippsPaymentRequestBody> VinterleirToVippsRequest(VinterleirRegistration reg, int total);
     }
 }

@@ -16,15 +16,18 @@ namespace SkiTKD.Web.Controllers
         private readonly ILogger<VinterleirController> _logger;
         private readonly IVinterleirRepository _vinterleirRepository;
 
-        public VinterleirController(ILogger<VinterleirController> logger)
+        public VinterleirController(ILogger<VinterleirController> logger, IVinterleirRepository repo)
         {
             _logger = logger;
+            _vinterleirRepository = repo;
         }
 
         [HttpPost]
+        [Route("Post")]
         public ActionResult<bool> Post(VinterleirRegistration reg)
         {
             _vinterleirRepository.AddRegistrationToExcel(reg, null);
+            _vinterleirRepository.SendEmail(reg.FirstName, reg.LastName, reg.Email);
             return true;
         }
     }
