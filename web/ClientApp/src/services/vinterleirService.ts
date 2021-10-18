@@ -95,7 +95,7 @@ export function getGrades() {
             name: `${current}. Cup (${color})`
         })
 
-        if(current == 10) {
+        if(current === 10) {
             current = 9; // Special grade... 
         }
         else if(current > 5 && Number.isInteger(current)) {

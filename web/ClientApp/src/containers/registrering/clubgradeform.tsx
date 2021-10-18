@@ -36,7 +36,7 @@ function ClubGrade(props: StepProps) {
     const [grade, setGrade] = useState<Grade | null>(
         props?.registration?.grade 
         ? props.registration.grade 
-        : { color: "Hvitt", dan: false, grade: 10, name: "Hvitt belte"}
+        : null
     );
     const [instructor, setInstructor] = useState<Instructor | undefined>(props.registration.instructor);
 

@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from './registration.module.css';
 import { StepProps, Steps } from "../../models/steps";
 
 function Sleepover(props: StepProps) {
-    const isSkiTaekwondoKlubb = props.registration?.club ? props.registration.club.startsWith("Ski Taekwondo") : false
+    const isSkiTaekwondoKlubb = props.registration?.club ? props.registration.club.startsWith("Ski Taekwondo") : false;
+    const cantSleepOver = isSkiTaekwondoKlubb && props.registration.age != null && props.registration.age < 12;
     const [sleepover, setSleepover] = useState(props.registration.sleepover);
+
+    useEffect(() => {
+        if(cantSleepOver) {
+            setSleepover(false);
+        }
+    })
 
     function save() {
         let registration = {... props.registration};
@@ -29,11 +36,13 @@ function Sleepover(props: StepProps) {
 
     return (
         <div className="slideLeft">
-            <h3 hidden={!isSkiTaekwondoKlubb}><b>Utøvere i Ski Taekwondo Klubb får ikke sove i hallen.</b></h3>
             <p>Overnatting i salen er gratis for alle utøvere, men krever egne sovesaker slik som for eksempel sovepose, madrass eller lignende.</p>
+            <h3 hidden={!cantSleepOver}>
+                <b>Barn i Ski Taekwondo Klubb får dessverre ikke lov til å sove i hallen.</b>
+            </h3>
             <div className={`${styles.registrationForm}`} >
-                <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={(x) => { isSkiTaekwondoKlubb ? setSleepover(false) : setSleepover(!sleepover); }} >
-                    <input disabled={isSkiTaekwondoKlubb} 
+                <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={(x) => { cantSleepOver ? setSleepover(false) : setSleepover(!sleepover); }} >
+                    <input disabled={cantSleepOver} 
                         type={"checkbox"} checked={sleepover} 
                         onChange={(x) => setSleepover(x.currentTarget.checked)}
                     />
