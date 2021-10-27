@@ -37,7 +37,7 @@ function Priser() {
         <div>
             <p>Her er prisene for vinterleiren 2021:</p>
             <h2>825,- for utøvere 12 år eller yngere.</h2>
-            <h2>950,- for utøvere over 12 år.</h2>
+            <h2>975,- for utøvere over 12 år.</h2>
             <h2>350,- for cupgradering.</h2>
             <h2>500,- for ledsagere som ønsker mat eller overnatting i hallen.</h2>
             <p>Betaling er enten igjennom Vipps eller med kort/kontant.</p>

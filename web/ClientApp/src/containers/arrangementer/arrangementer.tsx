@@ -15,7 +15,7 @@ function Arrangementer() {
                     <img src={vinterleirPicture} alt="Fellesbilde vinterleir" className={styles.textPicture} />
                 </a>
                 <h3>Dato: 3-5. desember 2021.</h3>
-                <h3>Pris: 950,- for voksen, 825,- for barn.</h3>
+                <h3>Pris: 975,- for voksen, 825,- for barn.</h3>
                 <p>Vårt årlige vinterleir skal holdes i år etter et opphold i 2020!</p>
                 <p>Her blir det mye fart og moro i Stil Arena på Langhus! Utøvere fra TTU klubber over hele landet kommer for å delta på vinterleir med oss.</p>
                 <p>Ypperlig sted for å møte flere som elsker taekwondo og for å få helt unike treninger med mastere fra hele Norge!</p>
