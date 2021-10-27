@@ -1,6 +1,8 @@
 import React from 'react';
 import { HashRouter, Route, NavLink, Link, useHistory } from 'react-router-dom';
 import styles from './vinterleir.module.css';
+import choPicture from './Cho.webp';
+import vinterleirPicture from './Vinterleir.webp';
 
 function Information(props: { history: any }) {
 
@@ -9,6 +11,9 @@ function Information(props: { history: any }) {
             <p>Ski Taekwondo Klubb holder vår 19 vinterleir i år for alle TTU klubber i Follo Stil Arena!</p>
             <p>Vinterleiren er en helg fra fredag til søndag med masse taekwondomoro for alle utøvere med gradering på søndag.</p> 
             <p>Det er en ypperlig måte å bli kjent med andre utøvere fra hele Norge og trene med helt andre flinke mastere fra andre klubber og utøvere!</p>
+            <a href={vinterleirPicture} target="_blank" >
+                <img src={vinterleirPicture} alt="Fellesbilde vinterleir" className={styles.textPicture} />
+            </a>
             <p>Man kan overnatte i salen dersom man ønsker det og vi har frokost, lunsj og middag for alle utøvere. Vi har også en kiosk for kaffe, mini pizza eller andre godsaker.</p>
             <p>Så kom bli med oss i Follo Stil Arena og bli med på en helg fylt med moro, spenning og god trening!</p>
             <button className={styles.registrationButton} onClick={() => props.history.push("/vinterleirregistrering")}>Registrering til vinterleir 2021</button>
@@ -44,11 +49,10 @@ function Priser() {
 
 function Vinterleir() {
     const history = useHistory();
-
     return (
         <div className={`${styles.vinterleirGrid} slideLeft`}>
             <div className={styles.picture}>
-                <p>Bilde av vinterleir</p>
+                <img src={choPicture} alt="Barnepartiet"/>
             </div>
             <div className={styles.textSide}>
                 <HashRouter>

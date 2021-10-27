@@ -185,7 +185,12 @@ namespace SkiTKD.Data.Repositories
         }
 
         public int GetTotal(VinterleirRegistration reg) {
+            if(reg.LastName.ToLower().Equals("test")) {     // Only for us to test.
+                return 10;
+            }
+
             var total = 975;
+
             if(reg.Age <= 12) {
                 total -= 150;
             }
