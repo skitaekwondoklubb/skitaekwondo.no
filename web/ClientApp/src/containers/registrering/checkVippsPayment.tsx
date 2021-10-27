@@ -8,7 +8,6 @@ import { Steps } from "../../models/steps";
 
 export function Done() {
     useEffect(() => {
-        console.log("DELETING FUCKING COOKIES!!!");
         deleteAllCookies();
     }, [])
 
@@ -43,7 +42,7 @@ function CheckVippsPayment(props: CheckVippsPaymentProps) {
 
     function checkAttempt(attempts: number = 0) {
         console.log(attempts);
-        if(attempts === 10) {
+        if(attempts === 30) {
             setError(true);
             deleteAllCookies();
             return;
@@ -54,21 +53,21 @@ function CheckVippsPayment(props: CheckVippsPaymentProps) {
                 deleteAllCookies();
             }
             else {
-                if(attempts === 8) {
+                if(attempts === 25) {
                     setDidNotPay(true);
                     setLoading(false);
                     return;
                 }
                 setTimeout(() => {
                     checkAttempt(attempts+1);
-                }, 3000);
+                }, 1700);
             }
         })
         .catch((err) => {
             console.log(`Didn't make it ${err.toString()}`);
             setTimeout(() => {
                 checkAttempt(attempts+1);
-            }, 3000);
+            }, 1700);
         });
     }
 

@@ -221,7 +221,6 @@ namespace SkiTKD.Data.Repositories
         }
 
         public bool SendEmail(string firstName, string lastName, string email) {
-
             SmtpClient smtpClient = new SmtpClient("smtp-mail.outlook.com", 587);
             smtpClient.Credentials = new System.Net.NetworkCredential(user, password);
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
