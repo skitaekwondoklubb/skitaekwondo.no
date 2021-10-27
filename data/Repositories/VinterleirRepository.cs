@@ -221,31 +221,53 @@ namespace SkiTKD.Data.Repositories
         }
 
         public bool SendEmail(string firstName, string lastName, string email) {
-            SmtpClient smtpClient = new SmtpClient("smtp-mail.outlook.com", 587);
-            smtpClient.Credentials = new System.Net.NetworkCredential(user, password);
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.EnableSsl = true;
-            MailMessage mail = new MailMessage(user, email);
-            mail.Subject = "Du er herved registrert til vinterleir";
-            mail.Body = @$"
-                <h1>Takk for at du registrerte deg til vinterleir!</h1>
-                <p>Hei {firstName} {lastName}, du er herved registrert til Ski Taekwondo Klubbs vinterleir 2021.<p>
-                <p>For avbestilling, ta kontakt med oss på <a href='mailto: kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a></p>
-                <p>Med vennlig hilsen<p>
-                <p>Ski Taekwondo Klubb</p>
-            ";
-            mail.BodyEncoding = System.Text.Encoding.UTF8;
-            mail.IsBodyHtml = true;
             try {
-                smtpClient.Send(mail);
-                return true;
+                var f =    new GraphServiceClient(
+                new DelegateAuthenticationProvider(
+                    (requestMessage) =>
+                    {
+                        requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", _tokenService.GetToken().GetAwaiter().GetResult());
+                        return Task.FromResult(0);
+                    })
+                );
+
+                var message = new Message
+                {
+                    Subject = "Du er herved registrert til vinterleir",
+                    Body = new ItemBody
+                    {
+                        ContentType = BodyType.Html,
+                        Content = @$"
+                            <h1>Takk for at du registrerte deg til vinterleir!</h1>
+                            <p>Hei {firstName} {lastName}, du er herved registrert til Ski Taekwondo Klubbs vinterleir 2021.<p>
+                            <p>For avbestilling, ta kontakt med oss på <a href='mailto: kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a></p>
+                            <p>Med vennlig hilsen<p>
+                            <p>Ski Taekwondo Klubb</p>
+                        "
+                    },
+                    ToRecipients = new List<Recipient>()
+                    {
+                        new Recipient
+                        {
+                            EmailAddress = new EmailAddress
+                            {
+                                Address = email
+                            }
+                        }
+                    }
+                };
+                
+
+                f.Me.SendMail(message, null).Request().PostAsync().GetAwaiter().GetResult();
+                    return true;
             }
-            catch {
+            catch(Exception e) {
                 Console.WriteLine("Klarte ikke levere mail!");
             }
 
             return false;
         }
+    
     }
 
     public class ExcelRequest {
@@ -258,3 +280,4 @@ namespace SkiTKD.Data.Repositories
         public string[][] values { get; set; }
     }
 }
+
