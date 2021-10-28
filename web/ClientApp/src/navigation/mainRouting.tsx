@@ -57,7 +57,9 @@ function MainRouting() {
               <Arrangementer/>
             </Route>
             <Route exact path="/registrering">
-              <Registrering />
+              <div>
+                <h1>Danseminaret er ferdig, så du trenger ikke registrere deg igjen :)</h1>
+              </div>
             </Route>
             <Route exact path="/vinterleirregistrering">
               <VinterleirRegistrering />
