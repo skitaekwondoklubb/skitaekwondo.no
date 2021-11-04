@@ -8,7 +8,7 @@ function Information(props: { history: any }) {
 
     return (
         <div>
-            <p>Ski Taekwondo Klubb holder vår 19 vinterleir i år for alle TTU klubber i Follo Stil Arena!</p>
+            <p>Ski Taekwondo Klubb holder vår 22. vinterleir for alle TTU klubber i Follo Stil Arena!</p>
             <p>Vinterleiren er en helg fra fredag til søndag med masse taekwondomoro for alle utøvere med gradering på søndag.</p> 
             <p>Det er en ypperlig måte å bli kjent med andre utøvere fra hele Norge og trene med helt andre flinke mastere fra andre klubber og utøvere!</p>
             <a href={vinterleirPicture} target="_blank" >
