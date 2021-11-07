@@ -72,6 +72,13 @@
     cursor: pointer;
 }
 
+:local .flyerGrid {
+    margin-top: 2em;
+    display: grid;
+    gap: 10%;
+    justify-content: center;
+    margin-bottom: 3em;
+}
 
 @media only screen and (max-width: 1080px) {
     :local .vinterleirGrid {

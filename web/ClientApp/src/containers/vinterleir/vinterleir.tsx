@@ -25,9 +25,13 @@ function Information(props: { history: any }) {
 function Schedule() {
     return (
         <div>
-            <p>Timeplan er klart om ikke alt for lenge!</p>
-            <p>Vi kommer tilbake med mer informasjon så snart dagsplanene er satt i stein.</p>
-            <p>Se vår flyer for mer informasjon.</p>
+            <h2>Informasjon for Ski Taekwondo Klubb:</h2>
+            <div className={styles.flyerGrid}>
+                <button className={styles.registrationButton} onClick={() => window.open("/invitasjonvinterleir2021barn.pdf")}>Informasjon - Barn</button>
+                <button className={styles.registrationButton} onClick={() => window.open("/invitasjonvinterleir2021voksen.pdf")}>Informasjon - Voksen</button>
+            </div>
+            <h2>Informasjon for andre klubber:</h2>
+            <button className={styles.registrationButton} onClick={() => window.open("/invitasjonvinterleir2021ekstern.pdf")}>Informasjon - Eksterne klubber</button>
         </div>
     )
 }
@@ -64,7 +68,7 @@ function Vinterleir() {
                             </button>
                         </NavLink>
                         <NavLink to="/schedule" activeClassName={styles.buttonActive}>
-                            <button>Timeplan</button>
+                            <button>Program og flyer</button>
                         </NavLink>
                         <NavLink to="/priser" activeClassName={styles.buttonActive}>
                             <button>Priser</button>
