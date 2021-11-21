@@ -12,9 +12,10 @@ function Utstyr() {
                 <h2>Overtrekksdrakter og klubbutstyr:</h2>
                 <p>Ski Taekwondo Klubb har inngått en avtale med Sport-X om salg av overtrekksdrakter, t-skjorter o.l med klubbens logo og eventuelt navnetrykk på ryggen etter klubbens mal.</p>
                 <p>Alle som ønsker dette kan kjøpe dette fra Sport-X sine nettsider.</p>
+                <h2>Bruk rabattkode <u><b>SKITKD</b></u> for klubbrabatt!</h2>
                 <button onClick={() => window.open("https://sport-x.no/avdeling/klubbshop/ski-taekwondo-klubb")}>Ski Taekwondo Klubb klubbshop</button>
+                
                 <p>Priser og bestillingsrutiner står på samme nettside. Sport-X tar av seg hele prosessen og alle spørsmål rundt bestillinger må rettes til Sport-X.</p>
-
                 <h2>Drakter, merker, teoribøker:</h2>
                 <p>Denne typen utstyr kan du finner i kiosken på Ski Taekwondo Klubb sin Vipps: 15550.</p>
                 <p>Etter kjøp kan man snakke med en instruktør for å få varen utdelt.</p>

@@ -22,8 +22,11 @@ function Arrangementer() {
                 <p>Ypperlig sted for å møte flere som elsker taekwondo og for å få helt unike treninger med mastere fra hele Norge!</p>
                 <p>Dangradering er fredag 3. desember. Det vil også være cupgradering på søndagen den 5. desember i Stil Arena.</p>
                 <p>Se mer informasjon om vinterleir for program og invitasjoner.</p>
+                <b>
+                    <p>Fristen for registrering har utgått.</p>
+                    <p>Ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å høre om muligheter for etterregistrering.</p>
+                </b>
                 <Link to="/vinterleir"><button className={`${styles.registrationButton} ${styles.spaceButtons}`}>Mer informasjon om vinterleir</button></Link>
-                <Link to="/vinterleirregistrering"><button className={`${styles.registrationButton} ${styles.spaceButtons}`}>Registrering til vinterleir</button></Link>
                 
             </div>
         </div>

@@ -16,7 +16,10 @@ function Information(props: { history: any }) {
             </a>
             <p>Man kan overnatte i salen dersom man ønsker det og vi har frokost, lunsj og middag for alle utøvere. Vi har også en kiosk for kaffe, mini pizza eller andre godsaker.</p>
             <p>Så kom bli med oss i Follo Stil Arena og bli med på en helg fylt med moro, spenning og god trening!</p>
-            <button className={styles.registrationButton} onClick={() => props.history.push("/vinterleirregistrering")}>Registrering til vinterleir 2021</button>
+            <b>
+                <p>Fristen for registrering har utgått.</p>
+                <p>Ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å høre om muligheter for etterregistrering.</p>
+            </b>
         </div>
 
     )

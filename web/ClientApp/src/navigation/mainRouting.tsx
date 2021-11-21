@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import Home from '../containers/home/home';
 import OmOss from '../containers/omoss/omoss';
 import Barneparti from '../containers/barneparti/barneparti';
@@ -57,11 +57,21 @@ function MainRouting() {
               <Arrangementer/>
             </Route>
             <Route exact path="/registrering">
-              <div>
-                <h1>Danseminaret er ferdig, så du trenger ikke registrere deg igjen :)</h1>
+              <div className={styles.expiredRegistration}>
+                <h1>Danseminaret er ferdig</h1>
+                <p>Så du trenger ikke registrere deg igjen :)</p>
+                <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
               </div>
             </Route>
             <Route exact path="/vinterleirregistrering">
+              <div className={styles.expiredRegistration}>
+                <h1>Registrering til vinterleir</h1>
+                <p>Fristen til å registrere seg til vinterleir er over.</p>
+                <p>Ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å høre om vi har mulighet til etteregistrering.</p>
+                <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
+              </div>
+            </Route>
+            <Route exact path="/vinterleiretterregistrering">
               <VinterleirRegistrering />
             </Route>
             <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/>} />
