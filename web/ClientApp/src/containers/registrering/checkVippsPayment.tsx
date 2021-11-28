@@ -79,7 +79,7 @@ function CheckVippsPayment(props: CheckVippsPaymentProps) {
     function tryAgain() {
         cancelOrder(props.orderId);
         setCookie("vinterleir_registrering_step", Steps.Payment, 3);
-        history.push("/vinterleirregistrering");
+        history.push("/vinterleiretterregistrering");
     }
 
     if(didNotPay) {

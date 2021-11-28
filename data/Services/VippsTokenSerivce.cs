@@ -28,7 +28,7 @@ namespace SkiTKD.Data.Repositories
         }
 
         public async Task<VippsAccessTokenResponse> GetToken() {
-            if(_vippsToken != null && DateTimeOffset.FromUnixTimeSeconds(_vippsToken.expires_on).UtcDateTime < DateTime.UtcNow) {
+            if(_vippsToken != null && DateTimeOffset.FromUnixTimeSeconds(_vippsToken.expires_on).CompareTo(DateTime.UtcNow) > 0) {
                 return _vippsToken;
             }
 
