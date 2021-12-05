@@ -18,6 +18,7 @@ namespace SkiTKD.Web.Controllers
 
         public VinterleirController(ILogger<VinterleirController> logger, IVinterleirRepository repo)
         {
+            throw new Exception("Vinterleir er over.");
             _logger = logger;
             _vinterleirRepository = repo;
         }

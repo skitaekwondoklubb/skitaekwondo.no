@@ -20,6 +20,7 @@ namespace SkiTKD.Web.Controllers
 
         public VippsController(ILogger<VippsController> logger, IVippsRepository repo, IVinterleirRepository vinterleirRepo)
         {
+            throw new Exception("Vinterleir er over.");
             _logger = logger;
             _vippsRepo = repo;
             _vinterleirRepo = vinterleirRepo;

@@ -18,6 +18,7 @@ namespace SkiTKD.Web.Controllers
 
         public RegistreringController(ILogger<RegistreringController> logger, IRegistreringRepository regRepo)
         {
+            throw new Exception("Registrering er over.");
             _logger = logger;
             _registreringRepository = regRepo;
         }
