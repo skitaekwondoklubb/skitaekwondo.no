@@ -17,8 +17,9 @@ function Information(props: { history: any }) {
             <p>Man kan overnatte i salen dersom man ønsker det og vi har frokost, lunsj og middag for alle utøvere. Vi har også en kiosk for kaffe, mini pizza eller andre godsaker.</p>
             <p>Så kom bli med oss i Follo Stil Arena og bli med på en helg fylt med moro, spenning og god trening!</p>
             <b>
-                <p>Fristen for registrering har utgått.</p>
-                <p>Ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å høre om muligheter for etterregistrering.</p>
+                <p>Dessverre ble vinterleiren avlyst i år også grunnet stor smittespredning og anbefalinger fra myndigheter.</p>
+                <p>Vi håper alle gode ting er tre og at vi kan gjennomføre vinterleir neste år.</p>
+                <p>I mellomtiden får alle ha en fin jul og godt nyttår. Pass på hverandre, så sees vi til vinterleir i 2022! 🙂</p>
             </b>
         </div>
 

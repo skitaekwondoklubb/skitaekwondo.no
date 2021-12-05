@@ -59,20 +59,23 @@ function MainRouting() {
             <Route exact path="/registrering">
               <div className={styles.expiredRegistration}>
                 <h1>Danseminaret er ferdig</h1>
-                <p>Så du trenger ikke registrere deg igjen :)</p>
+                <p>Så du trenger ikke registrere deg igjen 🙂</p>
                 <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
               </div>
             </Route>
             <Route exact path="/vinterleirregistrering">
               <div className={styles.expiredRegistration}>
                 <h1>Registrering til vinterleir</h1>
-                <p>Fristen til å registrere seg til vinterleir er over.</p>
-                <p>Ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å høre om vi har mulighet til etteregistrering.</p>
+                <p>Vinterleiren ble dessverre avlyst i år. Vi håper at alle gode ting er tre! 🙂</p>
                 <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
               </div>
             </Route>
             <Route exact path="/vinterleiretterregistrering">
-              <VinterleirRegistrering />
+              <div className={styles.expiredRegistration}>
+                <h1>Registrering til vinterleir</h1>
+                <p>Vinterleiren ble dessverre avlyst i år. Vi håper at alle gode ting er tre! 🙂</p>
+                <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
+              </div>
             </Route>
             <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/>} />
           </Switch>
