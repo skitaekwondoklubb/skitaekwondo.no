@@ -79,7 +79,10 @@ function Barneparti() {
                         <Priser/>
                     </Route>
                 </HashRouter>
-                <p><b>Barnepartiet er på dette tidspunktet fullt. Ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å sette barnet på venteliste.</b></p>
+                <b>
+                    <p>Vi vil nå ta inn nye medlemmer fortløpende, så ta kontakt raskt for å unngå venteliste.</p>
+                    <p>Send mail til <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å høre om det er plass på vårsemesteret!</p>
+                </b>
             </div>
         </div>
     )
