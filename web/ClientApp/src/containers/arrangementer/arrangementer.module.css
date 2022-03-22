@@ -66,6 +66,12 @@
     margin-bottom: 10px;
 }
 
+:local .documents {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+}
+
 
 @media only screen and (max-width: 1080px) {
     :local .arrangementerGrid {
@@ -120,6 +126,10 @@
         font-size: 6vw;
         border: 3px solid #eb1a52;
         border-radius: 15px;
+    }
+
+    :local .documents {
+        grid-template-columns: 1fr 1fr;
     }
 
 }
