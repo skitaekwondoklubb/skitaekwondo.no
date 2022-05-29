@@ -8,6 +8,7 @@ namespace SkiTKD.Data.Models {
         public string Club { get; set; }
         public GradeObj Grade { get; set; }
         public bool Gradering { get; set; }
+        public bool Sleepover { get; set; }
         public string Allergies { get; set; }
         public string Pizza { get; set; }
         public bool Vegan { get; set; }

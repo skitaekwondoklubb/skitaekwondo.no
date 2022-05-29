@@ -35,6 +35,7 @@ namespace SkiTKD.Web
             services.AddSingleton<IGraphTokenService, GraphTokenService>();
             services.AddTransient<IVinterleirRepository, VinterleirRepository>();
             services.AddTransient<IRegistreringRepository, RegistreringRepository>();
+            services.AddTransient<IGraderingRepository, GraderingRepository>();
             services.AddTransient<IVippsRepository, VippsRepository>();
         }
 

@@ -5,9 +5,10 @@ using System.Text;
 
 namespace SkiTKD.Data.Models {
       public class VinterleirRegistration : Person {
+        public bool Sleepover { get; set; }
         public string Club { get; set; }
         public GradeObj Grade { get; set; }
-        public InstructorType Instructor { get; set; }
+        public InstructorType Instructor { get; set; }
         public bool Gradering { get; set; }
         public bool HasLedsager { get; set; }
         public List<Ledsager> Ledsagere { get; set; }

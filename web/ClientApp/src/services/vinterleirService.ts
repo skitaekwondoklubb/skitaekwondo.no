@@ -1,4 +1,4 @@
-import { Grade, Registration } from '../models/registrationModels';
+import { Grade, Registration, SimpleRegistration } from '../models/registrationModels';
 
 export async function sendVinterleirRegistration(reg: Registration): Promise<boolean> {
     try {
@@ -19,9 +19,9 @@ export async function sendVinterleirRegistration(reg: Registration): Promise<boo
     }
 }
 
-export async function askForVippsPurchase(reg: Registration): Promise<string> {
+export async function askForVinterleirVippsPurchase(reg: Registration): Promise<string> {
     try {
-        const response = await fetch(`/api/Vipps/BetalMedVipps`, {
+        const response = await fetch(`/api/Vipps/BetalVinterleirMedVipps`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

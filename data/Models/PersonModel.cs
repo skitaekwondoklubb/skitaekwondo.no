@@ -7,8 +7,7 @@ namespace SkiTKD.Data.Models {
         public int Age { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
-        public bool Sleepover { get; set; }
-
+    
         // Vipps specific
         public virtual string PaymentMethod { get; set; }
         public virtual string OrderId { get; set; }
@@ -25,7 +24,6 @@ namespace SkiTKD.Data.Models {
                     Id,
                     FirstName, LastName, $"{Age}", 
                     Telephone, Email, 
-                    Sleepover         ? "Ja" : "Nei",
                     AlreadyRegistered ? "Ja" : "Nei",
                     PaymentMethod, OrderId
                 };

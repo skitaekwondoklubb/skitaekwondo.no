@@ -12,31 +12,30 @@ namespace SkiTKD.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class VippsController : ControllerBase
+    public class GraderingVippsController : ControllerBase
     {
-        private readonly ILogger<VippsController> _logger;
+        private readonly ILogger<GraderingVippsController> _logger;
         private readonly IVippsRepository _vippsRepo;
-        private readonly IVinterleirRepository _vinterleirRepo;
+        private readonly IGraderingRepository _graderingRepo;
 
-        public VippsController(ILogger<VippsController> logger, IVippsRepository repo, IVinterleirRepository vinterleirRepo)
+        public GraderingVippsController(ILogger<GraderingVippsController> logger, IVippsRepository repo, IGraderingRepository graderingRepo)
         {
-            throw new Exception("Vinterleir er over.");
             _logger = logger;
             _vippsRepo = repo;
-            _vinterleirRepo = vinterleirRepo;
+            _graderingRepo = graderingRepo;
         }
 
         [HttpPost]
-        [Route("BetalVinterleirMedVipps")]
-        public ActionResult<string> BetalVinterleirMedVipps(VinterleirRegistration reg)
+        [Route("BetalGraderingMedVipps")]
+        public ActionResult<string> BetalGraderingMedVipps(GraderingRegistration reg)
         {
-            var request = _vippsRepo.VinterleirToVippsRequest(reg, _vinterleirRepo.GetTotal(reg)).GetAwaiter().GetResult(); // Should be awaited.
+            var request = _vippsRepo.GraderingToVippsRequest(reg, 350).GetAwaiter().GetResult(); // Should be awaited.
             var url = _vippsRepo.Payments(request).GetAwaiter().GetResult();
             if(url == null || request?.transaction?.orderId == null) {
                 throw new Exception("Klarte ikke koble til Vipps. OrdreId er NULL");
             }
             
-            _vinterleirRepo.AddRegistrationToExcel(reg, request.transaction.orderId).GetAwaiter().GetResult();
+            _graderingRepo.AddRegistrationToExcel(reg, request.transaction.orderId).GetAwaiter().GetResult();
             
             return url;
         }
@@ -46,14 +45,14 @@ namespace SkiTKD.Web.Controllers
         public void PaymentUpdateCallback(string orderId, [FromBody] VippsPaymentCallbackModel orderInfo )
         {
             if(orderInfo.transactionInfo.status == "RESERVED") {
-                var possibleExcels = _vinterleirRepo.ReadFromExcel().GetAwaiter().GetResult();
+                var possibleExcels = _graderingRepo.ReadFromExcel().GetAwaiter().GetResult();
                 
                 var user = possibleExcels.People.SingleOrDefault(x => x.VippsOrderId.ToLower() == orderId.ToLower());
                 if(user == null) {
                     throw new Exception($"Fant ikke ordreid i våre data? Ta kontakt med oss med din ordreid ({orderId}) så skal vi dobbeltsjekke. ");
                 }
 
-                _vinterleirRepo.UpdatePaidStatus(user);
+                _graderingRepo.UpdatePaidStatus(user);
             }
             else if(string.IsNullOrEmpty(orderId)) {
                 throw new Exception("Vipps sendte oss ikke en ordreid.");
@@ -64,10 +63,10 @@ namespace SkiTKD.Web.Controllers
         [Route("CheckIfVippsOk/{orderId}")]
         public ActionResult<bool> CheckIfVippsOk(string orderId)
         {
-            var possibleExcels = _vinterleirRepo.ReadFromExcel().GetAwaiter().GetResult();
+            var possibleExcels = _graderingRepo.ReadFromExcel().GetAwaiter().GetResult();
             var user = possibleExcels.People.SingleOrDefault(x => x.VippsOrderId.ToLower() == orderId.ToLower());
             if(user.HasPaid.Equals("Ja")) {
-                _vinterleirRepo.SendEmail(user.FirstName, user.LastName, user.Email);
+                _graderingRepo.SendEmail(user.FirstName, user.LastName, user.Email);
                 return true;
             }
             
@@ -78,13 +77,13 @@ namespace SkiTKD.Web.Controllers
         [Route("cancel/{orderId}")]
         public void CancelOrder(string orderId)
         {
-            var possibleExcels = _vinterleirRepo.ReadFromExcel().GetAwaiter().GetResult();
+            var possibleExcels = _graderingRepo.ReadFromExcel().GetAwaiter().GetResult();
             
             var user = possibleExcels.People.SingleOrDefault(x => x.VippsOrderId.ToLower() == orderId.ToLower());
             if(user == null) {
                 throw new Exception($"Fant ikke ordreid i våre data? Ta kontakt med oss med din ordreid ({orderId}) så skal vi dobbeltsjekke.");
             }
-            _vinterleirRepo.DeleteRow(user);
+            _graderingRepo.DeleteRow(user);
         }     
     }
 }

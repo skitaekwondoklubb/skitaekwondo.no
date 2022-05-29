@@ -37,3 +37,11 @@ export interface Grade {
     color: string;
     name: string;
 }
+
+export interface SimpleRegistration {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    telephone: string;
+}

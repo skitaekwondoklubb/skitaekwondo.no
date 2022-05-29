@@ -8,5 +8,6 @@ namespace SkiTKD.Data.Interfaces
     {
         Task<string> Payments(VippsPaymentRequestBody body);
         Task<VippsPaymentRequestBody> VinterleirToVippsRequest(VinterleirRegistration reg, int total);
+        Task<VippsPaymentRequestBody> GraderingToVippsRequest(GraderingRegistration reg, int total);
     }
 }

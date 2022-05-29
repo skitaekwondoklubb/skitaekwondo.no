@@ -15,7 +15,9 @@ import Arrangementer from '../containers/arrangementer/arrangementer';
 import Vinterleir from '../containers/vinterleir/vinterleir';
 import VinterleirRegistrering from '../containers/vinterleir/vinterleirregistrering';
 import Registrering from '../containers/registrering/registrering';
-import CheckVippsPayment from "../containers/registrering/checkVippsPayment";
+import SimpleGradering from '../containers/graderingregistrering/simplegradering';
+import SimpleRegistrationRouting from '../containers/graderingregistrering/simplegraderingrouting';
+import CheckGraderingVippsPayment from '../containers/graderingregistrering/checkGraderingVippsPayment';
 
 function MainRouting() {
   return (
@@ -56,6 +58,10 @@ function MainRouting() {
             <Route path="/arrangementer">
               <Arrangementer/>
             </Route>
+            <Route exact path="/graderingregistrering">
+              <SimpleRegistrationRouting />
+            </Route>
+            
             <Route exact path="/registrering">
               <div className={styles.expiredRegistration}>
                 <h1>Danseminaret er ferdig</h1>
@@ -78,6 +84,7 @@ function MainRouting() {
               </div>
             </Route>
             {/* <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/>} /> */}
+            <Route exact path="/GraderingVipps/:ordreId" render={(props) => <CheckGraderingVippsPayment orderId={props.match.params.ordreId}/>} />
           </Switch>
         </div>
     </BrowserRouter>

@@ -6,7 +6,7 @@ import Vippsbutton from "../betalmedvipps.svg";
 import Loading from '../loading/loading';
 import { Registration } from "../../models/registrationModels";
 import { Instructor } from "../../models/instructor";
-import { askForVippsPurchase, sendVinterleirRegistration } from "../../services/vinterleirService";
+import { askForVinterleirVippsPurchase, sendVinterleirRegistration } from "../../services/vinterleirService";
 //import Vippshurtigkasse from "./vipps_hurtigkasse.svg";
 
 function Gradering(props: {gradering: boolean, dangradering: boolean }) {
@@ -154,7 +154,7 @@ function Payment(props: StepProps) {
     async function payWithVipps() {
         setLoading(true);
         try {
-            const ask = await askForVippsPurchase(props.registration);
+            const ask = await askForVinterleirVippsPurchase(props.registration);
             window.location.assign(ask);
         }
         catch {

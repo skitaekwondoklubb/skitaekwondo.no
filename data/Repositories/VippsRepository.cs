@@ -94,5 +94,31 @@ namespace SkiTKD.Data.Repositories
 
             return requestBody;
         }
+
+        public async Task<VippsPaymentRequestBody> GraderingToVippsRequest(GraderingRegistration reg, int total) {
+            if(reg.FirstName.ToLower() == "test" && reg.LastName.ToLower() == "test") {
+                total = 5;
+            }
+
+            var ordreId = Guid.NewGuid().ToString();
+            var requestBody = new VippsPaymentRequestBody {
+                customerInfo = new CustomerInfo {
+                    mobileNumber = reg.Telephone
+                },
+                merchantInfo = new MerchantInfo {
+                    authToken = await GetAccessToken(),
+                    callbackPrefix = $"{_callbackPrefix}/api/GraderingVipps",
+                    fallBack = $"{_callbackPrefix}/GraderingVipps/{ordreId}",
+                    merchantSerialNumber = _msn,
+                },
+                transaction = new Transaction {
+                    amount = total * 100, // Vipps represents total as øre.
+                    orderId = ordreId,
+                    transactionText = "Gradering",
+                }
+            };
+
+            return requestBody;
+        }
     }
 }

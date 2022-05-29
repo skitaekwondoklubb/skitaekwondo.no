@@ -1,14 +1,16 @@
-import { useState } from "react";
-import styles from './registration.module.css';
-import { StepProps, Steps } from "../../models/steps";
+import { useState } from 'react';
+import { SimpleStepProps } from '../../models/simplesteps';
+import styles from '../registrering/registration.module.css';
 
-function NameAgeForm(props: StepProps) {
+function SimpleForm(props: SimpleStepProps) {
     const [firstName, setFirstName] = useState(props.registration.firstName);
     const [lastName, setLastName] = useState(props.registration.lastName)
-    const [age, setAge]=  useState(props.registration.age);
     const [firstNameError, setFirstNameError] = useState("");
     const [lastNameError, setLastNameError] = useState("");
-    const [ageError, setAgeError] = useState("");
+    const [email, setEmail] = useState(props.registration.email);
+    const [telephone, setTelephone] = useState(props.registration.telephone);
+    const [emailError, setEmailError] = useState("");
+    const [telephoneError, setTelephoneError] = useState("");
 
     function validateFirstName(name: string) {
         setFirstName(name);
@@ -23,20 +25,28 @@ function NameAgeForm(props: StepProps) {
         else setLastNameError("");
     }
 
-    function validateAge(age: string) {
-        const ageInt = Number.parseInt(age);
-        setAge(ageInt);
+    function validateEmail(email: string) {
+        setEmail(email);
 
-        if(ageInt < 7) setAgeError("Du må fylle 8 år i år for å kunne delta.");
-        else setAgeError("");
+        if(email == null || email === "") { setEmailError("Du må legge inn en epost.") }
+        else if(!email.includes("@")) { setEmailError("Ugyldig epost.") }
+        else setEmailError("");
     }
 
+    function validateTelephone(tele: string) {
+        setTelephone(tele);
+        const regex = new RegExp("^(\\+?)\\d{8,20}");
+        if(tele == null || tele === "") { setTelephoneError("Du må legge inn et telefonnummer.") }
+        else if(!regex.test(tele)) { setTelephoneError("Ugyldig telefonnummer.")}
+        else setTelephoneError("");
+    }
+    
     function save() {
         let registration = props.registration;
         registration.firstName = firstName;
         registration.lastName = lastName;
-        if(age != null)
-            registration.age = age;
+        registration.telephone = telephone;
+        registration.email = email;
 
         props.setRegistration(registration);
     }
@@ -62,17 +72,28 @@ function NameAgeForm(props: StepProps) {
                 <input value={firstName} onChange={x => validateFirstName(x.currentTarget.value)} />
                 <p>Etternavn:</p>
                 <input value={lastName} onChange={x => validateLastName(x.currentTarget.value)} />
-                <p>Alder:</p>
-                <input className={styles.ageInput} value={age == null ? 0 : age} onChange={x => validateAge(x.currentTarget.value)} type="number" />
+                <p>Epost:</p>
+                <input value={email} type="email" onChange={x => validateEmail(x.currentTarget.value)} />
+                <p>Telefon:</p>
+                <input value={telephone} type="tel" onChange={x => validateTelephone(x.currentTarget.value)} />
             </div>
             <div className={styles.navigationButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
                 <button className={styles.nextButton}
-                    disabled={firstName === "" || lastName === "" || firstNameError !== "" ||  age == null || age === 0 || lastNameError !== "" || ageError !== ""} 
+                    disabled={
+                        firstName === "" 
+                        || lastName === "" 
+                        || firstNameError !== "" 
+                        || lastNameError !== "" 
+                        || email === "" 
+                        || telephone === "" 
+                        || emailError !== "" 
+                        || telephoneError !== "" 
+                    } 
                     onClick={nextStep}>Neste</button>
             </div>
         </div>
     )
 }
 
-export default NameAgeForm;
+export default SimpleForm;
