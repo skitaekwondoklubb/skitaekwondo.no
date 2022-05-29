@@ -18,10 +18,10 @@ function SimpleRegistrationRouting() {
     const [currentStep, setCurrentStep] = useState(SimpleSteps.Welcome);
     const [registration, setRegistration] = useState<SimpleRegistration>({
         id: "",
-        firstName: "asdasda",
-        lastName: "asdasd",
-        email: "sondrehusev@gmail.com",
-        telephone: "93542486"
+        firstName: "",
+        lastName: "",
+        email: "",
+        telephone: ""
     });
 
     const currentProps: CurrentPropsProps = { 
