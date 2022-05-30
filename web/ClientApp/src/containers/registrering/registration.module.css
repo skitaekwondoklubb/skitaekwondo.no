@@ -103,9 +103,6 @@
     border: 1px solid gray;
 }
 
-:local .masterDisclaimer {
-}
-
 :local .checkboxLine span {
     font-size: 1.4em;
 }
@@ -293,6 +290,10 @@
 }
 
 @media only screen and (max-width: 1080px) {
+    :local .registrationTop {
+        margin-left: 1.5em;
+        margin-right: 1.5em;
+    }
 
     :local .registration h1 {
         font-size: 2em;

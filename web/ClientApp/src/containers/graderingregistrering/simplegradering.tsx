@@ -8,7 +8,7 @@ function SimpleGradering(props: SimpleStepProps) {
     const [accept, setAccept] = useState(false);
     
     return (
-        <div>
+        <div className={`${styles.registrationTop} slideLeft`}>
             <p>Velkommen til registrering for gradering i Ski Taekwondo Klubb.</p>
             <p>Vi vil trenge informasjon som en del av registreringsprosessen og vil lagre dette digitalt.</p>
             <p>Denne informasjonen vil <b>kun</b> brukes av Ski Taekwondo Klubb for å arrangere gradering. Ski Taekwondo Klubb deler ingen
