@@ -33,8 +33,8 @@ function Treningstider() {
 function Priser() {
     return (
         <div className="fadeIn">
-            <h2 className={styles.price}>Ungdom: 330,- per måned.</h2>
-            <h2 className={styles.price}>Voksen: 370,- per måned.</h2>
+            <h2 className={styles.price}>Ungdom: 360,- per måned.</h2>
+            <h2 className={styles.price}>Voksen: 400,- per måned.</h2>
             <p>Vi tilbyr også familie rabatt! Fra andre betalende familiemedlem gjelder 10 % rabatt.*</p>
             <p>Bindingsperiode etter start er på 6 måneder.</p>
             
