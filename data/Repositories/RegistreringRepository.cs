@@ -25,13 +25,15 @@ namespace SkiTKD.Data.Repositories
         private readonly string _path;
         private readonly string _password;
         private IGraphTokenService _tokenService;
+        private readonly SkiTKDContext _dbContext;
 
-        public RegistreringRepository(IConfiguration config, IGraphTokenService graphService) {
+        public RegistreringRepository(IConfiguration config, IGraphTokenService graphService, SkiTKDContext dbContext) {
             _clientId = config["ClientId"];
             _user = config["ExcelUser"];
             _path = config["RegistrationPath"];
             _password = config["Pass"];
             _tokenService = graphService;
+            _dbContext = dbContext;
         }
 
         public async Task<bool> AddRegistrationToExcel(Registration registration)

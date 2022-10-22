@@ -15,6 +15,9 @@ namespace SkiTKD.Data.Models {
         public string Allergies { get; set; }
         public bool Vegan { get; set; }
         public string OtherInfo { get; set; }
+        public bool Public { get; set; }
+        public bool WantsToInstruct { get; set; }
+
 
         public string[][] ConvertLedsagereToExcel() {
             var convertedLedsagere = new List<string[]>();

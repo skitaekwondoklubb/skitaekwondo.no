@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json;
+using SkiTKD.Data.Entities;
 using SkiTKD.Data.Interfaces;
 using SkiTKD.Data.Models;
 using static SkiTKD.Data.Models.VinterleirRegistration;
@@ -26,17 +27,21 @@ namespace SkiTKD.Data.Repositories
         private readonly string path;
         private readonly string password;
         private readonly IGraphTokenService _tokenService;
+        private SkiTKDContext _dbContext;
 
-        public VinterleirRepository(IConfiguration config, IGraphTokenService graphToken) {
+
+        public VinterleirRepository(IConfiguration config, IGraphTokenService graphToken, SkiTKDContext dbContext) {
             clientId = config["ClientId"];
             user = config["ExcelUser"];
             path = config["VinterleirPath"];
             password = config["Pass"];
             _tokenService = graphToken;
+            _dbContext = dbContext;
         }
 
         public async Task<bool> AddRegistrationToExcel(VinterleirRegistration registration, string vippsOrderId)
         {
+
             if(!string.IsNullOrEmpty(vippsOrderId)) {
                 registration.OrderId = vippsOrderId;
                 registration.PaymentMethod = "Vipps";
@@ -202,9 +207,9 @@ namespace SkiTKD.Data.Repositories
                 total -= 475;
             }
 
-            if(reg.Gradering == true && reg.Grade?.Dan == false && reg.Grade.Grade != 1) {
-                total += 350;
-            }
+            // if(reg.Gradering == true && reg.Grade?.Dan == false && reg.Grade.Grade != 1) {
+            //     total += 350;
+            // }
 
             foreach (var item in reg.HasLedsager ? reg.Ledsagere : new List<Ledsager>())
             {
@@ -222,7 +227,7 @@ namespace SkiTKD.Data.Repositories
 
         public bool SendEmail(string firstName, string lastName, string email) {
             try {
-                var f =    new GraphServiceClient(
+                var f = new GraphServiceClient(
                 new DelegateAuthenticationProvider(
                     (requestMessage) =>
                     {

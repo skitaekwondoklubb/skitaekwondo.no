@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SkiTKD.Data.Models;
 using SkiTKD.Data.Interfaces;
+using SkiTKD.Data.Entities;
+using System.Linq;
 
 namespace SkiTKD.Data.Repositories
 {
@@ -21,8 +23,9 @@ namespace SkiTKD.Data.Repositories
         private readonly string _vippsEndpoint;
         private readonly string _callbackPrefix;
         private IVippsTokenService _vippsTokenService;
+        private readonly SkiTKDContext _dbContext;
 
-        public VippsRepository(IConfiguration config, IVippsTokenService tokenService) {
+        public VippsRepository(IConfiguration config, IVippsTokenService tokenService, SkiTKDContext context) {
   
             _subscription = config["VippsSubscription"];
             _msn = config["VippsMSN"];
@@ -31,6 +34,7 @@ namespace SkiTKD.Data.Repositories
             _vippsEndpoint = config["VippsEndpoint"];
             _callbackPrefix = config["VippsCallbackPrefix"];
             _vippsTokenService = tokenService;
+            _dbContext = context;
         }
 
         private async Task<string> GetAccessToken() {
@@ -73,11 +77,11 @@ namespace SkiTKD.Data.Repositories
             }
         }
 
-        public async Task<VippsPaymentRequestBody> VinterleirToVippsRequest(VinterleirRegistration reg, int total) {
+        public async Task<VippsPaymentRequestBody> VinterleirToVippsRequest(RegistrationEntity reg, int total) {
             var ordreId = Guid.NewGuid().ToString();
             var requestBody = new VippsPaymentRequestBody {
                 customerInfo = new CustomerInfo {
-                    mobileNumber = reg.Telephone
+                    mobileNumber = reg.Person.Telephone
                 },
                 merchantInfo = new MerchantInfo {
                     authToken = await GetAccessToken(),
@@ -92,33 +96,36 @@ namespace SkiTKD.Data.Repositories
                 }
             };
 
+            var order = new VippsEntity {
+                OrderId = ordreId,
+                MobileNumber = requestBody.customerInfo.mobileNumber,
+                Amount = requestBody.transaction.amount,
+                TransactionText = requestBody.transaction.transactionText,
+                RegistrationId = reg.RegistrationId,
+                TimeStamp = DateTime.UtcNow
+            };
+
+            _dbContext.VippsOrders.Add(order);
+            _dbContext.SaveChanges();
+
             return requestBody;
         }
 
-        public async Task<VippsPaymentRequestBody> GraderingToVippsRequest(GraderingRegistration reg, int total) {
-            if(reg.FirstName.ToLower() == "test" && reg.LastName.ToLower() == "test") {
-                total = 5;
-            }
+        public VippsEntity FindVippsOrder(string orderId) {
+            var vippsOrder = _dbContext.VippsOrders.SingleOrDefault(x => x.OrderId == orderId);
+            return vippsOrder;
+        }
 
-            var ordreId = Guid.NewGuid().ToString();
-            var requestBody = new VippsPaymentRequestBody {
-                customerInfo = new CustomerInfo {
-                    mobileNumber = reg.Telephone
-                },
-                merchantInfo = new MerchantInfo {
-                    authToken = await GetAccessToken(),
-                    callbackPrefix = $"{_callbackPrefix}/api/GraderingVipps",
-                    fallBack = $"{_callbackPrefix}/GraderingVipps/{ordreId}",
-                    merchantSerialNumber = _msn,
-                },
-                transaction = new Transaction {
-                    amount = total * 100, // Vipps represents total as øre.
-                    orderId = ordreId,
-                    transactionText = "Gradering",
-                }
-            };
+        public bool SetTransactionData(string orderId, TransactionCallbackInfo info) {
+            var order = FindVippsOrder(orderId);
+            order.TransactionId = info.transactionId;
+            order.Status = info.status;
+            DateTime orderTimestamp = DateTime.UtcNow;
+            DateTime.TryParse(info.timeStamp, out orderTimestamp);
+            order.TimeStamp = orderTimestamp;
 
-            return requestBody;
+            _dbContext.SaveChanges();
+            return true;
         }
     }
 }

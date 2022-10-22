@@ -1,0 +1,30 @@
+version: '3.5'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: skitkd_dev
+      POSTGRES_PASSWORD: skitkd_dev
+      PGDATA: /data/postgres
+    volumes:
+       - ./pgdev/postgres:/data/postgres
+    ports:
+      - "5432"
+    restart: unless-stopped
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: skitkd@skitkd.com
+      PGADMIN_DEFAULT_PASSWORD: skitkd_dev
+    volumes:
+       - pgadmin:/root/.pgadmin
+       - ./pgdev/servers.json:/pgadmin4/servers.json
+    ports:
+      - "5555:80"
+    restart: unless-stopped
+
+volumes:
+    postgres:
+    pgadmin:
