@@ -1,16 +1,20 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SkiTKD.Data.Entities {
+    [Table("payment")]
     public class PaymentEntity { 
         [Key]
-        public int PaymentId { get; set; }
-        public int RegistrationId { get; set; }
-        public bool Vipps { get; set; }
-        public double Amount { get; set; }
-        public bool Paid { get; set; }
-        public bool Cancelled { get; set; }
+        public int paymentid { get; set; }
+        [ForeignKey("Registration")]
+        public int registrationid { get; set; }
+        public bool vipps { get; set; }
+        public double amount { get; set; }
+        public bool paid { get; set; }
+        public bool cancelled { get; set; }
+
 
         public virtual RegistrationEntity Registration { get; set; }
     }

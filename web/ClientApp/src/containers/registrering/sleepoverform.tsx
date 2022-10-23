@@ -3,7 +3,7 @@ import styles from './registration.module.css';
 import { StepProps, Steps } from "../../models/steps";
 
 function Sleepover(props: StepProps) {
-    const isSkiTaekwondoKlubb = props.registration?.club ? props.registration.club.startsWith("Ski Taekwondo") : false;
+    const isSkiTaekwondoKlubb = props.registration?.clubId === 29;
     const cantSleepOver = isSkiTaekwondoKlubb && props.registration.age != null && props.registration.age < 12;
     const [sleepover, setSleepover] = useState(props.registration.sleepover);
 

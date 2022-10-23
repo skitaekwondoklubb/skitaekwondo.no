@@ -1,20 +1,15 @@
 
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SkiTKD.Data.Entities;
 
 namespace SkiTKD.Data {
     public class SkiTKDContext : DbContext { 
-        private readonly string _server;
-        private readonly string _user;
-        private readonly string _pw;
-        private readonly string _db;
+        private readonly IConfiguration _config;
 
         public SkiTKDContext(IConfiguration config) {
-            _server = config["DbServer"];
-            _user = config["DbUser"];
-            _pw = config["DbPw"];
-            _db = config["DbDb"];
+            _config = config;
         }
         
         public DbSet<ClubEntity> Clubs { get; set; }
@@ -27,6 +22,6 @@ namespace SkiTKD.Data {
         public DbSet<TransactionErrorEntity> TransactionErrors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql($"Host={_server};Username={_user};Password={_pw};Database={_db}");
+            => optionsBuilder.UseNpgsql(_config.GetConnectionString("postgre"));
         }
 }

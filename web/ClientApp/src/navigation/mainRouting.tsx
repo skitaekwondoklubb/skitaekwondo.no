@@ -58,33 +58,29 @@ function MainRouting() {
             <Route path="/arrangementer">
               <Arrangementer/>
             </Route>
-            <Route exact path="/graderingregistrering">
+            {/* <Route exact path="/graderingregistrering">
               <SimpleRegistrationRouting />
-            </Route>
-            
+            </Route> */}
+{/*             
             <Route exact path="/registrering">
               <div className={styles.expiredRegistration}>
                 <h1>Danseminaret er ferdig</h1>
                 <p>Så du trenger ikke registrere deg igjen 🙂</p>
                 <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
               </div>
-            </Route>
+            </Route> */}
             <Route exact path="/vinterleirregistrering">
+              <VinterleirRegistrering/>
+            </Route>
+            {/* <Route exact path="/vinterleiretterregistrering">
               <div className={styles.expiredRegistration}>
                 <h1>Registrering til vinterleir</h1>
                 <p>Vinterleiren ble dessverre avlyst i år. Vi håper at alle gode ting er tre! 🙂</p>
                 <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
               </div>
-            </Route>
-            <Route exact path="/vinterleiretterregistrering">
-              <div className={styles.expiredRegistration}>
-                <h1>Registrering til vinterleir</h1>
-                <p>Vinterleiren ble dessverre avlyst i år. Vi håper at alle gode ting er tre! 🙂</p>
-                <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
-              </div>
-            </Route>
+            </Route> */}
             {/* <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/>} /> */}
-            <Route exact path="/GraderingVipps/:ordreId" render={(props) => <CheckGraderingVippsPayment orderId={props.match.params.ordreId}/>} />
+            {/* <Route exact path="/GraderingVipps/:ordreId" render={(props) => <CheckGraderingVippsPayment orderId={props.match.params.ordreId}/>} /> */}
           </Switch>
         </div>
     </BrowserRouter>

@@ -22,21 +22,15 @@ namespace SkiTKD.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllersWithViews();
+            // Add proxy to api.
+            var proxyBuilder = services.AddReverseProxy();
+            proxyBuilder.LoadFromConfig(Configuration.GetSection("ReverseProxy"));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
-
-            services.AddSingleton<IVippsTokenService, VippsTokenService>();
-            services.AddSingleton<IGraphTokenService, GraphTokenService>();
-            services.AddTransient<IVinterleirRepository, VinterleirRepository>();
-            services.AddTransient<IRegistreringRepository, RegistreringRepository>();
-            services.AddTransient<IGraderingRepository, GraderingRepository>();
-            services.AddTransient<IVippsRepository, VippsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,11 +43,11 @@ namespace SkiTKD.Web
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHttpsRedirection();
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
@@ -61,9 +55,7 @@ namespace SkiTKD.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapReverseProxy();
             });
 
             app.UseSpa(spa =>

@@ -7,7 +7,7 @@ namespace SkiTKD.Data.Interfaces
 {
     public interface IRegistrationRepository
     {
-        RegistrationEntity AddRegistration(VinterleirRegistration registration, PersonEntity person);
+        RegistrationEntity AddRegistration(VinterleirRegistration registration, int personId);
         RegistrationEntity FindRegistration(int personId);
         bool Cancel(int registrationId);
     }

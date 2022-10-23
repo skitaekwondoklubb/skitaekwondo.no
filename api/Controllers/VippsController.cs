@@ -31,7 +31,7 @@ namespace SkiTKD.Web.Controllers
         {
             if(orderInfo.transactionInfo.status == "RESERVED") {
                 var order = _vippsRepo.FindVippsOrder(orderId);
-                _paymentRepo.SetPaid(order.RegistrationId);
+                _paymentRepo.SetPaid(order.registrationid);
                 _vippsRepo.SetTransactionData(orderId, orderInfo.transactionInfo);
 
             }
@@ -44,7 +44,7 @@ namespace SkiTKD.Web.Controllers
         [Route("CheckIfVippsOk/{orderId}")]
         public ActionResult<bool> CheckIfVippsOk(string orderId)
         {
-            var registrationId = _vippsRepo.FindVippsOrder(orderId).RegistrationId;
+            var registrationId = _vippsRepo.FindVippsOrder(orderId).registrationid;
             var hasPaid = _paymentRepo.RegistrationHasPaid(registrationId);
             
             return hasPaid;
@@ -54,7 +54,7 @@ namespace SkiTKD.Web.Controllers
         [Route("cancel/{orderId}")]
         public void CancelOrder(string orderId)
         {
-            var registrationId = _vippsRepo.FindVippsOrder(orderId).RegistrationId;
+            var registrationId = _vippsRepo.FindVippsOrder(orderId).registrationid;
             var cancelled = _paymentRepo.CancelPayment(registrationId);
             if(cancelled) {
                 

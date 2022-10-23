@@ -1,30 +1,33 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SkiTKD.Data.Entities {
+    [Table("vipps")]
     public class VippsEntity { 
         [Key]
-        public int VippsId { get; set; }
-        public int RegistrationId { get; set; }
-        public int PaymentId { get; set; }
-        public string OrderId { get; set; }
-        public string TransactionId { get; set; }
-        public string TransactionText { get; set; }
-        public string MobileNumber { get; set; }
-        public double Amount { get; set; }
-        public string Status { get; set; }
-        public DateTime TimeStamp { get; set; }
+        public int vippsid { get; set; }
+        [ForeignKey("Registration")]
+        public int registrationid { get; set; }
+        public int paymentid { get; set; }
+        public string orderid { get; set; }
+        public string transactionid { get; set; }
+        public string transactiontext { get; set; }
+        public string mobilenumber { get; set; }
+        public double amount { get; set; }
+        public string status { get; set; }
+        public DateTime timestamp { get; set; }
 
         public virtual RegistrationEntity Registration { get; set; }
     }
-
+    [Table("transactionError")]
     public class TransactionErrorEntity { 
         [Key]
-        public int TransactionErrorId { get; set; }
-        public string ContextId { get; set; }
-        public string ErrorMessage { get; set; }
-        public string ErrorCode { get; set; }
-        public string ErrorGroup { get; set; }
+        public int transactionerrorid { get; set; }
+        public string contextid { get; set; }
+        public string errormessage { get; set; }
+        public string errorcode { get; set; }
+        public string errorgroup { get; set; }
     }
 }

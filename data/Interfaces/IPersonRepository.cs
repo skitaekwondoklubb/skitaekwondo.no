@@ -7,7 +7,15 @@ namespace SkiTKD.Data.Interfaces
 {
     public interface IPersonRepository
     {
-        PersonEntity AddPerson(Person registration);
+        PersonEntity AddPerson(
+            string firstName,
+            string lastName,
+            int age,
+            string email,
+            string telephone
+        );
         PersonEntity FindPerson(string firstName, string lastName, string telephone);
+        PersonEntity FindPersonById(int personId);
+
     }
 }

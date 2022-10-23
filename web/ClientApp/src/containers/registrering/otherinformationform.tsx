@@ -4,6 +4,7 @@ import { StepProps, Steps } from "../../models/steps";
 
 function OtherInformation(props: StepProps) {
     const [otherInfo, setOtherInfo] = useState(props.registration.otherInfo);
+    const [wantsToInstruct, setWantsToInstruct] = useState(false);
 
     function save() {
         let registration = {... props.registration};
@@ -31,9 +32,13 @@ function OtherInformation(props: StepProps) {
         <div className="slideLeft">
             <p>Dersom det er annen informasjon vi trenger å vite kan dette skrives i tekstfeltet under.</p>
             <p>Vi tar bilder under arrangementer til bruk på nettsiden, Facebook o.l. Dersom du ikke ønsker at du/ditt barn skal bli tatt bilde av må du skrive det i feltet.</p>
-            <p hidden={props.registration.grade == null || props.registration.grade?.dan === false || props.registration.grade.grade < 4}>
-                <b>Hvis du som master er interessert i å instruere på vinterleir, skriv det gjerne under.</b>
-            </p>
+            <div hidden={props.registration.gradeId > 17}>
+                <p>Siden du er master har du mulighet til å instruere under vinterleir dersom det blir nødvendig. </p>
+                <div className={styles.instructBox}>
+                    <input id={"instructBox"} type="checkbox" checked={wantsToInstruct} onChange={() => setWantsToInstruct(!wantsToInstruct)}/>
+                    <label htmlFor="instructBox"><b>Jeg ønsker å instruere under vinterleir dersom det blir nødvendig.</b></label>
+                </div>
+            </div>
             <textarea  className={styles.freeText} value={otherInfo} onChange={(x) => setOtherInfo(x.currentTarget.value)} />
 
             <div className={styles.navigationButtons}>

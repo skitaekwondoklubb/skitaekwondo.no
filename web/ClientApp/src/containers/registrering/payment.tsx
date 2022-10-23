@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StepProps, Steps } from "../../models/steps";
 import { PizzaAlternatives } from "./pizzaform";
 import styles from './registration.module.css';
@@ -6,8 +6,8 @@ import Vippsbutton from "../betalmedvipps.svg";
 import Loading from '../loading/loading';
 import { Registration } from "../../models/registrationModels";
 import { Instructor } from "../../models/instructor";
-import { askForVinterleirVippsPurchase, sendVinterleirRegistration } from "../../services/vinterleirService";
-//import Vippshurtigkasse from "./vipps_hurtigkasse.svg";
+import { sendVinterleirRegistration } from "../../services/vinterleirService";
+import { getGrades, Grade } from "../../services/gradeService";
 
 function Gradering(props: {gradering: boolean, dangradering: boolean }) {
     if(props.gradering && !props.dangradering ) {
@@ -66,8 +66,8 @@ function PayLater(props: ActualPaymentProps) {
 
     function nextStep() {
         setLoading(true);
-        sendVinterleirRegistration(props.registration).then((success: boolean) => {
-            if(success) {
+        sendVinterleirRegistration(props.registration).then((success: string) => {
+            if(success === "Done") {
                 props.setCurrentStep(Steps.Done);
             }
         })
@@ -106,7 +106,7 @@ function PayLater(props: ActualPaymentProps) {
     )
 }
 
-function GetTotal(registration: Registration) {
+function GetTotal(registration: Registration, grade: Grade) {
     let total = 975;
     if(registration.age != null && registration.age <= 12) {
         total -= 150;
@@ -117,7 +117,7 @@ function GetTotal(registration: Registration) {
     else if(registration.instructor === Instructor.SkiHelperInstructor) { 
         total -= 475;
     }
-    if(registration.gradering === true && registration.grade?.dan === false && registration.grade.grade !== 1) {
+    if(registration.gradering === true && grade?.isDan === false && grade.grade !== 1) {
         total += 350;
     }
 
@@ -132,34 +132,44 @@ function GetTotal(registration: Registration) {
 
 function Payment(props: StepProps) {
     const [payLater, setPayLater] = useState(false);
-    const total = GetTotal(props.registration);
     const [loading, setLoading] = useState(false);
+    const [myGrade, setMyGrade] = useState<Grade>();
+    const [total, setTotal] = useState<number>(0);
+
+    useEffect(() => {
+        getGrades().then((x) => {
+            const grade = x.find(y => y.gradeId === props.registration.gradeId);
+            if(grade != null) {
+                setMyGrade(grade);
+                setTotal(GetTotal(props.registration, grade));
+            }
+        });
+    }, [])
 
     function goBack() {
         props.setCurrentStep(Steps.OtherInformation);
     }
 
-    function next() {
+    function payWithVipps() {
+        var reg = props.registration;
+        reg.vipps = true;
+        props.setRegistration(reg);
+        next();
+    }
+
+    function next() { // NEEDS TO PUT 
         setLoading(true);
-        sendVinterleirRegistration(props.registration).then((success: boolean) => {
-            if(success) {
+        sendVinterleirRegistration(props.registration).then((success: string) => {
+            if(success === "Done") {
                 props.setCurrentStep(Steps.Done);
+            }
+            else {
+                window.location.assign(success);
             }
         })
         .finally(() => {
             setLoading(false);
         })
-    }
-
-    async function payWithVipps() {
-        setLoading(true);
-        try {
-            const ask = await askForVinterleirVippsPurchase(props.registration);
-            window.location.assign(ask);
-        }
-        catch {
-            setLoading(false);
-        }
     }
 
     if(payLater) {
@@ -176,8 +186,8 @@ function Payment(props: StepProps) {
                 <InstructorStatus instructor={props.registration.instructor}/>
                 <Gradering 
                     gradering={props.registration.gradering != null && props.registration.gradering === true} 
-                    dangradering={props.registration.grade != null && (props.registration.grade.dan === true 
-                        || (props.registration.grade.dan === false && props.registration.grade.grade === 1))
+                    dangradering={myGrade != null && (myGrade.isDan === true 
+                        || (myGrade.isDan === false && myGrade.grade === 1))
                     }
                 />
                 {
@@ -192,6 +202,9 @@ function Payment(props: StepProps) {
                     <span>Totalt:</span>
                     <span>{total} kr</span>
                 </div>
+                <pre>
+                    {JSON.stringify(props.registration)}
+                </pre>
             </div>
             <div className={styles.paymentButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>

@@ -26,14 +26,18 @@ function RegistrationRouting() {
         email: "",
         telephone: "",
         allergies: "",
-        club: "",
-        grade: null,
+        clubId: 0,
+        gradeId: 0,
         gradering: false,
         hasLedsager: false,
         ledsagere: [],
         otherInfo: "",
         sleepover: false,
-        vegan: false
+        vegan: false,
+        instructor: 0,
+        public: null,
+        vipps: false,
+        wantsToInstruct: false
     });
     const currentProps = { 
         step: currentStep,
@@ -68,8 +72,6 @@ function RegistrationRouting() {
     }
 
     switch (currentStep) {
-        // case Steps.Welcome:
-        //     return <Welcome step={currentStep} setCurrentStep={setCurrentStep} registration={registration} setRegistration={setRegistration}/>;
         case Steps.NameAge:
             return <NameAgeForm {... currentProps } prevStep={Steps.Welcome} nextStep={Steps.EmailTelephone} 
                 />

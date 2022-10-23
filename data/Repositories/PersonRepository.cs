@@ -12,19 +12,25 @@ namespace SkiTKD.Data.Repositories
           _dbContext = dbContext;
         }
 
-        public PersonEntity AddPerson(Models.Person registration)
+        public PersonEntity AddPerson(
+            string firstName,
+            string lastName,
+            int age,
+            string email,
+            string telephone
+        )
         {
-            var alreadyExists = FindPerson(registration.FirstName, registration.LastName, registration.Telephone);
+            var alreadyExists = FindPerson(firstName, lastName, telephone);
             if(alreadyExists != null) {
                 return alreadyExists;
             }
 
             var newPerson = new PersonEntity {
-                FirstName = registration.FirstName,
-                LastName = registration.LastName,
-                Age = registration.Age, 
-                Email = registration.Email,
-                Telephone = registration.Telephone
+                firstname = firstName,
+                lastname = lastName,
+                age = age, 
+                email = email,
+                telephone = telephone
             };
 
             _dbContext.Add(newPerson);
@@ -33,12 +39,18 @@ namespace SkiTKD.Data.Repositories
         }
 
         public PersonEntity FindPerson(string firstName, string lastName, string telephone) {
-           var people = _dbContext.Persons.Where(x => x.FirstName.ToLower() == x.FirstName.ToLower() && x.LastName.ToLower() == x.LastName.ToLower());
+           var people = _dbContext.Persons.Where(x => x.firstname.ToLower() == x.firstname.ToLower() && x.lastname.ToLower() == x.lastname.ToLower());
            if(people.Count() > 1) {
-                return people.SingleOrDefault(x => x.Telephone == telephone);
+                return people.SingleOrDefault(x => x.telephone == telephone);
            }
 
-           return people.First();
+           return people.Count() > 0 ? people.First() : null;
+        }
+
+        public PersonEntity FindPersonById(int personId)
+        {
+            var person = _dbContext.Persons.SingleOrDefault(x => x.personid == personId);
+            return person;
         }
     }
 }

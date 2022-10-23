@@ -4,7 +4,7 @@ import { StepProps } from '../../models/steps';
 import { deleteAllCookies } from '../../services/cookieService';
 import { sendRegistration } from '../../services/registrationService';
 import styles from './registration.module.css';
-import RegistrationRouting from './registreringRouting';
+// import RegistrationRouting from './registreringRouting';
 
 export function RegistrationStep(props: StepProps)  {
 
@@ -28,7 +28,6 @@ export function RegistrationStep(props: StepProps)  {
             <p>Navn: {props.registration.firstName} {props.registration.lastName}</p>
             <p>Telefon: {props.registration.telephone}</p>
             <p>Epost: {props.registration.email}</p>
-            <p>Pizza: {props.registration.pizza}</p>
             <p>Veganer: {props.registration.vegan === true ? "Ja" : "Nei"}</p>
             <p>Allergier: {props.registration.allergies}</p>
             <p>Annet: {props.registration.otherInfo}</p>
@@ -84,7 +83,7 @@ function Registrering() {
         <div className={`${styles.registration} slideLeft`}>
             <div className={styles.textSide}>
                 <h1>Registrering til danseminar</h1>
-                <RegistrationRouting />
+                {/* <RegistrationRouting /> */}
             </div>
 
         </div>

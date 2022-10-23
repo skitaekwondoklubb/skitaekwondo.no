@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter, Link, NavLink, Route, useHistory } from 'react-router-dom';
 import RandomizedBackground from './randomizedbackground';
 import styles from './home.module.css'
+import { getClubs } from '../../services/clubService';
 
 
 function Treningstider() {

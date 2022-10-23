@@ -1,35 +1,29 @@
 import { FormEvent, useEffect, useState } from "react";
 import Autosuggest, { SuggestionsFetchRequested } from "react-autosuggest";
-import { Grade } from "../../models/registrationModels";
-import { getGrades } from "../../services/vinterleirService";
+import { getGrades, Grade } from "../../services/gradeService";
 
 function escapeRegexCharacters(str: string) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
 interface GradeAutocompleteProps {
-    currentSelection: Grade | null;
-    setGrade: (grade: Grade | null) => void;
+    currentSelection?: Grade;
+    grades: Grade[];
+    setGrade: (grade: Grade) => void;
 }
 
 export function GradeAutocomplete(props: GradeAutocompleteProps) {
     const [suggestions, setSuggestions] = useState<Grade[]>([]);
-    const grades = getGrades();
-    const [grade, setGrade] = useState(
-        props.currentSelection != null 
-        ? `${props.currentSelection.grade}. ${props.currentSelection.dan ? "Dan" : "Cup"}` 
-        : "");
+    const [grade, setGrade] = useState(props.currentSelection?.name);
+    const grades = props.grades;
 
     useEffect(() => {
-        console.log("Checking if Cup or Dan");
-        if(grades != null && (grade.toLowerCase().endsWith("cup") || grade.toLowerCase().endsWith("dan"))) {
-            const foundGrade = grades.find(x => x.name.toLowerCase().startsWith(grade.toLowerCase()));
-            if(foundGrade != null) {
-                props.setGrade(foundGrade);
-                return;
-            }
+        const newGrade = grades.find(y => y.name === grade);
+        console.log(props.currentSelection?.name);
+        console.log("new grade: " + newGrade?.name ?? "")
+        if(newGrade != null) {
+            props.setGrade(newGrade);
         }
-        props.setGrade(null);
     }, [grade])
 
     function getSuggestions(value: string) {
@@ -38,8 +32,10 @@ export function GradeAutocomplete(props: GradeAutocompleteProps) {
         if (escapedValue === '') {
           return [];
         }
-      
-        return grades.filter(grade => grade.name.toLowerCase().includes(escapedValue.toLowerCase()));
+        return grades.filter(grade => 
+            `${grade.grade}. ${grade.isDan ? "Dan" : "Cup"} ${!grade.isDan ? "(" + grade.name + ")" : ""}`.toLowerCase()
+                .includes(escapedValue.toLowerCase())
+        );
     }
 
     const onSuggestionsFetch: SuggestionsFetchRequested = (request) => {
@@ -60,11 +56,11 @@ export function GradeAutocomplete(props: GradeAutocompleteProps) {
             onSuggestionsFetchRequested={onSuggestionsFetch}
             renderSuggestion={(suggestion: Grade) => (
                 <div>
-                    <span>{suggestion.grade}. {suggestion.dan ? "Dan" : "Cup"} {!suggestion.dan ? `(${suggestion.color})` : ""}</span>
+                    <span>{suggestion.grade}. {suggestion.isDan ? "Dan" : "Cup"} {!suggestion.isDan ? `(${suggestion.name})` : ""}</span>
                 </div>
             )}
             inputProps={{
-                value: grade,
+                value: grade ?? "",
                 onChange: setGradeValue
             }}
         />

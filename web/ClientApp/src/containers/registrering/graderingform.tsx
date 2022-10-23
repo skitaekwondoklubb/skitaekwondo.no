@@ -4,7 +4,7 @@ import { StepProps } from "../../models/steps";
 
 function Gradering(props: StepProps) {
     const [gradering, setGradering] = useState(props.registration.gradering);
-    const isCup = props.registration.grade == null || (props.registration.grade.dan === false && props.registration.grade.grade > 1);
+    const isCup = props.registration.gradeId < 15;
 
     function save() {
         let registration = {... props.registration};

@@ -81,7 +81,7 @@ namespace SkiTKD.Data.Repositories
             var ordreId = Guid.NewGuid().ToString();
             var requestBody = new VippsPaymentRequestBody {
                 customerInfo = new CustomerInfo {
-                    mobileNumber = reg.Person.Telephone
+                    mobileNumber = reg.Person.telephone
                 },
                 merchantInfo = new MerchantInfo {
                     authToken = await GetAccessToken(),
@@ -97,12 +97,12 @@ namespace SkiTKD.Data.Repositories
             };
 
             var order = new VippsEntity {
-                OrderId = ordreId,
-                MobileNumber = requestBody.customerInfo.mobileNumber,
-                Amount = requestBody.transaction.amount,
-                TransactionText = requestBody.transaction.transactionText,
-                RegistrationId = reg.RegistrationId,
-                TimeStamp = DateTime.UtcNow
+                orderid = ordreId,
+                mobilenumber = requestBody.customerInfo.mobileNumber,
+                amount = requestBody.transaction.amount,
+                transactiontext = requestBody.transaction.transactionText,
+                registrationid = reg.registrationid,
+                timestamp = DateTime.UtcNow
             };
 
             _dbContext.VippsOrders.Add(order);
@@ -112,17 +112,17 @@ namespace SkiTKD.Data.Repositories
         }
 
         public VippsEntity FindVippsOrder(string orderId) {
-            var vippsOrder = _dbContext.VippsOrders.SingleOrDefault(x => x.OrderId == orderId);
+            var vippsOrder = _dbContext.VippsOrders.SingleOrDefault(x => x.orderid == orderId);
             return vippsOrder;
         }
 
         public bool SetTransactionData(string orderId, TransactionCallbackInfo info) {
             var order = FindVippsOrder(orderId);
-            order.TransactionId = info.transactionId;
-            order.Status = info.status;
+            order.transactionid = info.transactionId;
+            order.status = info.status;
             DateTime orderTimestamp = DateTime.UtcNow;
             DateTime.TryParse(info.timeStamp, out orderTimestamp);
-            order.TimeStamp = orderTimestamp;
+            order.timestamp = orderTimestamp;
 
             _dbContext.SaveChanges();
             return true;

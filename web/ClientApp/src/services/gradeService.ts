@@ -1,12 +1,15 @@
-export interface Club {
-    clubId: number;
+
+
+export interface Grade {
+    gradeId: number;
+    grade: number;
+    isDan: boolean;
     name: string;
 }
 
-
-export async function getClubs(): Promise<Club[]> {
+export async function getGrades(): Promise<Grade[]> {
     try {
-        const response = await fetch(`/api/Club/Get`, {
+        const response = await fetch(`/api/Grade/Get`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

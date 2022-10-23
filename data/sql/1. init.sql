@@ -1,3 +1,12 @@
+DROP TABLE IF EXISTS club CASCADE;
+DROP TABLE IF EXISTS grade CASCADE;
+DROP TABLE IF EXISTS person CASCADE;
+DROP TABLE IF EXISTS registration CASCADE;
+DROP TABLE IF EXISTS ledsager CASCADE;
+DROP TABLE IF EXISTS payment CASCADE;
+DROP TABLE IF EXISTS vipps CASCADE;
+DROP TABLE IF EXISTS transactionError CASCADE;
+
 CREATE TABLE club (
    clubId serial PRIMARY KEY,
    name varchar NOT NULL
@@ -44,12 +53,11 @@ CREATE TABLE ledsager (
     hasPaid boolean NOT NULL
 );
 
-
 CREATE TABLE payment (
     paymentId serial PRIMARY KEY,
     registrationId int NOT NULL references registration(registrationId),
     vipps boolean NOT NULL,
-    amount money NOT NULL,
+    amount numeric NOT NULL,
     paid boolean NOT NULL,
     cancelled boolean NOT NULL
 );
@@ -61,7 +69,7 @@ CREATE TABLE vipps (
     transactionId varchar NULL,
     transactionText varchar NULL,
     mobileNumber varchar NOT NULL,
-    amount money NOT NULL,
+    amount numeric NOT NULL,
     status varchar NOT NULL,
     timeStamp timestamp NULL
 );

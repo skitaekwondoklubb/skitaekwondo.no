@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using SkiTKD.Data.Entities;
 using SkiTKD.Data.Interfaces;
 using SkiTKD.Data.Models;
@@ -12,9 +10,16 @@ namespace SkiTKD.Data.Repositories
     public class PaymentRepository : IPaymentRepository
     {
         private readonly SkiTKDContext _dbContext;
+        private readonly IPersonRepository _personRepo;
+        private readonly ILedsagerRepository _ledsagerRepo;
+        private readonly IGradeRepository _gradeRepo;
 
-        public PaymentRepository(SkiTKDContext dbContext) {
+
+        public PaymentRepository(SkiTKDContext dbContext, IPersonRepository personRepo, ILedsagerRepository ledsagerRepo, IGradeRepository gradeRepo) {
           _dbContext = dbContext;
+          _personRepo = personRepo;
+          _ledsagerRepo = ledsagerRepo;
+          _gradeRepo = gradeRepo;
         }
 
         public PaymentEntity AddPayment(int registrationId, bool vipps, int amount)
@@ -25,11 +30,11 @@ namespace SkiTKD.Data.Repositories
             }
 
             var newPayment = new PaymentEntity {
-                RegistrationId = registrationId,
-                Amount = amount,
-                Vipps = vipps,
-                Paid = false,
-                Cancelled = false
+                registrationid = registrationId,
+                amount = amount,
+                vipps = vipps,
+                paid = false,
+                cancelled = false
             };
 
             _dbContext.Add(newPayment);
@@ -40,18 +45,18 @@ namespace SkiTKD.Data.Repositories
 
         public PaymentEntity FindPayment(int registrationId)
         {
-            return _dbContext.Payments.SingleOrDefault(x => x.RegistrationId == registrationId);
+            return _dbContext.Payments.SingleOrDefault(x => x.registrationid == registrationId);
         }
 
         public PaymentEntity FindPaymentById(int paymentId)
         {
-            return _dbContext.Payments.SingleOrDefault(x => x.PaymentId == paymentId);
+            return _dbContext.Payments.SingleOrDefault(x => x.paymentid == paymentId);
         }
 
         public bool SetPaid(int registrationId)
         {
             var payment = FindPayment(registrationId);
-            payment.Paid = true;
+            payment.paid = true;
             _dbContext.SaveChanges();
             return true;
         }
@@ -59,23 +64,25 @@ namespace SkiTKD.Data.Repositories
         public bool HasPaid(int paymentId)
         {
             var payment = FindPaymentById(paymentId);
-            return payment.Paid;
+            return payment.paid;
         }
 
         public bool RegistrationHasPaid(int registrationId)
         {
             var payment = FindPayment(registrationId);
-            return payment.Paid;
+            return payment.paid;
         }
 
         public bool CancelPayment(int registrationId) {
             var payment = FindPayment(registrationId);
-            payment.Cancelled = true;
+            payment.cancelled = true;
             _dbContext.SaveChanges();
             return true;
         }
 
         public int GetTotal(VinterleirRegistration reg) {
+            var grade = _gradeRepo.FindGradeById(reg.GradeId);
+
             if(reg.LastName.ToLower().Equals("test")) {     // Only for us to test.
                 return 10;
             }
@@ -93,14 +100,20 @@ namespace SkiTKD.Data.Repositories
                 total -= 475;
             }
 
-            if(reg.Gradering == true && reg.Grade?.isDan == false && reg.Grade.Grade != 1) {
+            if(reg.Gradering == true && grade.isdan == false && grade.grade != 1) {
                 total += 350;
             }
 
-            foreach (var item in reg.HasLedsager ? reg.Ledsagere : new List<Ledsager>())
+            foreach (var item in reg.Ledsagere)
             {
                 if(!item.AlreadyRegistered) {
                     total += 500;
+                }
+                else {
+                    var exists = _personRepo.FindPerson(item.FirstName, item.LastName, item.Telephone);
+                    if(exists == null) {
+                        throw new System.NullReferenceException("Person that says they were registered was not found.");
+                    }
                 }
             }
 
