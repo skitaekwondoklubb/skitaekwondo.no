@@ -12,10 +12,10 @@ export function Done() {
 
     return (
         <div className={styles.done}>
-            <h2>Du er herved registrert til vinterleir 2021!</h2>
+            <h2>Du er herved registrert til vinterleir 2022!</h2>
             <p>Vi gleder oss til å se deg der!</p>
-            <p>For endringer eller avbestilling ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a>
-            </p>
+            <p className={styles.lessMarginBottom}>For endringer eller avbestilling ta kontakt med oss på</p>
+            <p className={styles.lessMarginTop}><a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a></p>
             <Link to={"/"}><button>Tilbake til forsiden</button></Link>
         </div>
     )
@@ -27,7 +27,7 @@ export function Welcome(props: StepProps) {
 
     return (
         <div>
-            <p>Velkommen til registrering for Ski Taekwondo Klubbs vinterleir 2021!</p>
+            <p>Velkommen til registrering for Ski Taekwondo Klubbs vinterleir 2022!</p>
             <p>Vi vil trenge en del informasjon iløpet av registreringsprosessen og vil lagre dette digitalt.</p>
             <p>Denne informasjonen vil <b>kun</b> brukes av Ski Taekwondo Klubb for å arrangere vinterleir. Ski Taekwondo Klubb deler ingen
                 informasjon med tredjeparter.</p>

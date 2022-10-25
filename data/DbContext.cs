@@ -22,6 +22,12 @@ namespace SkiTKD.Data {
         public DbSet<TransactionErrorEntity> TransactionErrors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(_config.GetConnectionString("postgre"));
-        }
+            => optionsBuilder.UseNpgsql(_config.GetConnectionString("postgre"))
+                .UseLazyLoadingProxies();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+            => modelBuilder.UseSerialColumns();
+    }
+
+
 }

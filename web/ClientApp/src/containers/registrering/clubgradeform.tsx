@@ -71,21 +71,13 @@ function ClubGrade(props: StepProps) {
             registration.gradeId = grade.gradeId;
             console.log("SETTING GRADE TO " + grade.gradeId);
         }
-        else {
-            throw Error("Må ha en grad.");
-        }
 
         if(club != null){
             registration.clubId = club.clubId;
             console.log("SETTING CLUB TO " + club.clubId);
-
-
-        }
-        else {
-            throw Error("Må ha en klubb");
         }
 
-        if(club.name === "Ski Taekwondo Klubb" || (grade?.isDan === true && grade.grade >= 4)) {
+        if(club?.name === "Ski Taekwondo Klubb" || (grade?.isDan === true && grade.grade >= 4)) {
             registration.instructor = instructor;
         }
         else {

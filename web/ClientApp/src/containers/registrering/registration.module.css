@@ -242,6 +242,14 @@
     cursor: pointer;
 }
 
+:global #publicSelectBox {
+    padding: 0.8em;
+    background-color: white;
+    border-color: rgb(39, 39, 39);
+    border-radius: 5px;
+    font-size: 1em;
+}
+
 :local .checkout {
     display: flex;
     justify-content: space-between;
@@ -298,6 +306,15 @@
     border-radius: 20px;
 }
 
+:local .lessMarginTop {
+    margin-top: 0.0em;
+}
+
+
+:local .lessMarginBottom {
+    margin-bottom: 0.2em;
+}
+
 @media only screen and (max-width: 1080px) {
     :local .registrationTop {
         margin-left: 1.5em;
@@ -342,6 +359,10 @@
         height: 20vw;
     }
 
+    :local .instructBox {
+        font-size: 0.8em;
+    }
+
 
     :local .largeSpan {
         grid-column: 1;
@@ -382,5 +403,13 @@
     :local .checkboxLine input {
         transform: scale(1.5);
     }
+
+    :global #publicSelectBox {
+        padding: 0.8em;
+        background-color: white;
+        border-color: rgb(39, 39, 39);
+        border-radius: 5px;
+        font-size: 0.8em;
+    }    
 
 }

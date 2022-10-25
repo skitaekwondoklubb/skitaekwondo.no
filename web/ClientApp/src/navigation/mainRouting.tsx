@@ -18,6 +18,7 @@ import Registrering from '../containers/registrering/registrering';
 import SimpleGradering from '../containers/graderingregistrering/simplegradering';
 import SimpleRegistrationRouting from '../containers/graderingregistrering/simplegraderingrouting';
 import CheckGraderingVippsPayment from '../containers/graderingregistrering/checkGraderingVippsPayment';
+import CheckVippsPayment from '../containers/registrering/checkVippsPayment';
 
 function MainRouting() {
   return (
@@ -79,7 +80,7 @@ function MainRouting() {
                 <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
               </div>
             </Route> */}
-            {/* <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/>} /> */}
+            <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/>} />
             {/* <Route exact path="/GraderingVipps/:ordreId" render={(props) => <CheckGraderingVippsPayment orderId={props.match.params.ordreId}/>} /> */}
           </Switch>
         </div>

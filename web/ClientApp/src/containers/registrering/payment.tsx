@@ -26,16 +26,6 @@ function VinterleirForUtover(props: { firstName: string, lastName: string, age: 
     return <CheckoutRow article={`Vinterleir (voksen): ${props.firstName} ${props.lastName}`} price={"975"}/>
 }
 
-
-function Pizza(props: {pizza: string }) {
-    if(props.pizza !== PizzaAlternatives.None) {
-        return (
-            <CheckoutRow article={`Pizza`} price={"80"}/>
-        )
-    }
-    return <div/>
-}
-
 function InstructorStatus(props: { instructor?: Instructor }) {
     if(props.instructor === Instructor.SkiFullTimeInstructor) {
         return <CheckoutRow article={`Hovedinstruktør ved Ski Taekwondo Klubb`} price={"-975"}/>
@@ -50,7 +40,7 @@ function CheckoutRow(props: { article: string, price: string }) {
     return (
         <div className={styles.checkout}>
             <span>{props.article}</span>
-            <span>{props.price} kr</span>
+            <span>{props.price}kr</span>
         </div>
     )
 }
@@ -146,8 +136,11 @@ function Payment(props: StepProps) {
         });
     }, [])
 
+
     function goBack() {
-        props.setCurrentStep(Steps.OtherInformation);
+        if(typeof(props.prevStep) === "number") {
+            props.setCurrentStep(props.prevStep);
+        }
     }
 
     function payWithVipps() {
@@ -200,17 +193,20 @@ function Payment(props: StepProps) {
                 }
                 <div className={styles.checkoutTotal}>
                     <span>Totalt:</span>
-                    <span>{total} kr</span>
+                    <span>{total}kr</span>
                 </div>
-                <pre>
-                    {JSON.stringify(props.registration)}
-                </pre>
+
             </div>
             <div className={styles.paymentButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
-                <button hidden={total === 0} className={styles.cashCard} onClick={() => {setPayLater(true)}}>Kort/Kontant</button>
+                <button hidden={total === 0} className={styles.cashCard} onClick={() => {
+                    setPayLater(true);
+                    var reg = props.registration;
+                    reg.vipps = false;
+                    props.setRegistration(reg);
+                }}>Kort/Kontant</button>
                 <img hidden={total === 0} src={Vippsbutton} onClick={payWithVipps}/>
-                <button hidden={total !== 0} className={styles.nextButton} onClick={next}>Fullfør registrering</button>
+                <button hidden={total !== 0 && myGrade != null} className={styles.nextButton} onClick={next}>Fullfør registrering</button>
             </div>
             <Loading loading={loading} />
         </div>

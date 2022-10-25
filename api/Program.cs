@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddTransient<SkiTKDContext>();
 builder.Services.AddSingleton<IVippsTokenService, VippsTokenService>();
 builder.Services.AddSingleton<IGraphTokenService, GraphTokenService>();
@@ -23,6 +23,7 @@ builder.Services.AddTransient<IGradeRepository, GradeRepository>();
 builder.Services.AddTransient<IClubRepository, ClubRepository>();
 builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
 builder.Services.AddTransient<IRegistrationRepository, RegistrationRepository>();
+builder.Services.AddTransient<IMailRepository, MailRepository>();
 builder.Services.AddTransient<IVippsRepository, VippsRepository>();
 
 

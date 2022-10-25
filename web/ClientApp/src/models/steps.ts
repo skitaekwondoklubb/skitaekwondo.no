@@ -15,6 +15,7 @@ export enum Steps {
     Pizza,
     Teori,
     OtherInformation,
+    Public,
     Payment,
     Check,
     Vipps,

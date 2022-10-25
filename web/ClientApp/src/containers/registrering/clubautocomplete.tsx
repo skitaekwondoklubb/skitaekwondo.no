@@ -56,7 +56,6 @@ function ClubAutocomplete(props: ClubAutocompleteProps) {
                 value: club ?? "",
                 onChange: setClubValue
             }}
-            multiSection={false}
         />
     )
 }

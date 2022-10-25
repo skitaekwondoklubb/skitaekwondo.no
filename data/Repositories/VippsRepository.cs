@@ -77,11 +77,11 @@ namespace SkiTKD.Data.Repositories
             }
         }
 
-        public async Task<VippsPaymentRequestBody> VinterleirToVippsRequest(RegistrationEntity reg, int total) {
+        public async Task<VippsPaymentRequestBody> VinterleirToVippsRequest(int registrationId, string telephone, int paymentid, int total) {
             var ordreId = Guid.NewGuid().ToString();
             var requestBody = new VippsPaymentRequestBody {
                 customerInfo = new CustomerInfo {
-                    mobileNumber = reg.Person.telephone
+                    mobileNumber = telephone
                 },
                 merchantInfo = new MerchantInfo {
                     authToken = await GetAccessToken(),
@@ -100,8 +100,9 @@ namespace SkiTKD.Data.Repositories
                 orderid = ordreId,
                 mobilenumber = requestBody.customerInfo.mobileNumber,
                 amount = requestBody.transaction.amount,
+                paymentid = paymentid,
                 transactiontext = requestBody.transaction.transactionText,
-                registrationid = reg.registrationid,
+                registrationid = registrationId,
                 timestamp = DateTime.UtcNow
             };
 
@@ -126,6 +127,27 @@ namespace SkiTKD.Data.Repositories
 
             _dbContext.SaveChanges();
             return true;
+        }
+
+        public string GetStatus(string orderId)
+        {
+            var vipps = FindVippsOrder(orderId);
+            if(vipps != null) {
+                switch (vipps.status)
+                {
+                    case CallbackStatuses.Rejected :
+                        return CallbackStatuses.Rejected;
+                    case CallbackStatuses.Cancelled :
+                        return CallbackStatuses.Cancelled;
+                    case CallbackStatuses.Reserved :
+                        return CallbackStatuses.Reserved;
+                    case CallbackStatuses.Reserved_Failed:
+                        return CallbackStatuses.Reserved_Failed;
+                    default:
+                        return null;
+                }
+            }
+            return null;
         }
     }
 }

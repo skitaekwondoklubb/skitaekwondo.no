@@ -123,6 +123,7 @@ namespace SkiTKD.Data.Repositories
 
             return total;
         }
+
     }
 }
 

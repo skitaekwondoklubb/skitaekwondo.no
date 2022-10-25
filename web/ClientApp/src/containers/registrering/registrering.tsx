@@ -49,7 +49,7 @@ export function Done() {
             <h2>Du er herved registrert til danseminar!</h2>
             <p>Vi gleder oss til å se deg der!</p>
             <p>Du skal nå ha fått en epost som bekreftelse.</p>
-            <p>For endringer eller avbestilling ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a></p>
+            <p className={styles.lessMarginTop}>For endringer eller avbestilling ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a></p>
             <Link to={"/"}><button>Tilbake til forsiden</button></Link>
         </div>
     )

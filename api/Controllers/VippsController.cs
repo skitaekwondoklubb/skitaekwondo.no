@@ -17,12 +17,14 @@ namespace SkiTKD.Web.Controllers
         private readonly ILogger<VippsController> _logger;
         private readonly IVippsRepository _vippsRepo;
         private readonly IPaymentRepository _paymentRepo;
+        private readonly IMailRepository _mailRepo;
 
-        public VippsController(ILogger<VippsController> logger, IVippsRepository repo, IPaymentRepository paymentRepo)
+        public VippsController(ILogger<VippsController> logger, IVippsRepository repo, IPaymentRepository paymentRepo, IMailRepository mailRepo)
         {
             _logger = logger;
             _vippsRepo = repo;
             _paymentRepo = paymentRepo;
+            _mailRepo = mailRepo;
         }
 
         [HttpPost]
@@ -33,7 +35,11 @@ namespace SkiTKD.Web.Controllers
                 var order = _vippsRepo.FindVippsOrder(orderId);
                 _paymentRepo.SetPaid(order.registrationid);
                 _vippsRepo.SetTransactionData(orderId, orderInfo.transactionInfo);
-
+                _mailRepo.SendMail(order.registrationid);
+            }
+            else if(orderInfo.transactionInfo.status == "CANCELLED") {
+                var order = _vippsRepo.FindVippsOrder(orderId);
+                _vippsRepo.SetTransactionData(orderId, orderInfo.transactionInfo);
             }
             else if(string.IsNullOrEmpty(orderId)) {
                 throw new Exception("Vipps sendte oss ikke en ordreid.");
@@ -42,12 +48,16 @@ namespace SkiTKD.Web.Controllers
 
         [HttpGet]
         [Route("CheckIfVippsOk/{orderId}")]
-        public ActionResult<bool> CheckIfVippsOk(string orderId)
+        public ActionResult<string> CheckIfVippsOk(string orderId)
         {
             var registrationId = _vippsRepo.FindVippsOrder(orderId).registrationid;
             var hasPaid = _paymentRepo.RegistrationHasPaid(registrationId);
-            
-            return hasPaid;
+
+            if(!hasPaid) {
+                return _vippsRepo.GetStatus(orderId);
+            }
+
+            return CallbackStatuses.Reserved;
         }
 
         [HttpPost]
@@ -56,9 +66,6 @@ namespace SkiTKD.Web.Controllers
         {
             var registrationId = _vippsRepo.FindVippsOrder(orderId).registrationid;
             var cancelled = _paymentRepo.CancelPayment(registrationId);
-            if(cancelled) {
-                
-            }
         }     
     }
 }

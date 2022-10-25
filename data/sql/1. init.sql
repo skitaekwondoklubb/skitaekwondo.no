@@ -42,7 +42,8 @@ CREATE TABLE registration (
     otherInfo varchar NULL,
     public boolean NOT NULL,
     vipps boolean NOT NULL,
-    cancelled boolean NOT NULL
+    cancelled boolean NOT NULL,
+    mailsent boolean NOT NULL
 );
 
 CREATE TABLE ledsager (
@@ -65,12 +66,13 @@ CREATE TABLE payment (
 CREATE TABLE vipps (
     vippsId serial PRIMARY KEY,
     registrationId int NOT NULL references registration(registrationId),
+    paymentId int NOT NULL references payment(paymentId),
     orderId varchar NOT NULL,
     transactionId varchar NULL,
     transactionText varchar NULL,
     mobileNumber varchar NOT NULL,
     amount numeric NOT NULL,
-    status varchar NOT NULL,
+    status varchar NULL,
     timeStamp timestamp NULL
 );
 

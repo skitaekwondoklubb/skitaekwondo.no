@@ -24,6 +24,8 @@ services:
     ports:
       - "5555:80"
     restart: unless-stopped
+    depends_on:
+      - postgres
 
 volumes:
     postgres:

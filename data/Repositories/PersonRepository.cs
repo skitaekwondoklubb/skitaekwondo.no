@@ -39,7 +39,7 @@ namespace SkiTKD.Data.Repositories
         }
 
         public PersonEntity FindPerson(string firstName, string lastName, string telephone) {
-           var people = _dbContext.Persons.Where(x => x.firstname.ToLower() == x.firstname.ToLower() && x.lastname.ToLower() == x.lastname.ToLower());
+           var people = _dbContext.Persons.Where(x => firstName.ToLower() == x.firstname.ToLower() && lastName.ToLower() == x.lastname.ToLower());
            if(people.Count() > 1) {
                 return people.SingleOrDefault(x => x.telephone == telephone);
            }

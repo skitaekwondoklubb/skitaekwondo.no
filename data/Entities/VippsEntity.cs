@@ -10,6 +10,7 @@ namespace SkiTKD.Data.Entities {
         public int vippsid { get; set; }
         [ForeignKey("Registration")]
         public int registrationid { get; set; }
+        [ForeignKey("Payment")]
         public int paymentid { get; set; }
         public string orderid { get; set; }
         public string transactionid { get; set; }
@@ -20,6 +21,7 @@ namespace SkiTKD.Data.Entities {
         public DateTime timestamp { get; set; }
 
         public virtual RegistrationEntity Registration { get; set; }
+        public virtual PaymentEntity Payment { get; set; }
     }
     [Table("transactionError")]
     public class TransactionErrorEntity { 

@@ -19,7 +19,15 @@ export async function sendVinterleirRegistration(reg: Registration): Promise<str
     }
 }
 
-export async function checkIfPaid(orderId: string): Promise<boolean> {
+export enum OrderStatus {
+    Nothing = "",
+    Cancelled = "CANCELLED",
+    Reserved = "RESERVED",
+    Reserve_Failed = "RESERVE_FAILED",
+    Rejected = "REJECTED"
+}
+
+export async function checkIfPaid(orderId: string): Promise<OrderStatus> {
     try {
         const response = await fetch(`/api/Vipps/CheckIfVippsOk/${orderId}`, {
             method: 'GET',
@@ -30,7 +38,19 @@ export async function checkIfPaid(orderId: string): Promise<boolean> {
             throw new Error(err);
         })
         
-        return response.json();
+        var stringResponse: string = await response.json();
+        switch (stringResponse) {
+            case OrderStatus.Cancelled:
+                return OrderStatus.Cancelled;
+            case OrderStatus.Rejected:
+                return OrderStatus.Rejected;
+            case OrderStatus.Reserve_Failed:
+                return OrderStatus.Reserve_Failed;
+            case OrderStatus.Reserved:
+                return OrderStatus.Reserved;
+            default:
+                return OrderStatus.Nothing;
+        }
     }
     catch(err) {
         throw new Error(err as string);
