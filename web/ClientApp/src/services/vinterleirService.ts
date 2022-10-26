@@ -74,3 +74,26 @@ export async function cancelOrder(orderId: string): Promise<boolean> {
         throw new Error(err as string);
     }
 }
+
+export interface VinterleirUser {
+    name: string;
+    club: string;
+}
+
+export async function getVinterleirUsers(): Promise<VinterleirUser[]> {
+    try {
+        const response = await fetch(`/api/VinterleirUsers/Get`, {
+            method: 'Get',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).catch((err) => {
+            throw new Error(err);
+        })
+
+        return response.json();
+    }
+    catch(err) {
+        throw new Error(`${err}`);
+    }
+}

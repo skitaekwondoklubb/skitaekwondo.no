@@ -5,6 +5,7 @@
     align-items: center;
     gap: 10%;
     margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 :local .picture {

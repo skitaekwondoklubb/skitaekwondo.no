@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using SkiTKD.Data.Dto;
 using SkiTKD.Data.Entities;
 using SkiTKD.Data.Interfaces;
 using SkiTKD.Data.Models;
@@ -78,6 +80,16 @@ namespace SkiTKD.Data.Repositories
             entity.cancelled = true;
             _dbContext.SaveChanges();
             return true;
+        }
+
+        public List<PublicRegistrationDto> GetAllPublicRegistrations()
+        {
+            var registrations =_dbContext.Registrations.Where(x => x.@public == true).Select(y => new PublicRegistrationDto {
+                Name = $"{y.Person.firstname} {y.Person.lastname}",
+                Club = y.Club.name
+            }).ToList();
+
+            return registrations;
         }
     }
 }

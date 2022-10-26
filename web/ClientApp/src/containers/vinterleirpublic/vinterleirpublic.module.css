@@ -1,0 +1,108 @@
+:local .vinterleirPublicGrid {
+    margin-top: 2em;
+    height: 100%;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+:local .vinterleirPublicGrid input {
+    border: 1px solid slategray;
+    padding: 0.8em;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+:local .vinterleirPublicGrid h1 {
+    width: 800px;
+    margin-bottom: 0px;
+}
+
+:local .searchHeader {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+:local .searchHeader h2 {
+    text-align: left;
+    margin-bottom: 0.5em;
+}
+
+:local .usersGrid {
+    width: 50vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 2px solid #aaa;
+    margin-top: 2em;
+    border-radius: 5px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+:local .gridHeader {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-bottom: 2px solid #aaa;
+    padding-bottom: 1em;
+}
+
+:local .doubleSpan {
+    grid-column: span 2;
+}
+
+:local .gridHeader span  {
+    font-size: 1.2em;
+    text-decoration: underline;
+}
+
+
+:local .lessMarginTop {
+    margin-top: 0.0em;
+}
+
+
+:local .lessMarginBottom {
+    margin-bottom: 0.2em;
+}
+
+
+@media only screen and (max-width: 1080px) {
+    :local .vinterleirPublicGrid {
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+
+
+    :local .vinterleirPublicGrid h1 {
+        font-size: 2em;
+        max-width: 80vw;
+        margin-bottom: 0px;
+    }
+
+    :local .vinterleirPublicGrid p {
+        font-size: 1.3em;
+    }
+
+    :local .searchHeader {
+        width: 100%;
+        flex-direction: column;
+    }
+
+
+    :local .searchHeader h2 {
+        text-align: center;
+    }
+
+    :local .usersGrid {
+        width: 90vw;
+    }
+
+    :local .usersGrid p {
+        font-size: 1em;
+    }
+}
