@@ -16,7 +16,8 @@ export function Done(props: { orderId: string}) {
             <h2>Du er herved registrert til vinterleir!</h2>
             <p>Tusen takk for at du deltar på vinterleir, vi gleder oss til å se deg der!</p>
             <p>Du skal nå ha fått en epost som bekreftelse.</p>
-            <p>Din ordreid på Vipps er: {props.orderId}.</p>
+            <p className={styles.lessMarginBottom}>Din ordrenummer på Vipps er:</p>
+            <p className={styles.lessMarginTop}><b>{props.orderId}</b>.</p>
 
             <p>For endringer eller avbestilling ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a></p>
             <Link to={"/"}><button>Tilbake til forsiden</button></Link>
@@ -97,7 +98,7 @@ function CheckVippsPayment(props: CheckVippsPaymentProps) {
                     <h2>Vipps orderen ble avslått av Vipps. Ingen penger har blitt reservert eller belastet.</h2>
                     <p>Sannsynligvis er kortet du bruker i Vipps avslått eller noe i den duren.</p>
                     <p>Hvis dette er feil, ta kontakt med oss og legg ved ordrenummeret under:</p>
-                    <h2>Ordrenr: {props.orderId}</h2>
+                    <h2>Ordrenummer: {props.orderId}</h2>
                     <p>Hvis du vil prøve igjen eller kontant, velg prøv igjen.</p>
                     <p><a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a></p>
                 </div>

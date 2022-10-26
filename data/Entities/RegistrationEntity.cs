@@ -24,7 +24,7 @@ namespace SkiTKD.Data.Entities {
         public bool @public { get; set; }
         public bool vipps { get; set; }
         public bool cancelled { get; set; }
-        public bool mailesent { get; set; }
+        public bool mailsent { get; set; }
 
         public virtual PersonEntity Person { get; set; }
         public virtual ClubEntity Club { get; set; }

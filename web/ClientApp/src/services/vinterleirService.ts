@@ -38,7 +38,7 @@ export async function checkIfPaid(orderId: string): Promise<OrderStatus> {
             throw new Error(err);
         })
         
-        var stringResponse: string = await response.json();
+        var stringResponse: string = await response.text();
         switch (stringResponse) {
             case OrderStatus.Cancelled:
                 return OrderStatus.Cancelled;

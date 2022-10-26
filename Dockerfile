@@ -11,4 +11,6 @@ RUN dotnet publish -c Release -o out ./api/*.csproj
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build-env /build/out .
+ENV ASPNETCORE_URLS=http://+:80
+ENV ASPNETCORE_ENVIRONMENT=Production
 ENTRYPOINT ["dotnet", "SkiTKD.Api.dll"]

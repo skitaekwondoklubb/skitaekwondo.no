@@ -81,7 +81,6 @@ namespace SkiTKD.Web.Controllers
                                 throw new Exception("Klarte ikke koble til Vipps. OrdreId er NULL");
                             }
                             scope.Complete();
-                            
                             return Ok(url);
                         }
                     }

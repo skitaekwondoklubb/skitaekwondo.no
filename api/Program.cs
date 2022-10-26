@@ -3,8 +3,9 @@ using SkiTKD.Data.Interfaces;
 using SkiTKD.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) //load base settings
-    .AddJsonFile($"appsettings.Development.json", optional: true) //load environment settings
+builder.Configuration
+// .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) //load base settings
+    // .AddJsonFile($"appsettings.Development.json", optional: true) //load environment settings
     .AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true) //load local settings
     .AddEnvironmentVariables();
 // Add services to the container.
@@ -26,7 +27,6 @@ builder.Services.AddTransient<IRegistrationRepository, RegistrationRepository>()
 builder.Services.AddTransient<IMailRepository, MailRepository>();
 builder.Services.AddTransient<IVippsRepository, VippsRepository>();
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,9 +35,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-else {
-    app.UseHttpsRedirection();
-}
+// else {
+//     app.UseHttpsRedirection();
+// }
 
 
 app.UseAuthorization();
