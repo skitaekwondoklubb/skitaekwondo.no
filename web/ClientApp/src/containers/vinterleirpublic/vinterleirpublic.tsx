@@ -8,11 +8,16 @@ function VinterleirPublic() {
     const [showUsers, setShowUsers] = useState<VinterleirUser[]>([]);
     const [search, setSearch] = useState<string>("");
     const [searchClub, setSearchClub] = useState("");
+    const [errors, setErrors] = useState<boolean>(false);
+
 
     useEffect(() => {
         getVinterleirUsers().then(x => {
             setUsers(x);
-        });
+            setErrors(false);
+        }).catch(() => {
+            setErrors(true);
+        })
     }, []);
 
     useEffect(() => {
@@ -46,7 +51,7 @@ function VinterleirPublic() {
 
             </div>
             <p>Her kan du se registrerte deltakere på vinterleieren.</p>
-            <p className={styles.lessMarginTop}>Man vises kun her dersom man har gitt samtykke til å vises offentlig.</p>
+            <p className={styles.lessMarginTop}>Man vises med navn og grad her kun dersom man har gitt samtykke til å vises offentlig.</p>
             <p className={styles.lessMarginTop}>Hvis du valgte feil undre registrering, ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å endre valget.</p>
 
             <div className={styles.searchHeader}>
@@ -59,15 +64,24 @@ function VinterleirPublic() {
                     <input onChange={x => setSearchClub(x.currentTarget.value)} value={searchClub}/>
                 </div>
 
-
+            </div>
+            <div className={styles.amountOfUsers}>
+                <h3>{showUsers.length} registrerte deltakere.</h3>
             </div>
             <div className={styles.usersGrid}>
-                <div className={styles.gridHeader}>
-                    <span><b>Navn:</b></span>
-                    <span><b>Klubb:</b></span>
+                <span><b>Navn:</b></span>
+                <span><b>Grad:</b></span>
+                <span><b>Klubb:</b></span>
+                <div className={styles.gridSplitter}>
+                    <span/>
                 </div>
                 {
-                    users.length === 0 
+                    errors === true
+                    ? <h2>Klarte ikke laste data.</h2>
+                    : ""
+                }
+                {
+                    users.length === 0 && errors === false
                     ? <h2>Laster...</h2>
                     : ""
                 }
@@ -80,7 +94,8 @@ function VinterleirPublic() {
                     showUsers.map(x => {
                         return (
                             <React.Fragment  key={`${x.name}_${x.club}`}>
-                                <p >{x.name}</p>
+                                <p>{x.name}</p>
+                                <p>{x.grade}</p>
                                 <p>{x.club}</p>
                             </React.Fragment> 
                         )

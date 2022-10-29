@@ -42,7 +42,7 @@ export function Public(props: StepProps) {
             <p>Dersom man velger å vises til andre vil følgende informasjon være søkbar og offentlig:</p>
             <ul>
                 <li>Fullt navn</li>
-                <li>Klubb</li>
+                <li>Grad</li>
             </ul>
             <p>Disse dataene slettes og blir ikke synlige etter vinterleir er fullført.</p>
             <p>Hvis man ønsker å ombestemme seg så ta kontakt med oss på kontakt@skitaekwondo.no for å endre valget.</p>

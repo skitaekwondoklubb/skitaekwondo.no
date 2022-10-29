@@ -77,6 +77,7 @@ export async function cancelOrder(orderId: string): Promise<boolean> {
 
 export interface VinterleirUser {
     name: string;
+    grade: string;
     club: string;
 }
 

@@ -84,8 +84,9 @@ namespace SkiTKD.Data.Repositories
 
         public List<PublicRegistrationDto> GetAllPublicRegistrations()
         {
-            var registrations =_dbContext.Registrations.Where(x => x.@public == true).Select(y => new PublicRegistrationDto {
-                Name = $"{y.Person.firstname} {y.Person.lastname}",
+            var registrations =_dbContext.Registrations.Select(y => new PublicRegistrationDto {
+                Name = y.@public ? $"{y.Person.firstname} {y.Person.lastname}" : "Anonym",
+                Grade = y.@public ? $"{y.Grade.grade}. {PublicRegistrationDto.GetDan(y.Grade.isdan)}" : "-",
                 Club = y.Club.name
             }).ToList();
 
