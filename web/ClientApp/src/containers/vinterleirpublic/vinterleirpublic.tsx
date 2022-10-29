@@ -65,9 +65,15 @@ function VinterleirPublic() {
                 </div>
 
             </div>
-            <div className={styles.amountOfUsers}>
-                <h3>{showUsers.length} registrerte deltakere.</h3>
-            </div>
+            {
+                users != null && showUsers != null && users.length > 0  
+                ?  
+                <div className={styles.amountOfUsers}>
+                    <h3>Viser {showUsers.length} av {users.length} registrerte deltakere.</h3>
+                </div>
+                :
+                <span/>
+            }
             <div className={styles.usersGrid}>
                 <span><b>Navn:</b></span>
                 <span><b>Grad:</b></span>
@@ -77,12 +83,12 @@ function VinterleirPublic() {
                 </div>
                 {
                     errors === true
-                    ? <h2>Klarte ikke laste data.</h2>
+                    ? <h2 className={styles.doubleSpan}>Klarte ikke laste data.</h2>
                     : ""
                 }
                 {
                     users.length === 0 && errors === false
-                    ? <h2>Laster...</h2>
+                    ? <h2 className={styles.doubleSpan}>Laster...</h2>
                     : ""
                 }
                 {

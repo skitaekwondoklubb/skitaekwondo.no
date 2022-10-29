@@ -61,10 +61,8 @@
     padding-bottom: 1em;
 }
 
-
-
 :local .doubleSpan {
-    grid-column: span 2;
+    grid-column: span 3;
 }
 
 :local .gridHeader span  {
