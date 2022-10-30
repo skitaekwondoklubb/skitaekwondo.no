@@ -29,9 +29,7 @@ export function Welcome(props: StepProps) {
         <div>
             <p>Velkommen til registrering for Ski Taekwondo Klubbs vinterleir 2022!</p>
             <p>Vi vil trenge en del informasjon iløpet av registreringsprosessen og vil lagre dette digitalt.</p>
-            <p>Denne informasjonen vil <b>kun</b> brukes av Ski Taekwondo Klubb for å arrangere vinterleir. Ski Taekwondo Klubb deler ingen
-                informasjon med tredjeparter.</p>
-               
+            <p>Ski Taekwondo Klubb viser at du deltar for andre med kun klubb og anonymt blir med i beltegradstatistikken. Ingen annen informasjon deles uten samtykke.</p>
             <p>Etter vinterleieren er gjennomført vil digital personlig identifiserbar informasjon anonymiseres eller slettes.</p>
             <p>Vi tar bilder under arrangementet for bruk på nettsiden, Facebook o.l. Dersom du/ditt barn ikke ønsker å bli tatt bilde av må dette meddeles mot slutten av registreringen.</p>
             <div className={styles.disclaimer} onClick={() => setAccept(!accept)}>

@@ -73,6 +73,9 @@
     gap: 1em;
 }
 
+:local .spaceLinks {
+    margin-top: 0.5em;
+}
 
 @media only screen and (max-width: 1080px) {
     :local .arrangementerGrid {

@@ -21,11 +21,13 @@ function Arrangementer() {
                 <Link to={"/vinterleirregistrering"}>
                     <button className={styles.registrationButton}>Registrering til vinterleir</button>
                 </Link>
+                <div className={styles.spaceLinks}>
+                    <Link to="/vinterleirdeltakere">Du kan se en liste over påmeldte her.</Link>
+                </div>
                 <p>Etter to år uten vinterleir er det endelig igjen tid for å sparke løs i Follo Stil Arena!</p>
                 <p>Vinterleieren er en sosial sammenkomst mellom medlemmer i mange forskjellige TTU klubber. Denne gangen er det fra 2. desember til 4. desember.</p> 
                 <p>Her trener vi, er sosiale med hverandre og har det kjempegøy. Igjen kommer mange flinke mastere fra hele landet til å instruere.</p>
                 <p>Vi gleder oss masse og håper mange deltar på Ski Taekwondo Klubbs vinterleir 2022!</p>
-                <Link to="/vinterleirdeltakere">Du kan se en liste over påmeldte her.</Link>
             </div>
         </div>
     )

@@ -52,7 +52,7 @@ export function Public(props: StepProps) {
                 <select id={"publicSelectBox"} onChange={v => setAcceptValue(v.currentTarget.value)} value={`${accept}`}>
                     <option value={""}>-------</option>
                     <option value={"false"}>Jeg ønsker IKKE å være synlig for andre.</option>
-                    <option value={"true"}>Jeg ønsker å ha mitt navn og klubb synlig for andre.</option>
+                    <option value={"true"}>Jeg ønsker å ha mitt navn og min grad synlig for andre.</option>
                 </select>
             </div>
 
