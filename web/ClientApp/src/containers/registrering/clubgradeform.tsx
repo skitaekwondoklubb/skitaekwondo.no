@@ -69,12 +69,10 @@ function ClubGrade(props: StepProps) {
 
         if(grade != null) {
             registration.gradeId = grade.gradeId;
-            console.log("SETTING GRADE TO " + grade.gradeId);
         }
 
         if(club != null){
             registration.clubId = club.clubId;
-            console.log("SETTING CLUB TO " + club.clubId);
         }
 
         if(club?.name === "Ski Taekwondo Klubb" || (grade?.isDan === true && grade.grade >= 4)) {

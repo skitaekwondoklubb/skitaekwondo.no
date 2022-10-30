@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from './registration.module.css';
 import { StepProps } from "../../models/steps";
 
 function Gradering(props: StepProps) {
     const [gradering, setGradering] = useState(props.registration.gradering);
-    const isCup = props.registration.gradeId < 15;
+    const isCup = props.registration.gradeId < 14;
+
+    useEffect(() => {
+        if(props.registration.age > 12 && isCup) {
+            setGradering(false);
+        }
+    }, [])
 
     function save() {
         let registration = {... props.registration};
@@ -37,11 +43,24 @@ function Gradering(props: StepProps) {
                 <p>Dangradering tar plass på fredag.</p>
                 <p>Takstein, planker o.l, tas hånd om av oss, huk av dersom du skal dangradere.</p>
             </div>
+
             <div className={styles.registrationForm}>
-                <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setGradering(!gradering)}>
-                    <input type={"checkbox"} checked={gradering} onChange={x => setGradering(x.currentTarget.checked)}/>
+                <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => {
+                    if(!isCup || (isCup && props.registration.age < 13)) {
+                        setGradering(!gradering);
+                    }
+                } }>
+                    <input type={"checkbox"} disabled={isCup && props.registration.age > 12} checked={gradering} onChange={x => setGradering(x.currentTarget.checked)}/>
                     <span>Ønsker gradering</span>
                 </div>
+            </div>
+
+            <div hidden={!isCup || props.registration.age < 13}>
+                <p><b>Det vil ikke være cupgradering på vinterleiren for ungdom/voksne. </b></p>
+                {
+                    props.registration.clubId === 29 &&
+                    <p>Ski Taekwondo Klubb vil ha gradering for ungdom/voksne i januar 2023.</p>
+                }
             </div>
             <div className={styles.navigationButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
