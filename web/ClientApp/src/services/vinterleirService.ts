@@ -1,4 +1,5 @@
 import { Registration } from '../models/registrationModels';
+import { Grade } from './gradeService';
 
 export async function sendVinterleirRegistration(reg: Registration): Promise<string> {
     try {
@@ -84,6 +85,28 @@ export interface VinterleirUser {
 export async function getVinterleirUsers(): Promise<VinterleirUser[]> {
     try {
         const response = await fetch(`/api/VinterleirUsers/Get`, {
+            method: 'Get',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).catch((err) => {
+            throw new Error(err);
+        })
+
+        return response.json();
+    }
+    catch(err) {
+        throw new Error(`${err}`);
+    }
+}
+
+export interface VinterleirGradeStatistic {
+    grade: Grade;
+    amount: number;
+}
+export async function getVinterleirGradeStatistic(): Promise<VinterleirGradeStatistic[]> {
+    try {
+        const response = await fetch(`/api/VinterleirUsers/GetGrades`, {
             method: 'Get',
             headers: {
                 'Content-Type': 'application/json'

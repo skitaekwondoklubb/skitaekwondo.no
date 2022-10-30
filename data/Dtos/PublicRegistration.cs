@@ -9,4 +9,10 @@ namespace SkiTKD.Data.Dto {
             return isDan ? "Dan" : "Cup";
         }
     }
+
+
+    public class PublicGradeDto {
+        public GradeDto Grade { get; set; }
+        public int Amount { get; set; }
+    }
 }

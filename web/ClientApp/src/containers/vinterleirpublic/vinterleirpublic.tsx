@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getVinterleirUsers, VinterleirUser } from '../../services/vinterleirService';
+import { getVinterleirGradeStatistic, getVinterleirUsers, VinterleirGradeStatistic, VinterleirUser } from '../../services/vinterleirService';
+import VinterleirPublicGrades from './gradetab';
+import VinterleirPublicSearch from './searchtab';
 import styles from './vinterleirpublic.module.css';
 
 
@@ -9,6 +11,9 @@ function VinterleirPublic() {
     const [search, setSearch] = useState<string>("");
     const [searchClub, setSearchClub] = useState("");
     const [errors, setErrors] = useState<boolean>(false);
+    const [showingGrades, setShowingGrades] = useState<boolean>(false);
+    const [grades, setGrades] = useState<VinterleirGradeStatistic[]>([]);
+    const [gradeErrors, setGradeErrors] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -17,7 +22,17 @@ function VinterleirPublic() {
             setErrors(false);
         }).catch(() => {
             setErrors(true);
+        });
+
+        getVinterleirGradeStatistic()
+        .then(y => {
+            setGrades(y);
+            console.log(y);
+            setGradeErrors(false);
         })
+        .catch(e => {
+            setGradeErrors(true);
+        });
     }, []);
 
     useEffect(() => {
@@ -47,68 +62,18 @@ function VinterleirPublic() {
     return (
         <div className={`${styles.vinterleirPublicGrid} slideLeft`}>
             <div>
-            <h1>Deltagere på vinterleir</h1>
-
+                <h1>Deltagere på vinterleir</h1>
             </div>
-            <p>Her kan du se registrerte deltakere på vinterleieren.</p>
-            <p className={styles.lessMarginTop}>Man vises med navn og grad her kun dersom man har gitt samtykke til å vises offentlig.</p>
-            <p className={styles.lessMarginTop}>Hvis du valgte feil undre registrering, ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å endre valget.</p>
-
-            <div className={styles.searchHeader}>
-                <div>
-                    <h2>Navn:</h2>
-                    <input onChange={x => setSearch(x.currentTarget.value)} value={search}/>
-                </div>
-                <div>
-                    <h2>Klubb:</h2>
-                    <input onChange={x => setSearchClub(x.currentTarget.value)} value={searchClub}/>
-                </div>
-
+            <div className={styles.tab}>
+                <button className={`${!showingGrades ? styles.activeButton : ""}`} onClick={() => setShowingGrades(false)}>Søk</button>
+                <button className={`${showingGrades ? styles.activeButton : ""}`} onClick={() => setShowingGrades(true)}>Beltegrader</button>
             </div>
+
             {
-                users != null && showUsers != null && users.length > 0  
-                ?  
-                <div className={styles.amountOfUsers}>
-                    <h3>Viser {showUsers.length} av {users.length} registrerte deltakere.</h3>
-                </div>
-                :
-                <span/>
+                showingGrades
+                ? <VinterleirPublicGrades grades={grades} error={gradeErrors}/>
+                : <VinterleirPublicSearch errors={errors} search={search}  searchClub={searchClub} setSearch={setSearch} setSearchClub={setSearchClub} showUsers={showUsers} users={users}/>
             }
-            <div className={styles.usersGrid}>
-                <span><b>Navn:</b></span>
-                <span><b>Grad:</b></span>
-                <span><b>Klubb:</b></span>
-                <div className={styles.gridSplitter}>
-                    <span/>
-                </div>
-                {
-                    errors === true
-                    ? <h2 className={styles.doubleSpan}>Klarte ikke laste data.</h2>
-                    : ""
-                }
-                {
-                    users.length === 0 && errors === false
-                    ? <h2 className={styles.doubleSpan}>Laster...</h2>
-                    : ""
-                }
-                {
-                    showUsers.length === 0 && users.length > 0
-                    ? <h2 className={styles.doubleSpan}>Ingen deltakere funnet.</h2>
-                    : ""
-                }
-                {
-                    showUsers.map(x => {
-                        return (
-                            <React.Fragment  key={`${x.name}_${x.club}`}>
-                                <p>{x.name}</p>
-                                <p>{x.grade}</p>
-                                <p>{x.club}</p>
-                            </React.Fragment> 
-                        )
-                    })
-                }
-
-            </div>
         </div>
     )
 }

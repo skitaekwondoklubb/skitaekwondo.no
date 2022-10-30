@@ -12,6 +12,7 @@ namespace SkiTKD.Data.Interfaces
         RegistrationEntity AddRegistration(VinterleirRegistration registration, int personId);
         RegistrationEntity FindRegistration(int personId);
         List<PublicRegistrationDto> GetAllPublicRegistrations();
+        List<PublicGradeDto> GetGradeNumbers();
 
         bool Cancel(int registrationId);
     }

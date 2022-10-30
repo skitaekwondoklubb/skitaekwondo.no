@@ -84,13 +84,38 @@ namespace SkiTKD.Data.Repositories
 
         public List<PublicRegistrationDto> GetAllPublicRegistrations()
         {
-            var registrations =_dbContext.Registrations.Select(y => new PublicRegistrationDto {
+            var registrations =_dbContext.Registrations.Where(x => x.cancelled == false).Select(y => new PublicRegistrationDto {
                 Name = y.@public ? $"{y.Person.firstname} {y.Person.lastname}" : "Anonym",
                 Grade = y.@public ? $"{y.Grade.grade}. {PublicRegistrationDto.GetDan(y.Grade.isdan)}" : "-",
                 Club = y.Club.name
             }).ToList();
 
             return registrations;
+        }
+
+        public List<PublicGradeDto> GetGradeNumbers()
+        {
+            var amount = _dbContext.Registrations.Where(x => x.cancelled == false).Select(y => y.gradeid).ToList();
+            var grades = _gradeRepo.GetAllGrades();
+
+            var list = new List<PublicGradeDto>();
+
+            foreach (var grade in grades)
+            {
+                var totalOfThisGrade = amount.Where(x => x == grade.gradeid).Count();
+
+                list.Add(new PublicGradeDto {
+                    Amount = totalOfThisGrade,
+                    Grade = new GradeDto { 
+                        Grade = grade.grade,
+                        GradeId  = grade.gradeid,
+                        isDan = grade.isdan,
+                        Name = grade.name
+                    }
+                });
+            }
+
+            return list;
         }
     }
 }

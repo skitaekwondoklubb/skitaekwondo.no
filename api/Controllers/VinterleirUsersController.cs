@@ -29,5 +29,13 @@ namespace SkiTKD.Web.Controllers
             var allPeople = _regRepo.GetAllPublicRegistrations();
             return Ok(allPeople);
         }
+
+        [HttpGet]
+        [Route("GetGrades")]
+        public ActionResult<List<PublicGradeDto>> GetGrades()
+        {
+            var allPeople = _regRepo.GetGradeNumbers();
+            return Ok(allPeople);
+        }
     }
 }
