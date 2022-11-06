@@ -26,6 +26,7 @@ builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
 builder.Services.AddTransient<IRegistrationRepository, RegistrationRepository>();
 builder.Services.AddTransient<IMailRepository, MailRepository>();
 builder.Services.AddTransient<IVippsRepository, VippsRepository>();
+builder.Services.AddTransient<IVinterleirAdminRepository, VinteleirAdminRepository>();
 
 var app = builder.Build();
 

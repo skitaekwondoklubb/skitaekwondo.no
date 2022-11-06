@@ -149,5 +149,11 @@ namespace SkiTKD.Data.Repositories
             }
             return null;
         }
+
+        public VippsEntity FindVippsRegistration(int registrationId)
+        {
+            var vipps = _dbContext.VippsOrders.SingleOrDefault(x => x.registrationid == registrationId);
+            return vipps;
+        }
     }
 }
