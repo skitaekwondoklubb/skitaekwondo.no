@@ -50,13 +50,16 @@ export function Welcome(props: StepProps) {
 
 function VinterleirRegistrering() {
     return (
-        <div className={`${styles.registration} slideLeft`}>
-            <div className={styles.textSide}>
-                <h1>Registrering til vinterleir</h1>
-                <RegistrationRouting />
-            </div>
+        <div className={styles.registrationCenter}>
+            <div className={`${styles.registration} slideLeft`}>
+                <div className={styles.textSide}>
+                    <h1>Registrering til vinterleir</h1>
+                    <RegistrationRouting />
+                </div>
 
+            </div>
         </div>
+
     )
 }
 

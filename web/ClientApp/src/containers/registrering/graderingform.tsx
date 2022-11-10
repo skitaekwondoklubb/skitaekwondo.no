@@ -43,7 +43,13 @@ function Gradering(props: StepProps) {
                 <p>Dangradering tar plass på fredag.</p>
                 <p>Takstein, planker o.l, tas hånd om av oss, huk av dersom du skal dangradere.</p>
             </div>
-
+            <div hidden={!isCup || props.registration.age < 13}>
+                <p><b>Det vil ikke være cupgradering på vinterleiren for ungdom/voksne. </b></p>
+                {
+                    props.registration.clubId === 29 &&
+                    <p>Ski Taekwondo Klubb vil ha gradering for ungdom/voksne i januar 2023.</p>
+                }
+            </div>
             <div className={styles.registrationForm}>
                 <div className={`${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => {
                     if(!isCup || (isCup && props.registration.age < 13)) {
@@ -53,14 +59,6 @@ function Gradering(props: StepProps) {
                     <input type={"checkbox"} disabled={isCup && props.registration.age > 12} checked={gradering} onChange={x => setGradering(x.currentTarget.checked)}/>
                     <span>Ønsker gradering</span>
                 </div>
-            </div>
-
-            <div hidden={!isCup || props.registration.age < 13}>
-                <p><b>Det vil ikke være cupgradering på vinterleiren for ungdom/voksne. </b></p>
-                {
-                    props.registration.clubId === 29 &&
-                    <p>Ski Taekwondo Klubb vil ha gradering for ungdom/voksne i januar 2023.</p>
-                }
             </div>
             <div className={styles.navigationButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>

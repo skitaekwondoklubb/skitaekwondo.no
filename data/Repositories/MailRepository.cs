@@ -67,12 +67,13 @@ namespace SkiTKD.Data.Repositories
             else if(registration.instructor == InstructorType.SkiHelperInstructor) {
                 orders.Add($"{name}: 500 kr (Hjelpeinstruktør ved Ski Taekwondo Klubb)");
             }
-            else if(registration.Person.age >= 18) {
-                orders.Add($"{name}: 975 kr (voksen)");
-            }
-            else {
+            else if(registration.Person.age <= 12) {
                 orders.Add($"{name}: 825 kr (barn)");
             }
+            else {
+                orders.Add($"{name}: 975 kr");
+            }
+
 
             var ledsagere = _ledsagerRepo.FindLedsagersForPerson(registration.personid);
             if(ledsagere != null || ledsagere.Count > 0) {

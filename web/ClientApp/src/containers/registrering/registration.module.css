@@ -64,7 +64,7 @@
 
 
 :local .textSide {
-    width: 50vw;
+    max-width: 50vw;
 }
 
 :local .disclaimer {
@@ -315,7 +315,7 @@
     margin-bottom: 0.2em;
 }
 
-@media only screen and (max-width: 1080px) {
+@media only screen and (max-width: 1280px) {
     :local .registrationTop {
         margin-left: 1.5em;
         margin-right: 1.5em;
@@ -339,7 +339,7 @@
     }
 
     :local .textSide {
-        width: 90vw;
+        max-width: 100vw;
         margin-left: 3vw;
         margin-right: 3vw;
     }
