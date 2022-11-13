@@ -26,13 +26,13 @@ export function deleteAllCookies() {
     document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
 }
 
-function deleteCookie(cookiename: string)
-    {
-        var d = new Date();
-        d.setDate(d.getDate() - 1);
-        var expires = ";expires="+d;
-        var name=cookiename;
-        //alert(name);
-        var value="";
-        document.cookie = name + "=" + value + expires + "; path=/acc/html";                    
-    }
+export function deleteCookie(cookiename: string)
+{
+    var d = new Date();
+    d.setDate(d.getDate() - 1);
+    var expires = ";expires="+d;
+    var name=cookiename;
+    //alert(name);
+    var value="";
+    document.cookie = name + "=" + value + expires + "; path=/acc/html";                    
+}

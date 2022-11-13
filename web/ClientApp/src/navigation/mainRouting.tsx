@@ -20,6 +20,7 @@ import SimpleRegistrationRouting from '../containers/graderingregistrering/simpl
 import CheckGraderingVippsPayment from '../containers/graderingregistrering/checkGraderingVippsPayment';
 import CheckVippsPayment from '../containers/registrering/checkVippsPayment';
 import VinterleirPublic from '../containers/vinterleirpublic/vinterleirpublic';
+import VinterleirAdministration from '../containers/vinterleirpublic/administration';
 
 function MainRouting() {
   return (
@@ -76,6 +77,9 @@ function MainRouting() {
             </Route>
             <Route exact path="/vinterleirdeltakere">
               <VinterleirPublic/>
+            </Route>
+            <Route exact path="/vinterleirdeltakereadmin">
+              <VinterleirAdministration/>
             </Route>
             {/* <Route exact path="/vinterleiretterregistrering">
               <div className={styles.expiredRegistration}>

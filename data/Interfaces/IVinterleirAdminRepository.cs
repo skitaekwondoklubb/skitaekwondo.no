@@ -9,5 +9,6 @@ namespace SkiTKD.Data.Interfaces
     public interface IVinterleirAdminRepository
     {
         List<AdminRegistrationDto> GetUsers();
+        string ExportToCsv();
     }
 }

@@ -32,7 +32,7 @@ function OtherInformation(props: StepProps) {
         <div className="slideLeft">
             <p>Hvis det er annen informasjon vi trenger å vite om, kan dette skrives i tekstfeltet under.</p>
             <p>Vi tar bilder under arrangementer til bruk på nettsiden, Facebook o.l. Dersom du ikke ønsker at du/ditt barn skal bli tatt bilde av må du skrive det i feltet.</p>
-            <div hidden={props.registration.gradeId < 17}>
+            <div hidden={props.registration.gradeId < 18}>
                 <p>Siden du er master har du mulighet til å instruere under vinterleir dersom det blir nødvendig. </p>
                 <div className={`${styles.instructBox} ${styles.largeSpan} ${styles.checkboxLine}`} onClick={() => setWantsToInstruct(!wantsToInstruct)}>
                     <input type="checkbox" checked={wantsToInstruct} onChange={x => setWantsToInstruct(x.currentTarget.checked)} />

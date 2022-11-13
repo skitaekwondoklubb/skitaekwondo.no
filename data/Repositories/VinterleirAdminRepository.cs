@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CsvHelper;
 using Microsoft.Extensions.Configuration;
 using SkiTKD.Data.Dto;
 using SkiTKD.Data.Entities;
@@ -50,6 +53,21 @@ namespace SkiTKD.Data.Repositories
 
             return listOfRegistrations;
         }
+
+        public string ExportToCsv()
+        {
+            using (var writer = new StringWriter())
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                var users = GetUsers();
+
+                csv.WriteRecords(users);
+                return writer.ToString();
+            }
+
+            return null;
+        }
+
 
         private string InstructorToString(InstructorType instructor) {
             switch (instructor)
