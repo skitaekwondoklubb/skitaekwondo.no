@@ -9,6 +9,8 @@ function VinterleirAdministration() {
     const [people, setPeople] = useState<VinterleirFullUser[]>([]);
     const [authorized, setAuthorized] = useState(getCookie("adminToken") !== "");
     const [showUser, setShowUser] = useState<VinterleirFullUser | null>(null);
+    const [loading, setLoading] = useState(false);
+    
 
     useEffect(() => {
        getUsers();
@@ -16,18 +18,29 @@ function VinterleirAdministration() {
 
     function getUsers() {
         if(authorized) {
+            setLoading(true);
             getAllFullVinterleirUsers().then((x) => {
                 setPeople(x);
+                setLoading(false);
             })
             .catch((e) => {
                 setAuthorized(false);
                 deleteCookie("adminToken");
+                setLoading(false);
             })
         }
     }
 
     if(authorized && showUser) {
         return <AdministrationDetails person={showUser} goBack={() => setShowUser(null)}/>
+    }
+
+    if(loading) {
+        return (
+            <div className={styles.vinterleirAdminGrid}>
+                <h2>Laster inn, vennligst vent...</h2>
+            </div>
+        )
     }
 
     

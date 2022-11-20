@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -38,20 +39,27 @@ namespace SkiTKD.Data.Repositories
 
         public List<AdminRegistrationDto> GetUsers()
         {
-            var registrations = _dbContext.Registrations.Where(x => x.cancelled != true).ToList();
-            var listOfRegistrations = new List<AdminRegistrationDto>();
+            try {
+                var registrations = _dbContext.Registrations.Where(x => x.cancelled != true).ToList();
+                var listOfRegistrations = new List<AdminRegistrationDto>();
 
-            foreach (var reg in registrations)
-            {
-                listOfRegistrations.Add(MapUser(reg));
-                var ledsagere = _ledsagerRepo.FindLedsagersForPerson(reg.personid);
-                foreach (var ledsager in ledsagere)
+                foreach (var reg in registrations)
                 {
-                    listOfRegistrations.Add(MapLedsager(ledsager));
-                }  
-            }
+                    listOfRegistrations.Add(MapUser(reg));
+                    var ledsagere = _ledsagerRepo.FindLedsagersForPerson(reg.personid);
+                    foreach (var ledsager in ledsagere)
+                    {
+                        listOfRegistrations.Add(MapLedsager(ledsager));
+                    }  
+                }
 
-            return listOfRegistrations;
+                return listOfRegistrations;
+            } 
+            catch(Exception e) {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                throw e;
+            }
         }
 
         public string ExportToCsv()
@@ -64,8 +72,6 @@ namespace SkiTKD.Data.Repositories
                 csv.WriteRecords(users);
                 return writer.ToString();
             }
-
-            return null;
         }
 
 
