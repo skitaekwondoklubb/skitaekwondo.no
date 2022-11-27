@@ -9,7 +9,7 @@ function OtherInformation(props: StepProps) {
     function save() {
         let registration = {... props.registration};
         registration.otherInfo = otherInfo;
-
+        registration.wantsToInstruct = wantsToInstruct;        
         props.setRegistration(registration);
     }
     

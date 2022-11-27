@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using SkiTKD.Data.Entities;
@@ -45,7 +46,14 @@ namespace SkiTKD.Data.Repositories
 
         public PaymentEntity FindPayment(int registrationId)
         {
-            return _dbContext.Payments.SingleOrDefault(x => x.registrationid == registrationId);
+            try {
+                return _dbContext.Payments.SingleOrDefault(x => x.registrationid == registrationId);
+            }
+            catch(Exception e) {
+                Console.WriteLine($"Failed to get payment through registration: {registrationId}");
+                throw new Exception($"Failed to get payment through registration: {registrationId}", e);
+            }
+
         }
 
         public PaymentEntity FindPaymentById(int paymentId)

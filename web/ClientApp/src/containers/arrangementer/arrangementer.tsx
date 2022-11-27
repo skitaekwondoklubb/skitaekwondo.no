@@ -26,6 +26,7 @@ function Arrangementer() {
                 <Link to={"/vinterleirregistrering"}>
                     <button className={styles.registrationButton}>Registrering til vinterleir</button>
                 </Link>
+
                 <div className={styles.spaceLinks}>
                     <Link to="/vinterleirdeltakere">Du kan se en liste over påmeldte her.</Link>
                 </div>

@@ -152,8 +152,25 @@ namespace SkiTKD.Data.Repositories
 
         public VippsEntity FindVippsRegistration(int registrationId)
         {
-            var vipps = _dbContext.VippsOrders.SingleOrDefault(x => x.registrationid == registrationId && x.status != null);
-            return vipps;
+            try {
+                VippsEntity entity;
+                var vipps = _dbContext.VippsOrders.Where(x => x.registrationid == registrationId && x.status != null);
+                if(vipps.Count() > 1) {                    
+                    var possibilities = vipps.Where(x => x.status != CallbackStatuses.Cancelled);
+                    if(possibilities.Count() == 1) {
+                        return possibilities.First(); // Return first ok payment.
+                    }
+                }
+                if(vipps.Count() > 0) {
+                    return vipps.First(); // Return first ok or might have been cancelled.
+                }
+                
+                return null;
+            }
+            catch(Exception e) {
+                Console.WriteLine($"Error while getting VippsRegistrations through registrationid: {registrationId}");
+                throw new Exception($"Error while getting VippsRegistrations through registrationid: {registrationId}", e);
+            }
         }
     }
 }

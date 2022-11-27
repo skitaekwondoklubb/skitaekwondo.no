@@ -27,7 +27,7 @@ export function Welcome(props: StepProps) {
 
     return (
         <div>
-            <p>Velkommen til registrering for Ski Taekwondo Klubbs vinterleir 2022!</p>
+            <p>Velkommen til etterregistrering for Ski Taekwondo Klubbs vinterleir 2022!</p>
             <p>Vi vil trenge en del informasjon iløpet av registreringsprosessen og vil lagre dette digitalt.</p>
             <p>Ski Taekwondo Klubb viser at du deltar for andre med kun klubb og anonymt blir med i beltegradstatistikken. Ingen annen informasjon deles uten samtykke.</p>
             <p>Etter vinterleieren er gjennomført vil digital personlig identifiserbar informasjon anonymiseres eller slettes.</p>
@@ -53,7 +53,7 @@ function VinterleirRegistrering() {
         <div className={styles.registrationCenter}>
             <div className={`${styles.registration} slideLeft`}>
                 <div className={styles.textSide}>
-                    <h1>Registrering til vinterleir</h1>
+                    <h1>Etterregistrering til vinterleir</h1>
                     <RegistrationRouting />
                 </div>
 

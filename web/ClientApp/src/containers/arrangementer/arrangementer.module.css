@@ -86,7 +86,16 @@
 
 :local .invitations a {
     font-size: 1.3em;
+}
 
+:local .registrationButton:disabled {
+    border-color: grey;
+}
+
+:local .registrationButton:disabled:hover {
+    border-color: grey;
+    background-color: white;
+    color: grey;
 }
 
 @media only screen and (max-width: 1080px) {
