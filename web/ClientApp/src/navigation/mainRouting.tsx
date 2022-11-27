@@ -17,6 +17,7 @@ import VinterleirRegistrering from '../containers/vinterleir/vinterleirregistrer
 import CheckVippsPayment from '../containers/registrering/checkVippsPayment';
 import VinterleirPublic from '../containers/vinterleirpublic/vinterleirpublic';
 import VinterleirAdministration from '../containers/vinterleirpublic/administration';
+import Agenda from '../containers/vinterleiragenda/agenda';
 
 function MainRouting() {
   return (
@@ -85,6 +86,9 @@ function MainRouting() {
             </Route>
             <Route exact path="/vinterleirdeltakere">
               <VinterleirPublic/>
+            </Route>
+            <Route exact path="/agenda">
+              <Agenda/>
             </Route>
             <Route exact path="/vinterleirdeltakereadmin">
               <VinterleirAdministration/>
