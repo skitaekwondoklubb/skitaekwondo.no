@@ -43,7 +43,7 @@ function Agenda() {
 
         const cookie = getCookie("agenda");
 
-        if(cookie != null) {
+        if(cookie != null && cookie !== "") {
             const parsedSettings: SavedAgendaSettings = JSON.parse(cookie);
             setShowType(parsedSettings.showType);
             setShowGrade(parsedSettings.showGrade);
