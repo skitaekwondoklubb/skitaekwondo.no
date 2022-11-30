@@ -43,7 +43,6 @@ function ClubGrade(props: StepProps) {
         getClubs().then((x) => {
             setClubs(x);
 
-            console.log(props.registration.clubId);
 
             if(props.registration.clubId > 0) {
                 setClub(x.find(y => y.clubId === props.registration.clubId));
@@ -51,8 +50,6 @@ function ClubGrade(props: StepProps) {
             
         }).then(() => getGrades().then((x) => {
             setGrades(x);
-
-            console.log(props.registration.gradeId);
 
             if(props.registration.gradeId > 0) {
                 setGrade(x.find(y => y.gradeId === props.registration.gradeId));

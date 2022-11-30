@@ -11,6 +11,7 @@ export interface AgendaHappening {
     what: string;
     where: string;
     when?: string;
+    override?: string;
     type: ShowTypes;
     class: string;
 }
@@ -43,6 +44,7 @@ export const tosorte: AgendaGrade = { nr: 2, dan: false, color: "Rødt med to so
 export const tresorte: AgendaGrade = { nr: 1, dan: false, color: "Rødt med tre sorte striper" };
 export const dan: AgendaGrade = { nr: 1, dan: true, color: "1. Dan" };
 export const andredan: AgendaGrade = { nr: 2, dan: true, color: "2. Dan eller høyere" };
+
 
 export const gradeColors: AgendaGrade[] = [
     hvitt,

@@ -28,7 +28,6 @@ function SimplePayment(props: SimpleStepProps) {
         setLoading(true);
         try {
             const ask = await askForGraderingVippsPurchase(props.registration);
-            console.log(ask);
             window.location.assign(ask);
         }
         catch {

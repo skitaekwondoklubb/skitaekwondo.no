@@ -32,6 +32,8 @@
     align-items: center;
     margin-top: 1em;
     margin-bottom: 1em;
+    padding-bottom: 2em;
+    border-bottom: 2px solid grey;
 }
 
 
@@ -41,7 +43,6 @@
     gap: 10px;
     margin-left: 1em;
     margin-right: 1em;
-
 }
 
 :local .agendaBox {
@@ -59,7 +60,6 @@
 :local .agendaBox p {
     font-size: 1em;
     margin-bottom: 0.2em;
-
 }
 
 :local .agendaBox h3 {
@@ -68,7 +68,7 @@
 }
 
 :local .singleBox {
-    height: 80px;
+    height: 120px;
     padding-bottom: 1em;
     gap: 20px;
 }
@@ -138,4 +138,67 @@
 
 :local .boxGradeName {
     font-weight: bold;
+}
+
+
+@media only screen and (max-width: 1080px) { 
+
+    :local .agendaWidth {
+        width: 90vw;
+    }
+
+
+    :local .agendaFilter {
+        padding: 1em 0.25em 1em 0.25em;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    :local .agendaFilter button {
+        width: auto;
+    }
+
+    :local .agenda h1 {
+        font-size: 2em;
+    }
+
+    :local .agendaRow {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    :local .agendaMultiBox {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        flex-direction: column;
+        margin-left: 0em;
+        margin-right: 0em;
+    }
+
+    :local .singleBox {
+        width: 90vw;
+        height: auto;
+    }
+
+
+    :local .when {
+        font-size: 0.8em;
+    }
+
+    :local .where {
+        font-size: 0.8em;
+    }
+
+    :local .agendaCommonBox {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 90vw;
+        height: auto;
+    }
+
+    :local .topperMargin {
+        margin-bottom: 1em;
+    }
+    
 }

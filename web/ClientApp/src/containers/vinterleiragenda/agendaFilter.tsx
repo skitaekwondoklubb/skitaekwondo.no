@@ -12,7 +12,6 @@ interface AgendaFilterProps {
 function AgendaFilter(props: AgendaFilterProps) {
 
     function setTarget(x: React.SyntheticEvent<HTMLSelectElement, Event>) {
-        console.log("Settings: "  + x.currentTarget.value);
         let value = Number.parseInt(x.currentTarget.value);
         if(value === -1) {
             props.setShowGrade(undefined);
@@ -32,9 +31,9 @@ function AgendaFilter(props: AgendaFilterProps) {
             </div>
 
             <div>
-                <h3>Grad:</h3>
+                <h3>Min grad:</h3>
                 <select onChange={(x) => setTarget(x)} value={props.showGrade}>
-                    <option value={-1}>Alle</option>
+                    <option value={-1}>Vis alle</option>
                     {
                         gradeColors.map((grade, index) => {
                             return (

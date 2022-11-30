@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AgendaRow } from "./agendaBox";
 import { AgendaGrade, gradeColors, ShowTypes } from "./agendaData";
 import { AgendaDay, fredag, lordag, sondag } from "./agendaDays";
@@ -47,7 +47,6 @@ function Agenda() {
             const parsedSettings: SavedAgendaSettings = JSON.parse(cookie);
             setShowType(parsedSettings.showType);
             setShowGrade(parsedSettings.showGrade);
-            console.log("Resat because remember.");
         }
 
     }, []);
@@ -64,7 +63,7 @@ function Agenda() {
     return (
         <div className={styles.agenda}>
             <div className={styles.agendaWidth}>
-                <h1>Agenda</h1>
+                <h1>Program - Vinterleir 2022</h1>
                 <AgendaFilter showType={showType} setShowType={setShowType} showGrade={showGrade} setShowGrade={setShowGrade}/> 
 
                 <div className={styles.buttons}>
@@ -76,7 +75,7 @@ function Agenda() {
                 <div>
                     {
                         vinterleirdays[selectedDay].rows
-                        .map((row) => {
+                        .map((row, index) => {
                             return (
                                 <AgendaRow row={row} showGrade={showGrade != null ? gradeColors[showGrade] : null} showTypes={showType} />
                             )

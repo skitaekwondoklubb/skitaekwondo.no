@@ -45,3 +45,9 @@
     color: white;
     border-color: grey;
 }
+
+:global .boxcyan {
+    background-color: #00bcd4;
+    color: white;
+    border-color: #008394;
+}

@@ -19,8 +19,7 @@ export function GradeAutocomplete(props: GradeAutocompleteProps) {
 
     useEffect(() => {
         const newGrade = grades.find(y => y.name === grade);
-        console.log(props.currentSelection?.name);
-        console.log("new grade: " + newGrade?.name ?? "")
+
         if(newGrade != null) {
             props.setGrade(newGrade);
         }

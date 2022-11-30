@@ -18,7 +18,6 @@ function ClubAutocomplete(props: ClubAutocompleteProps) {
 
     useEffect(() => {
         const foundClub = props.clubs.find(x => x.name.toLowerCase() === club?.toLowerCase());
-        console.log(`found club? ${foundClub}`)
         if(foundClub != null) {
             props.setClub(foundClub);
         }

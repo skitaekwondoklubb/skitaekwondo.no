@@ -9,20 +9,18 @@ interface AgendaRowProps {
 }
 
 export function AgendaRow(props: AgendaRowProps) {
-    const single = props.row.happenings.length === 1;
-    const rowIsShown = props.row.happenings
+    const rowsAfterFilter = props.row.happenings
     .filter(x => props.showTypes === ShowTypes.All || (x.type === ShowTypes.All || props.showTypes === x.type))
-    .filter(x => (props.showGrade === null || x.who.length === 0 || (x.who.find(y => y.color === props.showGrade?.color) != null))).length > 0;
+    .filter(x => (props.showGrade === null || x.who.length === 0 || (x.who.find(y => y.color === props.showGrade?.color) != null)));
+    const single = rowsAfterFilter.length === 1;
 
-    if(rowIsShown) {
+    if(rowsAfterFilter.length > 0) {
         return (
             <div className={styles.agendaRow}>
-                <label className={styles.bold}>{props.row.when}</label> 
+                <label className={`${styles.bold} ${styles.topperMargin}`}>{props.row.when}</label> 
                 <div className={single ? styles.agendaCommonBox : styles.agendaMultiBox}>
                     {
-                        props.row.happenings
-                        .filter(x => props.showTypes === ShowTypes.All || (x.type === ShowTypes.All || props.showTypes === x.type))
-                        .filter(x => (props.showGrade === null || x.who.length === 0 || (x.who.find(y => y.color === props.showGrade?.color) != null)))
+                        rowsAfterFilter
                         .map(happenan => {
                             return (
                                 <AgendaBox agenda={happenan} single={single} />
@@ -30,7 +28,6 @@ export function AgendaRow(props: AgendaRowProps) {
                         })
                     }
                 </div>
-    
             </div>
         )
     }
@@ -64,7 +61,6 @@ function findGradeSpan(grades: AgendaGrade[]) {
 
     if(last.dan) {
         concat += `${last.color}`
-
     }
     else {
         concat += `${last.nr}. ${last.dan ? "Dan" : "Cup"}`;
@@ -75,8 +71,8 @@ function findGradeSpan(grades: AgendaGrade[]) {
 
 function findGradeNameSpan(grades: AgendaGrade[]) {
     const first = grades[0];
-    const last = grades[grades.length-1];
-
+    var last = grades[grades.length-1];
+ 
     if(first === last || (first.dan && last.dan)) {
         return  ``
     }
@@ -92,8 +88,9 @@ function MultiBox(props: AgendaBoxProps) {
             <h2>{props.agenda.what}</h2>
             <label className={styles.where}>{props.agenda.where}</label>
             <label className={styles.boxChildren}>{props.agenda.type === ShowTypes.Children ? "Barn 👧 (8-11 år)" : ""}</label>
-            { props.agenda.who.length === 0 && "Alle" }
-            <p>{ props.agenda.who.length > 0 && findGradeSpan(props.agenda.who) }</p>
+            <h3>{ !props.agenda.override && props.agenda.who.length === 0 && "Alle" }</h3>
+            <h3>{ props.agenda.override && props.agenda.override }</h3>
+            <p>{ !props.agenda.override && props.agenda.who.length > 0 && findGradeSpan(props.agenda.who) }</p>
             <small className={styles.boxGradeName}>{ props.agenda.who.length > 0 && findGradeNameSpan(props.agenda.who) }</small>
 
             <label className={styles.when}>{props.agenda.when}</label>
@@ -105,9 +102,13 @@ function SingleBox(props: AgendaBoxProps) {
     return (
         <div className={`${styles.agendaBox} ${props.agenda.class} ${props.single ? styles.singleBox : styles.normalBox}`} >
             <h2>{props.agenda.what}</h2>
-            <h3>Alle</h3>
-            <label className={styles.where}>{props.agenda.where}</label>
+            <label className={styles.boxChildren}>{props.agenda.type === ShowTypes.Children ? "Barn 👧 (8-11 år)" : ""}</label>
+            <h3>{ !props.agenda.override && props.agenda.who.length === 0 && "Alle" }</h3>
+            <h3>{ props.agenda.override && props.agenda.override }</h3>
+            <p>{ !props.agenda.override && props.agenda.who.length > 0 && findGradeSpan(props.agenda.who) }</p>
+            <small className={styles.boxGradeName}>{ props.agenda.who.length > 0 && findGradeNameSpan(props.agenda.who) }</small>
 
+            <label className={styles.where}>{props.agenda.where}</label>
             <label className={styles.when}>{props.agenda.when}</label>
 
     </div>

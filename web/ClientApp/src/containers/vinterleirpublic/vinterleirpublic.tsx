@@ -27,7 +27,6 @@ function VinterleirPublic() {
         getVinterleirGradeStatistic()
         .then(y => {
             setGrades(y);
-            console.log(y);
             setGradeErrors(false);
         })
         .catch(e => {
