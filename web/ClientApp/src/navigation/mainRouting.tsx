@@ -87,7 +87,7 @@ function MainRouting() {
             <Route exact path="/vinterleirdeltakere">
               <VinterleirPublic/>
             </Route>
-            <Route exact path="/agenda">
+            <Route exact path="/program">
               <Agenda/>
             </Route>
             <Route exact path="/vinterleirdeltakereadmin">

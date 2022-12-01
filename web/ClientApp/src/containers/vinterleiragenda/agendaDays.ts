@@ -238,7 +238,7 @@ export let lordag: AgendaDay = {
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.All,
                     who: [ blastripe, bla, rodtynnstripe, rodstripe ],
                     where: "Sal 2",
                     class: "boxblue",
@@ -305,7 +305,7 @@ export let lordag: AgendaDay = {
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.All,
                     who: [ blastripe, bla, rodtynnstripe, rodstripe ],
                     where: "Sal 2",
                     class: "boxblue",
@@ -343,7 +343,7 @@ export let lordag: AgendaDay = {
             happenings: [
                 {
                     type: ShowTypes.All,
-                    what: "Middag / Film",
+                    what: "Middag / Film / Aktiviteter",
                     who: [  ],
                     where: "Kiosk",
                     class: "boxpurple",
@@ -402,6 +402,7 @@ export let sondag: AgendaDay = {
                     what: "Dan-sermoni",
                     type: ShowTypes.Grown,
                     who: [ dan, andredan, ],
+                    override: "1. dan eller høyere",
                     where: "Sal 2",
                     class: "boxblack",
                     when: "Frem til 12.00"

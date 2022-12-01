@@ -23,13 +23,17 @@ function Arrangementer() {
                     <a href="/vinterleir2022_ungvoks.pdf" target={"_blank"}>Invitasjon - Ungdom/Voksen.</a>
                 </div>
 
+                <Link to={"/program"}>
+                    <button className={styles.registrationButton}>Program - Vinterleir 2022</button>
+                </Link>
+{/* 
                 <Link to={"/vinterleirregistrering"}>
                     <button className={styles.registrationButton}>Registrering til vinterleir</button>
-                </Link>
-
+                </Link> */}
+{/* 
                 <div className={styles.spaceLinks}>
                     <Link to="/vinterleirdeltakere">Du kan se en liste over påmeldte her.</Link>
-                </div>
+                </div> */}
 
                 <p>Etter to år uten vinterleir er det endelig igjen tid for å sparke løs i Follo Stil Arena!</p>
                 <p>Vinterleieren er en sosial sammenkomst mellom medlemmer i mange forskjellige TTU klubber. Denne gangen er det fra 2. desember til 4. desember.</p> 

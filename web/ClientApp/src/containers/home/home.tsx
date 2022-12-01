@@ -43,7 +43,9 @@ function Home() {
                                 <div className={`${styles.infoBoxButtons} fadeInSlow`}>
                                     <button onClick={() => history.push("/omoss")}>Les mer</button>
                                     <Link to="/treningstider"><button>Treningstider</button></Link>
-                                    {/* <button className={styles.arrangementerButton} onClick={() => history.push("/arrangementer")}>Arrangementer</button> */}
+                                </div>
+                                <div className={`${`${styles.infoBoxButtons} ${styles.infoBoxExtraButtonMargin}`} fadeInSlow`}>
+                                    <a href="/program"><button>Program - Vinterleir 2022</button></a>
                                 </div>
                             </div>
                         </Route>
