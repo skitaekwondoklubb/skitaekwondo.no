@@ -44,9 +44,9 @@ function Home() {
                                     <button onClick={() => history.push("/omoss")}>Les mer</button>
                                     <Link to="/treningstider"><button>Treningstider</button></Link>
                                 </div>
-                                <div className={`${`${styles.infoBoxButtons} ${styles.infoBoxExtraButtonMargin}`} fadeInSlow`}>
+                                {/* <div className={`${`${styles.infoBoxButtons} ${styles.infoBoxExtraButtonMargin}`} fadeInSlow`}>
                                     <a href="/program"><button>Program - Vinterleir 2022</button></a>
-                                </div>
+                                </div> */}
                             </div>
                         </Route>
                         <Route exact path ="/treningstider">
