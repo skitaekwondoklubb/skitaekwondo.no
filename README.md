@@ -5,9 +5,7 @@ Dette er Ski Taekwondo Klubb sin nettside. Den er laget for å vise statisk info
 Det gjenstår en del arbeid.
 
 - Mye CSS må sammenslås og renses. For mye copy paste
-- Refaktorering av en del av registreringen.
 - Generell cleanup.
-- Vinterleir er ikke ferdigstilt.
 - GitHub Actions for automatisk bygging
 - Automatisk deployment til Azure 
 
@@ -15,7 +13,7 @@ Det gjenstår en del arbeid.
 Dette er de forskjellige prosjektene vår nettside består av:
 
 ### Api
-Apiet er veldig simpelt C# ASP.NET web api og tar imot data som sendes til et Excel skjema. 
+Apiet er veldig simpelt C# ASP.NET web api og tar imot data som sendes en PostgreSQL database (i Azure).
 
 ### Data
 Et klassebibliotek for å gjøre det ovenfor. Det er splittet ut i et klassebibliotek for å gjøre det lettere å teste.
@@ -27,8 +25,9 @@ Integrasjonstester for excelhåndtering.
 En React nettside som inneholder det meste.
 
 ## Dependencies:
-- .NET 5
+- .NET 7
 - Node
+- PostgreSQL (for api)
 
 ## Bygging:
 Bygging av prosjektet er veldig lett. For både Api, data og test er det bare å kjøre 
@@ -46,7 +45,7 @@ dotnet watch run # i api og/eller web
 ## Docker:
 Det er to Docker containers som brukes for å host prosjektene:
 ### Api
-Api prosjektet kjører i denne containeren. Den må ha visse environment variables for å kunne logge inn og endre Excel skjemaet.
+Api prosjektet kjører i denne containeren. Den må ha visse environment variables for å kunne bruke Vipps, PostgreSQL og lignende.
 Se appsettings.json for hvilke environment variables denne må ha.
 
 ### Web
