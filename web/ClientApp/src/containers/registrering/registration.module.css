@@ -64,7 +64,7 @@
 
 
 :local .textSide {
-    width: 50vw;
+    max-width: 50vw;
 }
 
 :local .disclaimer {
@@ -202,6 +202,15 @@
     font-size: 1.3em;
 }
 
+:local .instructBox {
+    margin-bottom: 1em;
+    font-size: 1.2em;
+}
+
+:local .instructBox input {
+    margin-right: 1em;
+}
+
 :local .paymentButtons {
     display: grid;
     /* grid-template-columns: 0.2fr 0.3fr 0.2fr 0.3fr; */
@@ -231,6 +240,14 @@
 :local .paymentButtons img {
     grid-column: 4;
     cursor: pointer;
+}
+
+:global #publicSelectBox {
+    padding: 0.8em;
+    background-color: white;
+    border-color: rgb(39, 39, 39);
+    border-radius: 5px;
+    font-size: 1em;
 }
 
 :local .checkout {
@@ -289,7 +306,16 @@
     border-radius: 20px;
 }
 
-@media only screen and (max-width: 1080px) {
+:local .lessMarginTop {
+    margin-top: 0.0em;
+}
+
+
+:local .lessMarginBottom {
+    margin-bottom: 0.2em;
+}
+
+@media only screen and (max-width: 1280px) {
     :local .registrationTop {
         margin-left: 1.5em;
         margin-right: 1.5em;
@@ -313,7 +339,7 @@
     }
 
     :local .textSide {
-        width: 90vw;
+        max-width: 100vw;
         margin-left: 3vw;
         margin-right: 3vw;
     }
@@ -331,6 +357,10 @@
     :local .freeText {
         width: 100%;
         height: 20vw;
+    }
+
+    :local .instructBox {
+        font-size: 0.8em;
     }
 
 
@@ -373,5 +403,13 @@
     :local .checkboxLine input {
         transform: scale(1.5);
     }
+
+    :global #publicSelectBox {
+        padding: 0.8em;
+        background-color: white;
+        border-color: rgb(39, 39, 39);
+        border-radius: 5px;
+        font-size: 0.8em;
+    }    
 
 }

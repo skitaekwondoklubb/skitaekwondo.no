@@ -41,7 +41,6 @@ function CheckGraderingVippsPayment(props: CheckGraderingVippsPaymentProps) {
     }, [])
 
     function checkAttempt(attempts: number = 0) {
-        console.log(attempts);
         if(attempts === 30) {
             setError(true);
             deleteAllCookies();

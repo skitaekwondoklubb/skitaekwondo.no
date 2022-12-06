@@ -12,10 +12,10 @@ export function Done() {
 
     return (
         <div className={styles.done}>
-            <h2>Du er herved registrert til vinterleir 2021!</h2>
+            <h2>Du er herved registrert til vinterleir 2022!</h2>
             <p>Vi gleder oss til å se deg der!</p>
-            <p>For endringer eller avbestilling ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a>
-            </p>
+            <p className={styles.lessMarginBottom}>For endringer eller avbestilling ta kontakt med oss på</p>
+            <p className={styles.lessMarginTop}><a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a></p>
             <Link to={"/"}><button>Tilbake til forsiden</button></Link>
         </div>
     )
@@ -27,11 +27,9 @@ export function Welcome(props: StepProps) {
 
     return (
         <div>
-            <p>Velkommen til registrering for Ski Taekwondo Klubbs vinterleir 2021!</p>
+            <p>Velkommen til etterregistrering for Ski Taekwondo Klubbs vinterleir 2022!</p>
             <p>Vi vil trenge en del informasjon iløpet av registreringsprosessen og vil lagre dette digitalt.</p>
-            <p>Denne informasjonen vil <b>kun</b> brukes av Ski Taekwondo Klubb for å arrangere vinterleir. Ski Taekwondo Klubb deler ingen
-                informasjon med tredjeparter.</p>
-               
+            <p>Ski Taekwondo Klubb viser at du deltar for andre med kun klubb og anonymt blir med i beltegradstatistikken. Ingen annen informasjon deles uten samtykke.</p>
             <p>Etter vinterleieren er gjennomført vil digital personlig identifiserbar informasjon anonymiseres eller slettes.</p>
             <p>Vi tar bilder under arrangementet for bruk på nettsiden, Facebook o.l. Dersom du/ditt barn ikke ønsker å bli tatt bilde av må dette meddeles mot slutten av registreringen.</p>
             <div className={styles.disclaimer} onClick={() => setAccept(!accept)}>
@@ -52,13 +50,16 @@ export function Welcome(props: StepProps) {
 
 function VinterleirRegistrering() {
     return (
-        <div className={`${styles.registration} slideLeft`}>
-            <div className={styles.textSide}>
-                <h1>Registrering til vinterleir</h1>
-                <RegistrationRouting />
-            </div>
+        <div className={styles.registrationCenter}>
+            <div className={`${styles.registration} slideLeft`}>
+                <div className={styles.textSide}>
+                    <h1>Etterregistrering til vinterleir</h1>
+                    <RegistrationRouting />
+                </div>
 
+            </div>
         </div>
+
     )
 }
 

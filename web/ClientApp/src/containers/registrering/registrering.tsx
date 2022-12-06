@@ -4,7 +4,7 @@ import { StepProps } from '../../models/steps';
 import { deleteAllCookies } from '../../services/cookieService';
 import { sendRegistration } from '../../services/registrationService';
 import styles from './registration.module.css';
-import RegistrationRouting from './registreringRouting';
+// import RegistrationRouting from './registreringRouting';
 
 export function RegistrationStep(props: StepProps)  {
 
@@ -28,7 +28,6 @@ export function RegistrationStep(props: StepProps)  {
             <p>Navn: {props.registration.firstName} {props.registration.lastName}</p>
             <p>Telefon: {props.registration.telephone}</p>
             <p>Epost: {props.registration.email}</p>
-            <p>Pizza: {props.registration.pizza}</p>
             <p>Veganer: {props.registration.vegan === true ? "Ja" : "Nei"}</p>
             <p>Allergier: {props.registration.allergies}</p>
             <p>Annet: {props.registration.otherInfo}</p>
@@ -50,7 +49,7 @@ export function Done() {
             <h2>Du er herved registrert til danseminar!</h2>
             <p>Vi gleder oss til å se deg der!</p>
             <p>Du skal nå ha fått en epost som bekreftelse.</p>
-            <p>For endringer eller avbestilling ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a></p>
+            <p className={styles.lessMarginTop}>For endringer eller avbestilling ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a></p>
             <Link to={"/"}><button>Tilbake til forsiden</button></Link>
         </div>
     )
@@ -63,8 +62,8 @@ export function Welcome(props: StepProps) {
         <div>
             <p>Velkommen til registrering for Ski Taekwondo Klubbs danseminar 22. til 24. oktober!</p>
             <p>Vi vil trenge informasjon som en del av registreringsprosessen og vil lagre dette digitalt.</p>
-            <p>Denne informasjonen vil <b>kun</b> brukes av Ski Taekwondo Klubb for å arrangere danseminar. Ski Taekwondo Klubb deler ingen
-                informasjon med tredjeparter.</p>
+            <p>Denne informasjonen vil brukes av Ski Taekwondo Klubb for å arrangere danseminar.</p>
+            <p>Ski Taekwondo Klubb viser at du deltar for andre med kun klubbinformasjon. Ingen annen informasjon deles uten samtykke.</p>
             <p>Etter helgen er gjennomført vil digital personlig identifiserbar informasjon anonymiseres eller slettes.</p>
             <p>Vi tar bilder under arrangementet for bruk på nettsiden, Facebook o.l. Dersom du/ditt barn ikke ønsker å bli tatt bilde av må dette meddeles mot slutten av registreringen.</p>
             <div className={styles.disclaimer} onClick={() => setAccept(!accept)}>
@@ -84,7 +83,7 @@ function Registrering() {
         <div className={`${styles.registration} slideLeft`}>
             <div className={styles.textSide}>
                 <h1>Registrering til danseminar</h1>
-                <RegistrationRouting />
+                {/* <RegistrationRouting /> */}
             </div>
 
         </div>

@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SkiTKD.Data.Models;
 using SkiTKD.Data.Interfaces;
+using SkiTKD.Data.Entities;
+using System.Linq;
 
 namespace SkiTKD.Data.Repositories
 {
@@ -21,8 +23,9 @@ namespace SkiTKD.Data.Repositories
         private readonly string _vippsEndpoint;
         private readonly string _callbackPrefix;
         private IVippsTokenService _vippsTokenService;
+        private readonly SkiTKDContext _dbContext;
 
-        public VippsRepository(IConfiguration config, IVippsTokenService tokenService) {
+        public VippsRepository(IConfiguration config, IVippsTokenService tokenService, SkiTKDContext context) {
   
             _subscription = config["VippsSubscription"];
             _msn = config["VippsMSN"];
@@ -31,6 +34,7 @@ namespace SkiTKD.Data.Repositories
             _vippsEndpoint = config["VippsEndpoint"];
             _callbackPrefix = config["VippsCallbackPrefix"];
             _vippsTokenService = tokenService;
+            _dbContext = context;
         }
 
         private async Task<string> GetAccessToken() {
@@ -73,11 +77,11 @@ namespace SkiTKD.Data.Repositories
             }
         }
 
-        public async Task<VippsPaymentRequestBody> VinterleirToVippsRequest(VinterleirRegistration reg, int total) {
+        public async Task<VippsPaymentRequestBody> VinterleirToVippsRequest(int registrationId, string telephone, int paymentid, int total) {
             var ordreId = Guid.NewGuid().ToString();
             var requestBody = new VippsPaymentRequestBody {
                 customerInfo = new CustomerInfo {
-                    mobileNumber = reg.Telephone
+                    mobileNumber = telephone
                 },
                 merchantInfo = new MerchantInfo {
                     authToken = await GetAccessToken(),
@@ -92,33 +96,81 @@ namespace SkiTKD.Data.Repositories
                 }
             };
 
+            var order = new VippsEntity {
+                orderid = ordreId,
+                mobilenumber = requestBody.customerInfo.mobileNumber,
+                amount = requestBody.transaction.amount,
+                paymentid = paymentid,
+                transactiontext = requestBody.transaction.transactionText,
+                registrationid = registrationId,
+                timestamp = DateTime.UtcNow
+            };
+
+            _dbContext.VippsOrders.Add(order);
+            _dbContext.SaveChanges();
+
             return requestBody;
         }
 
-        public async Task<VippsPaymentRequestBody> GraderingToVippsRequest(GraderingRegistration reg, int total) {
-            if(reg.FirstName.ToLower() == "test" && reg.LastName.ToLower() == "test") {
-                total = 5;
-            }
+        public VippsEntity FindVippsOrder(string orderId) {
+            var vippsOrder = _dbContext.VippsOrders.SingleOrDefault(x => x.orderid == orderId);
+            return vippsOrder;
+        }
 
-            var ordreId = Guid.NewGuid().ToString();
-            var requestBody = new VippsPaymentRequestBody {
-                customerInfo = new CustomerInfo {
-                    mobileNumber = reg.Telephone
-                },
-                merchantInfo = new MerchantInfo {
-                    authToken = await GetAccessToken(),
-                    callbackPrefix = $"{_callbackPrefix}/api/GraderingVipps",
-                    fallBack = $"{_callbackPrefix}/GraderingVipps/{ordreId}",
-                    merchantSerialNumber = _msn,
-                },
-                transaction = new Transaction {
-                    amount = total * 100, // Vipps represents total as øre.
-                    orderId = ordreId,
-                    transactionText = "Gradering",
+        public bool SetTransactionData(string orderId, TransactionCallbackInfo info) {
+            var order = FindVippsOrder(orderId);
+            order.transactionid = info.transactionId;
+            order.status = info.status;
+            DateTime orderTimestamp = DateTime.UtcNow;
+            DateTime.TryParse(info.timeStamp, out orderTimestamp);
+            order.timestamp = orderTimestamp;
+
+            _dbContext.SaveChanges();
+            return true;
+        }
+
+        public string GetStatus(string orderId)
+        {
+            var vipps = FindVippsOrder(orderId);
+            if(vipps != null) {
+                switch (vipps.status)
+                {
+                    case CallbackStatuses.Rejected :
+                        return CallbackStatuses.Rejected;
+                    case CallbackStatuses.Cancelled :
+                        return CallbackStatuses.Cancelled;
+                    case CallbackStatuses.Reserved :
+                        return CallbackStatuses.Reserved;
+                    case CallbackStatuses.Reserved_Failed:
+                        return CallbackStatuses.Reserved_Failed;
+                    default:
+                        return null;
                 }
-            };
+            }
+            return null;
+        }
 
-            return requestBody;
+        public VippsEntity FindVippsRegistration(int registrationId)
+        {
+            try {
+                VippsEntity entity;
+                var vipps = _dbContext.VippsOrders.Where(x => x.registrationid == registrationId && x.status != null);
+                if(vipps.Count() > 1) {                    
+                    var possibilities = vipps.Where(x => x.status != CallbackStatuses.Cancelled);
+                    if(possibilities.Count() == 1) {
+                        return possibilities.First(); // Return first ok payment.
+                    }
+                }
+                if(vipps.Count() > 0) {
+                    return vipps.First(); // Return first ok or might have been cancelled.
+                }
+                
+                return null;
+            }
+            catch(Exception e) {
+                Console.WriteLine($"Error while getting VippsRegistrations through registrationid: {registrationId}");
+                throw new Exception($"Error while getting VippsRegistrations through registrationid: {registrationId}", e);
+            }
         }
     }
 }

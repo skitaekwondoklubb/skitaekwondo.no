@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from './registration.module.css';
 import { StepProps, Steps } from "../../models/steps";
 import { GradeAutocomplete } from "./gradeautocomplete";
 import ClubAutocomplete from "./clubautocomplete";
-import { Grade, Registration } from "../../models/registrationModels";
-import { ttuClubs } from '../../services/clubService';
 import { Instructor } from "../../models/instructor";
+import { Club, getClubs } from "../../services/clubService";
+import { getGrades, Grade } from "../../services/gradeService";
 
 interface IsInstructorProps {
     club: string;
-    grade: Grade | null;
+    gradeId: number;
     age: number;
     setInstructor: (ins: Instructor) => void;
     instructor: Instructor | undefined; 
@@ -31,22 +31,48 @@ function IsInstructor(props: IsInstructorProps) {
 }
 
 function ClubGrade(props: StepProps) {
-    const [clubs, setClubs] = useState(ttuClubs);
-    const [club, setClub] = useState<string>(props?.registration?.club ?  props.registration.club : "");
-    const [grade, setGrade] = useState<Grade | null>(
-        props?.registration?.grade 
-        ? props.registration.grade 
-        : null
-    );
-    const [instructor, setInstructor] = useState<Instructor | undefined>(props.registration.instructor);
+    const [loading, setLoading] = useState(true);
+    const [clubs, setClubs] = useState<Club[]>([]);
+    const [grades, setGrades] = useState<Grade[]>([]);
+    const [club, setClub] = useState<Club>();
+    const [grade, setGrade] = useState<Grade>();
+    const [instructor, setInstructor] = useState<Instructor>(props?.registration?.instructor);
+
+    useEffect(() => {
+        setLoading(true);
+        getClubs().then((x) => {
+            setClubs(x);
+
+
+            if(props.registration.clubId > 0) {
+                setClub(x.find(y => y.clubId === props.registration.clubId));
+            }
+            
+        }).then(() => getGrades().then((x) => {
+            setGrades(x);
+
+            if(props.registration.gradeId > 0) {
+                setGrade(x.find(y => y.gradeId === props.registration.gradeId));
+            }
+        }).finally(() => setLoading(false))
+        )
+
+    }, [])
+
 
     function save() {
         let registration = {... props.registration};
 
-        registration.grade = grade;
-        registration.club = club;
 
-        if(club === "Ski Taekwondo Klubb" || (grade?.dan === true && grade.grade >= 4)) {
+        if(grade != null) {
+            registration.gradeId = grade.gradeId;
+        }
+
+        if(club != null){
+            registration.clubId = club.clubId;
+        }
+
+        if(club?.name === "Ski Taekwondo Klubb" || (grade?.isDan === true && grade.grade >= 4)) {
             registration.instructor = instructor;
         }
         else {
@@ -75,20 +101,21 @@ function ClubGrade(props: StepProps) {
             <p>Her kan du finne din klubb og beltegrad.</p>
             <p>Dersom din klubb ikke er i listen, ta kontakt med oss så vil vi legge den til!</p>
 
+
             <div className={styles.registrationForm}>
                 <p>Klubb:</p>
-                <ClubAutocomplete currentSelection={club} clubs={clubs} setClub={setClub} />
+                {!loading ? <ClubAutocomplete currentSelection={club} clubs={clubs} setClub={setClub} /> : <input placeholder="Laster klubber..."/> }
                 <p>Beltegrad:</p>
-                <GradeAutocomplete currentSelection={grade} setGrade={setGrade}/>
-                <IsInstructor age={props.registration.age} instructor={instructor} club={club} grade={grade} setInstructor={setInstructor} />
+                {!loading ? <GradeAutocomplete currentSelection={grade} grades={grades ?? []} setGrade={setGrade}/>  : <input placeholder="Laster belter..."/> }
+                <IsInstructor age={props.registration.age} instructor={instructor} club={club?.name ?? ""} gradeId={grade?.gradeId ?? 0} setInstructor={setInstructor} />
             </div>
-            <div className={styles.masterDisclaimer} hidden={grade == null || grade?.dan === false || (grade != null && grade.dan === true && grade.grade < 4)}>
+            <div className={styles.masterDisclaimer} hidden={grade == null || grade?.gradeId < 18}>
                 <h3>Alle mastere betaler uansett for leieren. Noen få utvalgte får refusjon igjennom godtgjørelse.</h3>
                 <h3>Grandmaster Svein Anderstuen og Master Tom Lasse Karlsen tar godtgjørelse med de som er aktuelle.</h3>
             </div>
             <div className={styles.navigationButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
-                <button className={styles.nextButton}  disabled={club === "" || grade == null} onClick={nextStep}>Neste</button>
+                <button className={styles.nextButton} disabled={club?.clubId === 0 || grade == null} onClick={nextStep}>Neste</button>
             </div>
         </div>
     )

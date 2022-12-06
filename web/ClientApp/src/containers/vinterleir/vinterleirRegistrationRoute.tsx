@@ -15,6 +15,7 @@ import Payment from "../registrering/payment";
 import { Done, Welcome } from "./vinterleirregistrering";
 import Sleepover from "../registrering/sleepoverform";
 import { Registration } from "../../models/registrationModels";
+import Public from "../registrering/publicform";
 
 
 function RegistrationRouting() {
@@ -26,14 +27,18 @@ function RegistrationRouting() {
         email: "",
         telephone: "",
         allergies: "",
-        club: "",
-        grade: null,
+        clubId: 0,
+        gradeId: 0,
         gradering: false,
         hasLedsager: false,
         ledsagere: [],
         otherInfo: "",
         sleepover: false,
-        vegan: false
+        vegan: false,
+        instructor: 0,
+        public: null,
+        vipps: false,
+        wantsToInstruct: false
     });
     const currentProps = { 
         step: currentStep,
@@ -68,8 +73,6 @@ function RegistrationRouting() {
     }
 
     switch (currentStep) {
-        // case Steps.Welcome:
-        //     return <Welcome step={currentStep} setCurrentStep={setCurrentStep} registration={registration} setRegistration={setRegistration}/>;
         case Steps.NameAge:
             return <NameAgeForm {... currentProps } prevStep={Steps.Welcome} nextStep={Steps.EmailTelephone} 
                 />
@@ -101,10 +104,13 @@ function RegistrationRouting() {
             return <FoodPreference {... currentProps } prevStep={Steps.Allergies} nextStep={Steps.OtherInformation}
                 />
         case Steps.OtherInformation:
-            return <OtherInformation {... currentProps } prevStep={Steps.FoodPreference} nextStep={Steps.Payment}
+            return <OtherInformation {... currentProps } prevStep={Steps.FoodPreference} nextStep={Steps.Public}
+                />
+        case Steps.Public:
+            return <Public {... currentProps } prevStep={Steps.OtherInformation} nextStep={Steps.Payment}
                 />
         case Steps.Payment:
-            return <Payment {... currentProps } prevStep={Steps.OtherInformation} nextStep={Steps.Done} 
+            return <Payment {... currentProps } prevStep={Steps.Public} nextStep={Steps.Done} 
                 />
         case Steps.Done:
             return <Done />

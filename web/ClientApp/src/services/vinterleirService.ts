@@ -1,6 +1,7 @@
-import { Grade, Registration, SimpleRegistration } from '../models/registrationModels';
+import { Registration } from '../models/registrationModels';
+import { Grade } from './gradeService';
 
-export async function sendVinterleirRegistration(reg: Registration): Promise<boolean> {
+export async function sendVinterleirRegistration(reg: Registration): Promise<string> {
     try {
         const response = await fetch(`/api/Vinterleir/Post`, {
             method: 'POST',
@@ -12,35 +13,22 @@ export async function sendVinterleirRegistration(reg: Registration): Promise<boo
             throw new Error(err);
         })
 
-        return response.json();
+        return response.text();
     }
     catch(err) {
         throw new Error(`${err}`);
     }
 }
 
-export async function askForVinterleirVippsPurchase(reg: Registration): Promise<string> {
-    try {
-        const response = await fetch(`/api/Vipps/BetalVinterleirMedVipps`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(reg)
-        }).catch((err) => {
-            throw new Error(err);
-        })
-
-        const resp = response.text();
-        
-        return resp;
-    }
-    catch(err) {
-        throw new Error(err as string);
-    }
+export enum OrderStatus {
+    Nothing = "",
+    Cancelled = "CANCELLED",
+    Reserved = "RESERVED",
+    Reserve_Failed = "RESERVE_FAILED",
+    Rejected = "REJECTED"
 }
 
-export async function checkIfPaid(orderId: string): Promise<boolean> {
+export async function checkIfPaid(orderId: string): Promise<OrderStatus> {
     try {
         const response = await fetch(`/api/Vipps/CheckIfVippsOk/${orderId}`, {
             method: 'GET',
@@ -51,7 +39,19 @@ export async function checkIfPaid(orderId: string): Promise<boolean> {
             throw new Error(err);
         })
         
-        return response.json();
+        var stringResponse: string = await response.text();
+        switch (stringResponse) {
+            case OrderStatus.Cancelled:
+                return OrderStatus.Cancelled;
+            case OrderStatus.Rejected:
+                return OrderStatus.Rejected;
+            case OrderStatus.Reserve_Failed:
+                return OrderStatus.Reserve_Failed;
+            case OrderStatus.Reserved:
+                return OrderStatus.Reserved;
+            default:
+                return OrderStatus.Nothing;
+        }
     }
     catch(err) {
         throw new Error(err as string);
@@ -76,47 +76,48 @@ export async function cancelOrder(orderId: string): Promise<boolean> {
     }
 }
 
-export function getGrades() {
-    const colors = [
-        "Hvitt","Hvitt med gul stripe","Gult med hvit stripe",
-        "Gult","Gult med grønn stripe",
-        "Grønt","Grønt med blå stripe",
-        "Blått","Blått med en tynn rød stripe","Blått med en rød stripe",
-        "Rødt","Rødt med en sort stripe","Rødt med to sorte striper","Rødt med tre sorte striper"
-    ];
+export interface VinterleirUser {
+    name: string;
+    grade: string;
+    club: string;
+}
 
-    let list: Grade[] = [];
-    let current: number = 10;
-    for (const color of colors) {
-        list.push({
-            grade: current,
-            dan: false,
-            color: color,
-            name: `${current}. Cup (${color})`
+export async function getVinterleirUsers(): Promise<VinterleirUser[]> {
+    try {
+        const response = await fetch(`/api/VinterleirUsers/Get`, {
+            method: 'Get',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).catch((err) => {
+            throw new Error(err);
         })
 
-        if(current === 10) {
-            current = 9; // Special grade... 
-        }
-        else if(current > 5 && Number.isInteger(current)) {
-            current = (current-1) + 0.1;
-        }
-        else if(current > 5 && !Number.isInteger(current)){
-            current = current - 0.1;
-        }
-        else {
-            current = current - 1;
-        }
+        return response.json();
     }
-
-    for (let index = 1; index < 11; index++) {
-        list.push({
-            grade: index,
-            dan: true,
-            color: "Svart",
-            name: `${index}. Dan`
-        });
+    catch(err) {
+        throw new Error(`${err}`);
     }
+}
 
-    return list;
+export interface VinterleirGradeStatistic {
+    grade: Grade;
+    amount: number;
+}
+export async function getVinterleirGradeStatistic(): Promise<VinterleirGradeStatistic[]> {
+    try {
+        const response = await fetch(`/api/VinterleirUsers/GetGrades`, {
+            method: 'Get',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).catch((err) => {
+            throw new Error(err);
+        })
+
+        return response.json();
+    }
+    catch(err) {
+        throw new Error(`${err}`);
+    }
 }

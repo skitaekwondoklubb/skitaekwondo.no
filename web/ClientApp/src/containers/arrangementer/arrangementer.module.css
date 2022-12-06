@@ -5,6 +5,7 @@
     align-items: center;
     gap: 10%;
     margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 :local .picture {
@@ -72,6 +73,30 @@
     gap: 1em;
 }
 
+:local .spaceLinks {
+    margin-top: 0.5em;
+}
+
+:local .invitations {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-bottom: 1em;
+}
+
+:local .invitations a {
+    font-size: 1.3em;
+}
+
+:local .registrationButton:disabled {
+    border-color: grey;
+}
+
+:local .registrationButton:disabled:hover {
+    border-color: grey;
+    background-color: white;
+    color: grey;
+}
 
 @media only screen and (max-width: 1080px) {
     :local .arrangementerGrid {

@@ -49,6 +49,9 @@
     padding: 20px 30px 20px 30px;
 }
 
+:local .infoBoxExtraButtonMargin {
+    margin-top: 1em;
+}
 
 :local .treningstider h1 {
     margin-top: 0px;
@@ -73,6 +76,10 @@
 }
 
 @media only screen and (max-width: 1080px) {
+
+    :local .infoBoxExtraButtonMargin {
+        margin-top: 0px;
+    }
 
     :local .home {
         margin-left: 10%;

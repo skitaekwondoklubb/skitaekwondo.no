@@ -1,3 +1,4 @@
+
 import { Instructor } from './instructor';
 export interface Registration {
     firstName: string;
@@ -8,16 +9,16 @@ export interface Registration {
     allergies: string;
     vegan: boolean;
     otherInfo: string;
-    club?: string;
-    grade?: Grade | null;
-    gradering?: boolean;
-    instructor?: Instructor;
-    sleepover?: boolean;
-    hasLedsager?: boolean;
-    ledsagere?: Array<Ledsager>;
-    pizza?: string;
-    theory?: boolean;
-    physical?: boolean;
+    clubId: number;
+    gradeId: number;
+    gradering: boolean;
+    instructor: Instructor;
+    sleepover: boolean;
+    hasLedsager: boolean;
+    ledsagere: Array<Ledsager>;
+    wantsToInstruct: boolean;
+    vipps: boolean;
+    public: boolean | null;
 }
 
 export interface Ledsager {
@@ -29,13 +30,6 @@ export interface Ledsager {
     email: string;
     sleepover: boolean;
     alreadyRegistered: boolean;
-}
-
-export interface Grade {
-    grade: number;
-    dan: boolean;
-    color: string;
-    name: string;
 }
 
 export interface SimpleRegistration {

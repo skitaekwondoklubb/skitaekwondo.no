@@ -1,38 +1,23 @@
-export const ttuClubs = [
-    "Bergen Vest",
-    "Bergstaden",
-    "Brandbu",
-    "Bjerke",
-    "Bø",
-    "Centrum",
-    "Elverum",
-    "Evje",
-    "Florø",
-    "Hamar",
-    "I.R",
-    "Islev",
-    "Kunja",
-    "Larvik",
-    "Lillesand",
-    "Lund",
-    "Lyngby",
-    "Meland",
-    "Moss",
-    "Munkholmen",
-    "Nesodden",
-    "Nittedal",
-    "Nordfjord",
-    "Notodden",
-    "Oppsal",
-    "OSI",
-    "Osterøy",
-    "Ringerike",
-    "Ski Taekwondo Klubb",
-    "Solør",
-    "Steinkjer",
-    "Sunnfjord",
-    "Sædalen",
-    "Tynset",
-    "Ålesund",
-    "Sølvbyen"
-]
+export interface Club {
+    clubId: number;
+    name: string;
+}
+
+
+export async function getClubs(): Promise<Club[]> {
+    try {
+        const response = await fetch(`/api/Club/Get`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).catch((err) => {
+            throw new Error(err);
+        })
+
+        return response?.json();
+    }
+    catch(err) {
+        throw new Error(err as string);
+    }
+}

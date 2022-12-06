@@ -1,23 +1,23 @@
 import { FormEvent, useEffect, useState } from "react";
 import Autosuggest, { SuggestionsFetchRequested } from "react-autosuggest";
+import { Club } from "../../services/clubService";
 
 function escapeRegexCharacters(str: string) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
 interface ClubAutocompleteProps {
-    currentSelection: string;
-    clubs: string[];
-    setClub: (club: string) => void;
+    currentSelection: Club | undefined;
+    clubs: Club[];
+    setClub: (club: Club) => void;
 }
 
 function ClubAutocomplete(props: ClubAutocompleteProps) {
-    const [suggestions, setSuggestions] = useState<string[]>([]);
-    const [club, setClub] = useState(props.currentSelection);
+    const [suggestions, setSuggestions] = useState<Club[]>([]);
+    const [club, setClub] = useState(props.currentSelection?.name);
 
     useEffect(() => {
-        const foundClub = props.clubs.find(x => x.toLowerCase() === club.toLowerCase());
-        
+        const foundClub = props.clubs.find(x => x.name.toLowerCase() === club?.toLowerCase());
         if(foundClub != null) {
             props.setClub(foundClub);
         }
@@ -30,7 +30,7 @@ function ClubAutocomplete(props: ClubAutocompleteProps) {
           return [];
         }
       
-        return props.clubs.filter(club => club.toLowerCase().includes(escapedValue.toLowerCase()));
+        return props.clubs.filter(club => club.name.toLowerCase().includes(escapedValue.toLowerCase()));
     }
 
     const onSuggestionsFetch: SuggestionsFetchRequested = (request) => {
@@ -44,15 +44,15 @@ function ClubAutocomplete(props: ClubAutocompleteProps) {
     return (
         <Autosuggest 
             suggestions={suggestions}
-            getSuggestionValue={(aclub: string) => aclub}
+            getSuggestionValue={(aclub) => aclub.name}
             onSuggestionsFetchRequested={onSuggestionsFetch}
-            renderSuggestion={(suggestion: string) => (
+            renderSuggestion={(suggestion: Club) => (
                 <div>
-                    <span>{suggestion}</span>
+                    <span>{suggestion.name}</span>
                 </div>
             )}
             inputProps={{
-                value: club,
+                value: club ?? "",
                 onChange: setClubValue
             }}
         />

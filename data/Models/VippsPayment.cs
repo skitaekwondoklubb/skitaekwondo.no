@@ -35,4 +35,12 @@ namespace SkiTKD.Data.Models {
         public static string Regular = "eComm Regular Payment";
         public static string Express = "eComm Express Payment";
     }
+
+    public static class CallbackStatuses {
+        public const string Nothing = "";
+        public const string Reserved = "RESERVED";
+        public const string Reserved_Failed = "RESERVE_FAILED";
+        public const string Cancelled = "CANCELLED";
+        public const string Rejected = "REJECTED";
+    }
 }

@@ -1,0 +1,53 @@
+:global .boxpurple {
+    background-color: #673ab7;
+    color: white;
+    border-color: #6d1b7b;
+}
+
+:global .boxred {
+    background-color: #e91e63;
+    color: white;
+    border-color: #a31545;
+}
+
+:global .boxblue {
+    background-color: #2196f3;
+    color: white;
+    border-color: #1769aa;
+}
+
+:global .boxwhite {
+    background-color: white;
+    color: black;
+    border-color: seashell;
+}
+
+:global .boxyellow {
+    background-color: #ff5722;
+    color: white;
+    border-color: #b23c17;
+}
+
+:global .boxgreen {
+    background-color: #4caf50;
+    color: white;
+    border-color: #357a38;
+}
+
+:global .boxaltred {
+    background-color: #ff1744;
+    color: white;
+    border-color: #b2102f;
+}
+
+:global .boxblack {
+    background-color: black;
+    color: white;
+    border-color: grey;
+}
+
+:global .boxcyan {
+    background-color: #00bcd4;
+    color: white;
+    border-color: #008394;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter, Link, NavLink, Route, useHistory } from 'react-router-dom';
 import RandomizedBackground from './randomizedbackground';
 import styles from './home.module.css'
+import { getClubs } from '../../services/clubService';
 
 
 function Treningstider() {
@@ -42,8 +43,10 @@ function Home() {
                                 <div className={`${styles.infoBoxButtons} fadeInSlow`}>
                                     <button onClick={() => history.push("/omoss")}>Les mer</button>
                                     <Link to="/treningstider"><button>Treningstider</button></Link>
-                                    {/* <button className={styles.arrangementerButton} onClick={() => history.push("/arrangementer")}>Arrangementer</button> */}
                                 </div>
+                                {/* <div className={`${`${styles.infoBoxButtons} ${styles.infoBoxExtraButtonMargin}`} fadeInSlow`}>
+                                    <a href="/program"><button>Program - Vinterleir 2022</button></a>
+                                </div> */}
                             </div>
                         </Route>
                         <Route exact path ="/treningstider">

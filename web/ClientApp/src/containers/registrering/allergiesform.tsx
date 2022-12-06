@@ -32,7 +32,7 @@ function Allergies(props: StepProps) {
     return (
         <div className="slideLeft">
             <p>Matallergier er noe Ski Taekwondo Klubb tar seriøst. Vi passer på at det er et alternativ for deg til alle måltider.</p>
-            <p>Skriv også ned eventuelle andre viktige allergier vi må vite om i tilfelle nødsituasjoner.</p>
+            <p>Skriv også ned andre seriøse allergier det er viktig vi må vite om i tilfelle nødsituasjoner.</p>
             <p>Hvis man ikke har allergier eller det kun er milde/irrelevante allergier, kan feltet under forbli tomt.</p>
             <textarea className={styles.freeText} value={allergies} onChange={(x) => setAllergies(x.currentTarget.value)} />
 

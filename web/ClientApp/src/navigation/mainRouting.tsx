@@ -14,10 +14,10 @@ import styles from './navigation.module.css';
 import Arrangementer from '../containers/arrangementer/arrangementer';
 import Vinterleir from '../containers/vinterleir/vinterleir';
 import VinterleirRegistrering from '../containers/vinterleir/vinterleirregistrering';
-import Registrering from '../containers/registrering/registrering';
-import SimpleGradering from '../containers/graderingregistrering/simplegradering';
-import SimpleRegistrationRouting from '../containers/graderingregistrering/simplegraderingrouting';
-import CheckGraderingVippsPayment from '../containers/graderingregistrering/checkGraderingVippsPayment';
+import CheckVippsPayment from '../containers/registrering/checkVippsPayment';
+import VinterleirPublic from '../containers/vinterleirpublic/vinterleirpublic';
+import VinterleirAdministration from '../containers/vinterleirpublic/administration';
+import Agenda from '../containers/vinterleiragenda/agenda';
 
 function MainRouting() {
   return (
@@ -58,33 +58,44 @@ function MainRouting() {
             <Route path="/arrangementer">
               <Arrangementer/>
             </Route>
-            <Route exact path="/graderingregistrering">
+            {/* <Route exact path="/graderingregistrering">
               <SimpleRegistrationRouting />
-            </Route>
-            
+            </Route> */}
+{/*             
             <Route exact path="/registrering">
               <div className={styles.expiredRegistration}>
                 <h1>Danseminaret er ferdig</h1>
                 <p>Så du trenger ikke registrere deg igjen 🙂</p>
                 <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
               </div>
-            </Route>
+            </Route> */}
             <Route exact path="/vinterleirregistrering">
               <div className={styles.expiredRegistration}>
                 <h1>Registrering til vinterleir</h1>
-                <p>Vinterleiren ble dessverre avlyst i år. Vi håper at alle gode ting er tre! 🙂</p>
-                <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
+                <p className={styles.smallGap}>Vinterleiren er over for denne gang! 🙂 Sees i 2023!</p>
+                {/* <p className={styles.bigGap}> 🙂</p> */}
+                <div className={styles.extraButtons}>
+                  <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
+                  {/* <Link to="/vinterleirdeltakere"><button className={`${styles.backButton} ${styles.otherButton}`}>Til deltakerliste</button></Link> */}
+                </div>
+
               </div>
             </Route>
-            <Route exact path="/vinterleiretterregistrering">
-              <div className={styles.expiredRegistration}>
-                <h1>Registrering til vinterleir</h1>
-                <p>Vinterleiren ble dessverre avlyst i år. Vi håper at alle gode ting er tre! 🙂</p>
-                <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
-              </div>
+            {/* <Route exact path="/vinterleiretterregistrering">
+              <VinterleirRegistrering/>
+            </Route> */}
+            {/* <Route exact path="/vinterleirdeltakere">
+              <VinterleirPublic/>
             </Route>
+            <Route exact path="/program">
+              <Agenda/>
+            </Route>
+            <Route exact path="/vinterleirdeltakereadmin">
+              <VinterleirAdministration/>
+            </Route> */}
+
             {/* <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/>} /> */}
-            <Route exact path="/GraderingVipps/:ordreId" render={(props) => <CheckGraderingVippsPayment orderId={props.match.params.ordreId}/>} />
+            {/* <Route exact path="/GraderingVipps/:ordreId" render={(props) => <CheckGraderingVippsPayment orderId={props.match.params.ordreId}/>} /> */}
           </Switch>
         </div>
     </BrowserRouter>
