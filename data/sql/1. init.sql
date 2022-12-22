@@ -1,7 +1,8 @@
 DROP TABLE IF EXISTS club CASCADE;
 DROP TABLE IF EXISTS grade CASCADE;
 DROP TABLE IF EXISTS person CASCADE;
-DROP TABLE IF EXISTS registration CASCADE;
+DROP TABLE IF EXISTS vinterleirregistration CASCADE;
+DROP TABLE IF EXISTS graderingregistration CASCADE;
 DROP TABLE IF EXISTS ledsager CASCADE;
 DROP TABLE IF EXISTS payment CASCADE;
 DROP TABLE IF EXISTS vipps CASCADE;
@@ -28,7 +29,39 @@ CREATE TABLE grade (
     isDan boolean NOT NULL
 );
 
-CREATE TABLE registration (
+CREATE TABLE payment (
+    paymentId serial PRIMARY KEY,
+    vipps boolean NOT NULL,
+    vippsId int NULL,
+    amount numeric NOT NULL,
+    paid boolean NOT NULL,
+    cancelled boolean NOT NULL
+);
+
+CREATE TABLE vipps (
+    vippsId serial PRIMARY KEY,
+    paymentId int NOT NULL references payment(paymentId),
+    orderId varchar NOT NULL,
+    transactionId varchar NULL,
+    transactionText varchar NULL,
+    mobileNumber varchar NOT NULL,
+    amount numeric NOT NULL,
+    status varchar NULL,
+    timeStamp timestamp NULL
+);
+
+ALTER TABLE payment
+   ADD FOREIGN KEY (vippsId) REFERENCES vipps(vippsId);
+
+CREATE TABLE transactionError (
+    transactionErrorId serial PRIMARY KEY,
+    contextId varchar NOT NULL,
+    errorMessage varchar NULL,
+    errorCode varchar NULL,
+    errorGroup varchar NULL
+);
+
+CREATE TABLE vinterleirregistration (
     registrationId serial PRIMARY KEY,
     personId int NOT NULL REFERENCES person(personId),
     clubId int NOT NULL REFERENCES club(clubId),
@@ -41,7 +74,15 @@ CREATE TABLE registration (
     wantsToInstruct boolean NOT NULL,
     otherInfo varchar NULL,
     public boolean NOT NULL,
-    vipps boolean NOT NULL,
+    paymentId int NULL REFERENCES payment(paymentId),
+    cancelled boolean NOT NULL,
+    mailsent boolean NOT NULL
+);
+
+CREATE TABLE graderingregistration (
+    registrationId serial PRIMARY KEY,
+    personId int NOT NULL REFERENCES person(personId),
+    paymentId int NULL REFERENCES payment(paymentId),
     cancelled boolean NOT NULL,
     mailsent boolean NOT NULL
 );
@@ -50,36 +91,8 @@ CREATE TABLE ledsager (
     ledsagerId serial PRIMARY KEY,
     personId int REFERENCES person(personId),
     forPersonId int REFERENCES person(personId),
-    registrationId int REFERENCES registration(registrationId),
+    registrationId int REFERENCES vinterleirregistration(registrationId),
     hasPaid boolean NOT NULL
 );
 
-CREATE TABLE payment (
-    paymentId serial PRIMARY KEY,
-    registrationId int NOT NULL references registration(registrationId),
-    vipps boolean NOT NULL,
-    amount numeric NOT NULL,
-    paid boolean NOT NULL,
-    cancelled boolean NOT NULL
-);
 
-CREATE TABLE vipps (
-    vippsId serial PRIMARY KEY,
-    registrationId int NOT NULL references registration(registrationId),
-    paymentId int NOT NULL references payment(paymentId),
-    orderId varchar NOT NULL,
-    transactionId varchar NULL,
-    transactionText varchar NULL,
-    mobileNumber varchar NOT NULL,
-    amount numeric NOT NULL,
-    status varchar NULL,
-    timeStamp timestamp NULL
-);
-
-CREATE TABLE transactionError (
-    transactionErrorId serial PRIMARY KEY,
-    contextId varchar NOT NULL,
-    errorMessage varchar NULL,
-    errorCode varchar NULL,
-    errorGroup varchar NULL
-);

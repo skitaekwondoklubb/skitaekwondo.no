@@ -10,7 +10,7 @@ namespace SkiTKD.Web.Controllers
     public class VinterleirController : ControllerBase
     {
         private readonly ILogger<VinterleirController> _logger;
-        private readonly IRegistrationRepository _regRepo;
+        private readonly IVinterleirRegistrationRepository _regRepo;
         private readonly IPersonRepository _personRepo;
         private readonly IVippsRepository _vippsRepo;
         private readonly IPaymentRepository _paymentRepo;
@@ -20,7 +20,7 @@ namespace SkiTKD.Web.Controllers
         public VinterleirController(
             ILogger<VinterleirController> logger, 
             IPersonRepository personRepo, 
-            IRegistrationRepository regRepo, 
+            IVinterleirRegistrationRepository regRepo, 
             IVippsRepository vippsRepo,
             IPaymentRepository paymentRepo,
             ILedsagerRepository ledsagerRepo,
@@ -40,6 +40,7 @@ namespace SkiTKD.Web.Controllers
         [Route("Post")]
         public async Task<ActionResult<string>> Post(VinterleirRegistration reg)
         {
+            throw new Exception("Vinterleirregistrering er ikke mulig nå.");
 
             using(TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)) {
                 try {
@@ -51,9 +52,7 @@ namespace SkiTKD.Web.Controllers
                         reg.Telephone
                     );
 
-                    _regRepo.AddRegistration(reg, person.personid);
-
-                    var registration = _regRepo.FindRegistration(person.personid);
+                    var registration = _regRepo.AddRegistration(reg, person.personid);
 
                     if(reg.Ledsagere.Count > 0) {
                         foreach(var ledsager in reg.Ledsagere) {
@@ -70,21 +69,23 @@ namespace SkiTKD.Web.Controllers
                         }
                     }
 
-                    var existingPayment = _paymentRepo.FindPayment(registration.registrationid);
+                    var existingPayment = registration.Payment;
                     if(existingPayment == null || !(existingPayment.paid) || (existingPayment.cancelled == true)) {
-                        var payment = _paymentRepo.AddPayment(registration.registrationid, registration.vipps, _paymentRepo.GetTotal(reg));
+                        var payment = _paymentRepo.AddPayment(registration, reg.Vipps, _paymentRepo.GetTotal(reg));
 
-                        if(registration.vipps) {
-                            var request = await _vippsRepo.VinterleirToVippsRequest(registration.registrationid, person.telephone, payment.paymentid, (int)payment.amount);
+                        if(reg.Vipps) {
+                            var request = await _vippsRepo.VippsRequest(registration.registrationid, person.telephone, payment.paymentid, (int)payment.amount, "Vinterleir for utøver");
                             var url = await _vippsRepo.Payments(request);
                             if(url == null || request?.transaction?.orderId == null) {
                                 throw new Exception("Klarte ikke koble til Vipps. OrdreId er NULL");
                             }
+
                             scope.Complete();
                             return Ok(url);
                         }
                     }
-                    _mailRepo.SendMail(registration.registrationid);
+                    
+                    _mailRepo.SendMail(registration);
                     scope.Complete();
                 }
                 catch(Exception e) {

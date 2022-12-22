@@ -28,6 +28,6 @@ namespace SkiTKD.Data.Entities {
 
         public virtual PersonEntity Person { get; set; }
         public virtual PersonEntity ForPerson { get; set; }
-        public virtual RegistrationEntity Registration { get; set; }
+        public virtual VinterleirRegistrationEntity Registration { get; set; }
     }
 }

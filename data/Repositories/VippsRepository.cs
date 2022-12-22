@@ -77,7 +77,7 @@ namespace SkiTKD.Data.Repositories
             }
         }
 
-        public async Task<VippsPaymentRequestBody> VinterleirToVippsRequest(int registrationId, string telephone, int paymentid, int total) {
+        public async Task<VippsPaymentRequestBody> VippsRequest(int registrationId, string telephone, int paymentid, int total, string transactionText) {
             var ordreId = Guid.NewGuid().ToString();
             var requestBody = new VippsPaymentRequestBody {
                 customerInfo = new CustomerInfo {
@@ -92,7 +92,7 @@ namespace SkiTKD.Data.Repositories
                 transaction = new Transaction {
                     amount = total * 100, // Vipps represents total as øre.
                     orderId = ordreId,
-                    transactionText = "Vinterleir for utøver",
+                    transactionText = transactionText,
                 }
             };
 
@@ -102,11 +102,10 @@ namespace SkiTKD.Data.Repositories
                 amount = requestBody.transaction.amount,
                 paymentid = paymentid,
                 transactiontext = requestBody.transaction.transactionText,
-                registrationid = registrationId,
                 timestamp = DateTime.UtcNow
             };
 
-            _dbContext.VippsOrders.Add(order);
+            var completed = _dbContext.VippsOrders.Add(order);
             _dbContext.SaveChanges();
 
             return requestBody;
@@ -148,29 +147,6 @@ namespace SkiTKD.Data.Repositories
                 }
             }
             return null;
-        }
-
-        public VippsEntity FindVippsRegistration(int registrationId)
-        {
-            try {
-                VippsEntity entity;
-                var vipps = _dbContext.VippsOrders.Where(x => x.registrationid == registrationId && x.status != null);
-                if(vipps.Count() > 1) {                    
-                    var possibilities = vipps.Where(x => x.status != CallbackStatuses.Cancelled);
-                    if(possibilities.Count() == 1) {
-                        return possibilities.First(); // Return first ok payment.
-                    }
-                }
-                if(vipps.Count() > 0) {
-                    return vipps.First(); // Return first ok or might have been cancelled.
-                }
-                
-                return null;
-            }
-            catch(Exception e) {
-                Console.WriteLine($"Error while getting VippsRegistrations through registrationid: {registrationId}");
-                throw new Exception($"Error while getting VippsRegistrations through registrationid: {registrationId}", e);
-            }
         }
     }
 }

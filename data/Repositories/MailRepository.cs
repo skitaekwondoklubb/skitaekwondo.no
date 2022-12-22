@@ -20,7 +20,8 @@ namespace SkiTKD.Data.Repositories
         private readonly string password;
         private readonly IGraphTokenService _tokenService;
         private readonly SkiTKDContext _dbContext;
-        private readonly IRegistrationRepository _regRepo;
+        private readonly IVinterleirRegistrationRepository _vinterleirRegRepo;
+        private readonly IGraderingRepository _graderingRepo;
         private readonly IPaymentRepository _paymentRepo;
         private readonly ILedsagerRepository _ledsagerRepo;
         private readonly IVippsRepository _vippsRepo;
@@ -30,25 +31,26 @@ namespace SkiTKD.Data.Repositories
             IConfiguration config, 
             IGraphTokenService graphToken, 
             SkiTKDContext dbContext, 
-            IRegistrationRepository regRepo,
+            IVinterleirRegistrationRepository regRepo,
             IPaymentRepository paymentRepo,
             ILedsagerRepository ledsagerRepo,
-            IVippsRepository vippsRepo) {
+            IVippsRepository vippsRepo,
+            IGraderingRepository graderingRepo
+        ) {
             clientId = config["ClientId"];
             user = config["ExcelUser"];
             path = config["VinterleirPath"];
             password = config["Pass"];
             _tokenService = graphToken;
             _dbContext = dbContext;
-            _regRepo = regRepo;
+            _vinterleirRegRepo = regRepo;
             _paymentRepo = paymentRepo;
             _ledsagerRepo = ledsagerRepo;
             _vippsRepo = vippsRepo;
+            _graderingRepo = graderingRepo;
         }
 
-        public bool SendMail(int registrationId) {
-           var registration = _dbContext.Registrations.Single(x => x.registrationid == registrationId);
-
+        public bool SendMail(RegistrationEntity registration) {
             if(registration.mailsent == false) {
                 SendMailToRecipient(registration);
                 registration.mailsent = true;
@@ -58,7 +60,27 @@ namespace SkiTKD.Data.Repositories
             return false;
         }
 
-        private string GetOrder(RegistrationEntity registration) {
+        private string GetOrder(RegistrationEntity reg) {
+            if(reg is VinterleirRegistrationEntity) {
+                var vinterleirReg = _vinterleirRegRepo.FindRegistration(reg.registrationid);
+                return GetVinterleirOrder(vinterleirReg);
+            }
+            else if(reg is GraderingRegistrationEntity) {
+                return GetGraderingOrder();
+            }
+
+            throw new Exception($"Ingen registrering med denne typen.");
+        }
+
+        private string GetGraderingOrder() {
+            var builder = new StringBuilder();
+            builder.Append("<li>");
+            builder.Append($"Gradering: {PaymentRepository.GetTotalGradering}");
+            builder.Append("</li>");
+            return builder.ToString();
+        }
+
+        private string GetVinterleirOrder(VinterleirRegistrationEntity registration) {
             var orders = new List<string>();
             var name = $"{registration.Person.firstname} {registration.Person.lastname}";
             if(registration.instructor == InstructorType.SkiFullTimeInstructor) {
@@ -110,35 +132,24 @@ namespace SkiTKD.Data.Repositories
                     })
                 );
 
+
                 var order = GetOrder(registration);
-                var paymentMethod = registration.vipps ? "Vipps" : "Kort/Kontant";
+                var payment = registration.Payment ?? _paymentRepo.FindPaymentById(registration.paymentid ?? throw new Exception("Mangler paymentId i registrering."));
+                var paymentMethod = payment.vipps ? "Vipps" : "Kort/Kontant";
                 var orderId = "";
 
                 // Vis ordrenummer hvis dette er Vipps.
-                if(registration.vipps) {
-                    var possibilties = _dbContext.VippsOrders.Where(x => x.registrationid == registration.registrationid).ToList().Last();
-                    if(possibilties != null) {
-                        orderId = $"<p>Vipps ordernummer: {possibilties.orderid}</p>";
-                    }
+                if(payment.vipps && registration.Payment.VippsEntity != null) {
+                    orderId = $"<p>Vipps ordernummer: {registration.Payment.VippsEntity.orderid}</p>";
                 }
 
                 var message = new Message
                 {
-                    Subject = "Du er registrert til vinterleir",
+                    Subject = $"Du er registrert til {GetTypeTitle(registration)}",
                     Body = new ItemBody
                     {
                         ContentType = BodyType.Html,
-                        Content = @$"
-                            <h1>Takk for at du registrerte deg til vinterleir!</h1>
-                            <p>Hei {registration.Person.firstname} {registration.Person.lastname}, du er herved registrert til Ski Taekwondo Klubbs vinterleir {DateTime.Now.Year}.<p>
-                            <p>Her følger en kvittering:<p>
-                            <ul>{order}</ul>
-                            <p>Betalingsmåte: {paymentMethod}</p>
-                            {orderId}
-                            <p>For avbestilling, ta kontakt med oss på <a href='mailto: kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a></p>
-                            <p>Med vennlig hilsen<p>
-                            <p>Ski Taekwondo Klubb</p>
-                        "
+                        Content = registration is VinterleirRegistrationEntity ? GetVinterleirReceipt(registration, order, paymentMethod, orderId) : GetGraderingReceipt(registration, order, paymentMethod, orderId)
                     },
                     ToRecipients = new List<Recipient>()
                     {
@@ -162,7 +173,46 @@ namespace SkiTKD.Data.Repositories
                 throw e;
             }
         }
+
+        private string GetTypeTitle(RegistrationEntity reg) {
+             return reg is VinterleirRegistrationEntity ? "vinterleir" : "gradering";
+        }
     
+        private string GetVinterleirReceipt(RegistrationEntity reg, string order, string paymentMethod, string orderId) {
+            if(!(reg is GraderingRegistrationEntity)) {
+                throw new Exception("Klarte ikke sende mail: Feil registreringstype.");
+            }
+
+            return @$"
+                <h1>Takk for at du registrerte deg til vinterleir!</h1>
+                <p>Hei {reg.Person.firstname} {reg.Person.lastname}, du er herved registrert til Ski Taekwondo Klubbs vinterleir {DateTime.Now.Year}.<p>
+                <p>Her følger en kvittering:<p>
+                <ul>{order}</ul>
+                <p>Betalingsmåte: {paymentMethod}</p>
+                {orderId}
+                <p>For avbestilling, ta kontakt med oss på <a href='mailto: kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a></p>
+                <p>Med vennlig hilsen<p>
+                <p>Ski Taekwondo Klubb</p>
+            ";
+        }
+
+        private string GetGraderingReceipt(RegistrationEntity reg, string order, string paymentMethod, string orderId) {
+            if(!(reg is GraderingRegistrationEntity)) {
+                throw new Exception("Klarte ikke sende mail: Feil registreringstype.");
+            }
+
+            return @$"
+                <p>Hei {reg.Person.firstname} {reg.Person.lastname}, du er herved registrert til gradering i Ski Taekwondo Klubb.<p>
+                <p>Her følger en kvittering:<p>
+                <ul>{order}</ul>
+                <p>Betalingsmåte: {paymentMethod}</p>
+                {orderId}
+                <p>For avbestilling, ta kontakt med oss på <a href='mailto: kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a></p>
+                <p>Lykke til!</p>
+                <p>Med vennlig hilsen<p>
+                <p>Ski Taekwondo Klubb</p>
+            ";
+        }
     }
 }
 

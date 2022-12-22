@@ -14,44 +14,45 @@ namespace SkiTKD.Data.Repositories
         private readonly IPersonRepository _personRepo;
         private readonly ILedsagerRepository _ledsagerRepo;
         private readonly IGradeRepository _gradeRepo;
+        private readonly IVippsRepository _vippsRepo;
 
-
-        public PaymentRepository(SkiTKDContext dbContext, IPersonRepository personRepo, ILedsagerRepository ledsagerRepo, IGradeRepository gradeRepo) {
+        public PaymentRepository(SkiTKDContext dbContext, IPersonRepository personRepo, ILedsagerRepository ledsagerRepo, IGradeRepository gradeRepo, IVippsRepository vippsRepo) {
           _dbContext = dbContext;
           _personRepo = personRepo;
           _ledsagerRepo = ledsagerRepo;
           _gradeRepo = gradeRepo;
+          _vippsRepo = vippsRepo;
         }
 
-        public PaymentEntity AddPayment(int registrationId, bool vipps, int amount)
+        public PaymentEntity AddPayment(RegistrationEntity registration, bool vipps, int amount)
         {
-            var alreadyExists = FindPayment(registrationId);
-            if(alreadyExists != null) {
-                return alreadyExists;
-            }
-
             var newPayment = new PaymentEntity {
-                registrationid = registrationId,
                 amount = amount,
                 vipps = vipps,
                 paid = false,
                 cancelled = false
             };
 
-            _dbContext.Add(newPayment);
+            var paymentEntity = _dbContext.Add(newPayment);
             _dbContext.SaveChanges();
+
+            if(paymentEntity.Entity?.paymentid == null) {
+                throw new Exception("PAYMENT WAS NULL");
+            }
+
+            registration.paymentid = paymentEntity.Entity.paymentid;
 
             return newPayment;
         }
 
-        public PaymentEntity FindPayment(int registrationId)
+        public PaymentEntity FindPaymentByVipps(int vippsId)
         {
             try {
-                return _dbContext.Payments.SingleOrDefault(x => x.registrationid == registrationId);
+                return _dbContext.Payments.SingleOrDefault(x => x.vippsid == vippsId);
             }
             catch(Exception e) {
-                Console.WriteLine($"Failed to get payment through registration: {registrationId}");
-                throw new Exception($"Failed to get payment through registration: {registrationId}", e);
+                Console.WriteLine($"Failed to get payment through vippsId: {vippsId}");
+                throw new Exception($"Failed to get payment through vippsId: {vippsId}", e);
             }
 
         }
@@ -61,9 +62,9 @@ namespace SkiTKD.Data.Repositories
             return _dbContext.Payments.SingleOrDefault(x => x.paymentid == paymentId);
         }
 
-        public bool SetPaid(int registrationId)
+        public bool SetPaid(int paymentId)
         {
-            var payment = FindPayment(registrationId);
+            var payment = FindPaymentById(paymentId);
             payment.paid = true;
             _dbContext.SaveChanges();
             return true;
@@ -75,14 +76,8 @@ namespace SkiTKD.Data.Repositories
             return payment.paid;
         }
 
-        public bool RegistrationHasPaid(int registrationId)
-        {
-            var payment = FindPayment(registrationId);
-            return payment.paid;
-        }
-
-        public bool CancelPayment(int registrationId) {
-            var payment = FindPayment(registrationId);
+        public bool CancelPayment(int paymentId) {
+            var payment = FindPaymentById(paymentId);
             payment.cancelled = true;
             _dbContext.SaveChanges();
             return true;
@@ -131,6 +126,41 @@ namespace SkiTKD.Data.Repositories
 
             return total;
         }
+
+        public void SetVippsOnPayment(int paymentId, int vippsId)
+        {
+            var payment = FindPaymentById(paymentId);
+            if(payment == null) {
+                throw new NullReferenceException($"Tried to set Vippss on NULL payment: {paymentId}");
+            }
+
+            payment.vippsid = vippsId;
+            payment.vipps = true;
+            
+            _dbContext.SaveChanges();
+        }
+
+        public RegistrationEntity FindRegistrationByPayment(int? paymentId)
+        {
+            if(paymentId == null) {
+                throw new NullReferenceException("PaymentId is NULL");
+            }
+
+            
+            var tryVinterleir = _dbContext.VinterleirRegistrations.SingleOrDefault(x => x.paymentid == paymentId);
+            if(tryVinterleir != null) {
+                return tryVinterleir;
+            }
+
+            var tryGradering = _dbContext.GraderingRegistrations.SingleOrDefault(x => x.paymentid == paymentId);
+            if(tryGradering != null) {
+                return tryGradering;
+            }
+
+            throw new Exception($"PaymentId {paymentId} is not connected to any registrations.");
+        }
+
+        public static int GetTotalGradering = 350;
 
     }
 }

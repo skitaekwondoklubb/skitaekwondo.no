@@ -14,8 +14,9 @@ namespace SkiTKD.Data {
         
         public DbSet<ClubEntity> Clubs { get; set; }
         public DbSet<GradeEntity> Grades { get; set; }
+        public DbSet<GraderingRegistrationEntity> GraderingRegistrations { get; set; }
         public DbSet<PersonEntity> Persons { get; set; }
-        public DbSet<RegistrationEntity> Registrations { get; set; }
+        public DbSet<VinterleirRegistrationEntity> VinterleirRegistrations { get; set; }
         public DbSet<LedsagerEntity> Ledsagere { get; set; }
         public DbSet<PaymentEntity> Payments { get; set; }
         public DbSet<VippsEntity> VippsOrders { get; set; }
@@ -23,10 +24,10 @@ namespace SkiTKD.Data {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseNpgsql(_config.GetConnectionString("postgre"))
-                .UseLazyLoadingProxies();
+            .UseLazyLoadingProxies();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-            => modelBuilder.UseSerialColumns();
+            => modelBuilder.UseIdentityColumns();
     }
 
 

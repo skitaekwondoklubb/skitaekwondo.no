@@ -18,6 +18,7 @@ import CheckVippsPayment from '../containers/registrering/checkVippsPayment';
 import VinterleirPublic from '../containers/vinterleirpublic/vinterleirpublic';
 import VinterleirAdministration from '../containers/vinterleirpublic/administration';
 import Agenda from '../containers/vinterleiragenda/agenda';
+import SimpleRegistrationRouting from '../containers/graderingregistrering/simplegraderingrouting';
 
 function MainRouting() {
   return (
@@ -58,9 +59,9 @@ function MainRouting() {
             <Route path="/arrangementer">
               <Arrangementer/>
             </Route>
-            {/* <Route exact path="/graderingregistrering">
+            <Route exact path="/graderingregistrering">
               <SimpleRegistrationRouting />
-            </Route> */}
+            </Route>
 {/*             
             <Route exact path="/registrering">
               <div className={styles.expiredRegistration}>
@@ -94,8 +95,8 @@ function MainRouting() {
               <VinterleirAdministration/>
             </Route> */}
 
-            {/* <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/>} /> */}
-            {/* <Route exact path="/GraderingVipps/:ordreId" render={(props) => <CheckGraderingVippsPayment orderId={props.match.params.ordreId}/>} /> */}
+            {/* <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/> type={"Vinterleir"}} /> */}
+            <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId} type={"Gradering"}/>} />
           </Switch>
         </div>
     </BrowserRouter>

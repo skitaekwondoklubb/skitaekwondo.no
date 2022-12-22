@@ -10,13 +10,14 @@ using SkiTKD.Data.Dto;
 using SkiTKD.Data.Entities;
 using SkiTKD.Data.Interfaces;
 using static SkiTKD.Data.Models.VinterleirRegistration;
+using static SkiTKD.Data.Models.VinterleirRegistrationModel;
 
 namespace SkiTKD.Data.Repositories
 {
     public class VinteleirAdminRepository : IVinterleirAdminRepository
     {
         private readonly SkiTKDContext _dbContext;
-        private readonly IRegistrationRepository _regRepo;
+        private readonly IVinterleirRegistrationRepository _regRepo;
         private readonly ILedsagerRepository _ledsagerRepo;
         private readonly IPaymentRepository _paymentRepo;
         private readonly IVippsRepository _vippsRepo;
@@ -25,7 +26,7 @@ namespace SkiTKD.Data.Repositories
         public VinteleirAdminRepository(
             IConfiguration config, 
             SkiTKDContext dbContext, 
-            IRegistrationRepository regRepo,
+            IVinterleirRegistrationRepository regRepo,
             ILedsagerRepository ledsagerRepo,
             IPaymentRepository paymentRepo,
             IVippsRepository vippsRepo
@@ -40,7 +41,7 @@ namespace SkiTKD.Data.Repositories
         public List<AdminRegistrationDto> GetUsers()
         {
             try {
-                var registrations = _dbContext.Registrations.Where(x => x.cancelled != true).ToList();
+                var registrations = _dbContext.VinterleirRegistrations.Where(x => x.cancelled != true).ToList();
                 var listOfRegistrations = new List<AdminRegistrationDto>();
 
                 foreach (var reg in registrations)
@@ -87,12 +88,8 @@ namespace SkiTKD.Data.Repositories
             }
         }
 
-        private AdminRegistrationDto MapUser(RegistrationEntity reg) {
-            var payment = _paymentRepo.FindPayment(reg.registrationid);
-            VippsEntity vipps = null; 
-            if(payment.vipps) {
-                vipps = _vippsRepo.FindVippsRegistration(reg.registrationid);
-            }
+        private AdminRegistrationDto MapUser(VinterleirRegistrationEntity reg) {
+
 
             return new AdminRegistrationDto {
                 personid = reg.personid,
@@ -100,7 +97,7 @@ namespace SkiTKD.Data.Repositories
                 lastname = reg.Person.lastname,
                 age = reg.Person.age,
                 allergies = reg.allergies,
-                amount = payment.amount,
+                amount = reg.Payment.amount,
                 club = reg.Club.name,
                 email = reg.Person.email,
                 grade = $"{reg.Grade.grade}. {(reg.Grade.isdan ? "Dan" : "Cup")}",
@@ -108,15 +105,15 @@ namespace SkiTKD.Data.Repositories
                 instructor =  InstructorToString(reg.instructor),
                 isLedsager = false,
                 isLedsagerForName = "false",
-                orderid = vipps?.orderid,
+                orderid = reg.Payment.VippsEntity?.orderid,
                 otherinfo = reg.otherinfo,
-                paid = payment.paid,
+                paid = reg.Payment.paid,
                 @public = reg.@public,
                 sleepover = reg.sleepover,
                 telephone = reg.Person.telephone,
-                transactionid = vipps?.transactionid,
+                transactionid = reg.Payment.VippsEntity?.transactionid,
                 vegan = reg.vegan,
-                vipps = reg.vipps,
+                vipps = reg.Payment.vipps,
                 wantstoinstruct = reg.wantstoinstruct
             };
         }

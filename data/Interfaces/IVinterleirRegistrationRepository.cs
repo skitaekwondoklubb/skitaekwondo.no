@@ -7,13 +7,13 @@ using SkiTKD.Data.Models;
 
 namespace SkiTKD.Data.Interfaces
 {
-    public interface IRegistrationRepository
+    public interface IVinterleirRegistrationRepository
     {
-        RegistrationEntity AddRegistration(VinterleirRegistration registration, int personId);
-        RegistrationEntity FindRegistration(int personId);
+        VinterleirRegistrationEntity AddRegistration(VinterleirRegistration registration, int personId);
+        VinterleirRegistrationEntity FindRegistration(int personId);
         List<PublicRegistrationDto> GetAllPublicRegistrations();
         List<PublicGradeDto> GetGradeNumbers();
-
         bool Cancel(int registrationId);
+
     }
 }

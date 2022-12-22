@@ -33,9 +33,9 @@ namespace SkiTKD.Data.Repositories
                 telephone = telephone
             };
 
-            _dbContext.Add(newPerson);
+            var saved = _dbContext.Add(newPerson);
             _dbContext.SaveChanges();
-            return newPerson;
+            return saved.Entity;
         }
 
         public PersonEntity FindPerson(string firstName, string lastName, string telephone) {

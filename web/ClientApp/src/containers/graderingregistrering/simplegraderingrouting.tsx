@@ -17,11 +17,12 @@ interface CurrentPropsProps {
 function SimpleRegistrationRouting() {
     const [currentStep, setCurrentStep] = useState(SimpleSteps.Welcome);
     const [registration, setRegistration] = useState<SimpleRegistration>({
-        id: "",
         firstName: "",
         lastName: "",
         email: "",
-        telephone: ""
+        telephone: "",
+        age: 0,
+        vipps: false
     });
 
     const currentProps: CurrentPropsProps = { 
@@ -32,8 +33,8 @@ function SimpleRegistrationRouting() {
     };
 
     useEffect(() => {
-        const registrationCookie = getCookie("registrering");
-        const step = getCookie("registrering_step");
+        const registrationCookie = getCookie("simple_registrering");
+        const step = getCookie("simple_registrering_step");
 
         if(step != null && step !== '' && step !== "0" && registrationCookie != null && registrationCookie !== '') {
             try {
@@ -58,6 +59,7 @@ function SimpleRegistrationRouting() {
 
     return (
         <div className={`${styles.registration} slideLeft`}>
+            <h1>Registrering til gradering</h1>
             <RouteCurrentStep { ... currentProps }/>
         </div>
     )

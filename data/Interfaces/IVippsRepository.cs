@@ -8,9 +8,8 @@ namespace SkiTKD.Data.Interfaces
     public interface IVippsRepository
     {
         Task<string> Payments(VippsPaymentRequestBody body);
-        Task<VippsPaymentRequestBody> VinterleirToVippsRequest(int registrationId, string telephone, int paymentId, int total);
+        Task<VippsPaymentRequestBody> VippsRequest(int registrationId, string telephone, int paymentId, int total, string transactionText);
         VippsEntity FindVippsOrder(string orderId);
-        VippsEntity FindVippsRegistration(int registrationId);
         bool SetTransactionData(string orderId, TransactionCallbackInfo info);
         string GetStatus(string orderId);
     }

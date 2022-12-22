@@ -7,14 +7,14 @@ namespace SkiTKD.Data.Interfaces
 {
     public interface IPaymentRepository
     {
-        PaymentEntity AddPayment(int registrationId, bool vipps, int amount);
-        bool SetPaid(int registrationId);
-        PaymentEntity FindPayment(int registrationId);
+        PaymentEntity AddPayment(RegistrationEntity reg, bool vipps, int amount);
+        bool SetPaid(int paymentId);
+        PaymentEntity FindPaymentByVipps(int vippsId);
         PaymentEntity FindPaymentById(int paymentId);
-
+        RegistrationEntity FindRegistrationByPayment(int? paymentId);
         int GetTotal(VinterleirRegistration reg);
         bool HasPaid(int paymentId);
-        bool RegistrationHasPaid(int registrationId);
-        bool CancelPayment(int registrationId);
+        bool CancelPayment(int paymentId);
+        void SetVippsOnPayment(int paymentId, int vippsId);
     }
 }

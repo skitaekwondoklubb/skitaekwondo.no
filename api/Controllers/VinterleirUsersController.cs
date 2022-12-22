@@ -11,11 +11,11 @@ namespace SkiTKD.Web.Controllers
     public class VinterleirUsersController : ControllerBase
     {
         private readonly ILogger<VinterleirUsersController> _logger;
-        private readonly IRegistrationRepository _regRepo;
+        private readonly IVinterleirRegistrationRepository _regRepo;
 
         public VinterleirUsersController(
             ILogger<VinterleirUsersController> logger, 
-            IRegistrationRepository regRepo
+            IVinterleirRegistrationRepository regRepo
         )
         {
             _logger = logger;

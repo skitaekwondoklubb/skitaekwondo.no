@@ -353,6 +353,7 @@ web/build/*
 *.*ocal.json
 *.local.env
 *.Local.json
+*.local.yml
 *.keys
 *ngrok
 

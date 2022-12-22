@@ -33,9 +33,10 @@ export interface Ledsager {
 }
 
 export interface SimpleRegistration {
-    id: string;
     firstName: string;
     lastName: string;
+    age: number;
     email: string;
     telephone: string;
+    vipps: boolean;
 }
