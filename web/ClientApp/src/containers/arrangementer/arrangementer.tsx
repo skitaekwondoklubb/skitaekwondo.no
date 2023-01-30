@@ -11,14 +11,6 @@ function Arrangementer() {
                 <p>Vi holder flere arrangementer i Ski Taekwondo Klubb hvert år, en av gjengangerne er Ski Taekwondo Klubbs vinterleir i desember.</p>
                 <p>Følgende arrangementer er på agendaen i 2023:</p>
 
-                <h2>Gradering i Ski Taekwondo Klubb</h2>
-                <h3>Dato: Tirsdag 10. januar.</h3>
-                {/* <h3>Pris: 975,- for voksen, 825,- for barn.</h3> */}
-                <p>Vanligvis har det vært cupgradering på vinterleir, men denne gangen bestemte vi oss for å ha gradering i januar for ungdommer og voksne.</p>
-                <p>Ikke glem å ta med medlemspass!</p>
-
-                <hr/>
-
 
                 <h2>Vinterleir i Ski Taekwondo Klubb</h2>
                 <a href={vinterleirPicture} target="_blank" >

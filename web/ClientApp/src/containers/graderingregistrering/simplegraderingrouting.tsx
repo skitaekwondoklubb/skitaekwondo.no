@@ -58,10 +58,15 @@ function SimpleRegistrationRouting() {
     }
 
     return (
-        <div className={`${styles.registration} slideLeft`}>
-            <h1>Registrering til gradering</h1>
-            <RouteCurrentStep { ... currentProps }/>
+        <div className={styles.registrationCenter}>
+            <div className={`${styles.registration} slideLeft`}>
+                <div className={styles.textSide}>
+                    <h1>Registrering til gradering</h1>
+                    <RouteCurrentStep { ... currentProps }/>
+                </div>
+            </div>
         </div>
+
     )
 }
 

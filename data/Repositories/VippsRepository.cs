@@ -106,6 +106,10 @@ namespace SkiTKD.Data.Repositories
             };
 
             var completed = _dbContext.VippsOrders.Add(order);
+
+
+            _dbContext.SaveChanges();
+            completed.Entity.Payment.vippsid = completed.Entity.vippsid;
             _dbContext.SaveChanges();
 
             return requestBody;

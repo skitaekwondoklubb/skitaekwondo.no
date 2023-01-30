@@ -60,7 +60,16 @@ function MainRouting() {
               <Arrangementer/>
             </Route>
             <Route exact path="/graderingregistrering">
-              <SimpleRegistrationRouting />
+              <div className={styles.expiredRegistration}>
+                  <h1>Registrering til gradering</h1>
+                  <p className={styles.smallGap}>Gradering er over for denne gang! Vi sees til sommeren!</p>
+                  {/* <p className={styles.bigGap}> 🙂</p> */}
+                  <div className={styles.extraButtons}>
+                    <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
+                    {/* <Link to="/vinterleirdeltakere"><button className={`${styles.backButton} ${styles.otherButton}`}>Til deltakerliste</button></Link> */}
+                  </div>
+
+                </div>
             </Route>
 {/*             
             <Route exact path="/registrering">
@@ -96,7 +105,7 @@ function MainRouting() {
             </Route> */}
 
             {/* <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/> type={"Vinterleir"}} /> */}
-            <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId} type={"Gradering"}/>} />
+            {/* <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId} type={"Gradering"}/>} /> */}
           </Switch>
         </div>
     </BrowserRouter>

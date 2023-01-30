@@ -58,7 +58,12 @@ namespace SkiTKD.Web.Controllers
 
                     var existingPayment = registration.Payment;
                     if(existingPayment == null || !(existingPayment.paid) || (existingPayment.cancelled == true)) {
-                        var payment = _paymentRepo.AddPayment(registration, reg.Vipps, PaymentRepository.GetTotalGradering);
+                        var payment = _paymentRepo.AddPayment(
+                            registration, 
+                            reg.Vipps, 
+                            registration.Person.lastname.ToLower() == "test" ? 10 : PaymentRepository.GetTotalGradering // People with "Test" as name gets 10kr instead.
+                        );
+
 
                         if(reg.Vipps) {
                             var request = await _vippsRepo.VippsRequest(registration.registrationid, person.telephone, payment.paymentid, (int)payment.amount, "Gradering for utøver");
