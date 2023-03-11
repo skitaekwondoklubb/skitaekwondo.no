@@ -40,6 +40,7 @@ namespace SkiTKD.Web.Controllers
         [Route("Post")]
         public async Task<ActionResult<string>> Post(GraderingRegistration reg)
         {
+            throw new Exception("Gradering er ikke tilgjenglig.");
             using(TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)) {
                 try {
                     var person = _personRepo.AddPerson(
