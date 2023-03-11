@@ -6,19 +6,19 @@ export interface Destination {
 export const destinations: Destination[] = [
     {
         "name": "Om oss",
-        "link": "/omoss"
+        "link": "/om/oss"
     },
     {
         "name": "Barnepartiet",
-        "link": "/barnepartiet"
+        "link": "/barnepartiet/informasjon"
     },
     {
         "name": "Ungdom/voksenpartiet",
-        "link": "/ungdomvoksenpartiet"
+        "link": "/ungdomvoksenpartiet/informasjon"
     },
     {
         "name": "Teori",
-        "link": "/teori"
+        "link": "/teori/informasjon"
     },
     {
         "name": "Samarbeidspartnere",

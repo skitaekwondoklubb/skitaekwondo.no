@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, NavLink } from 'react-router-dom';
+import { Route, NavLink, Routes, Navigate } from 'react-router-dom';
 import styles from './ungdomvoksen.module.css';
 import ungvoksPicSide from './ungvoks.webp'
 import ungvoksMid from './ungvoksaction.webp'
@@ -49,6 +49,26 @@ function Priser() {
     )
 }
 
+function Navigation() {
+    return (
+        <>
+            <div className={styles.subButtons}>
+                <NavLink to="informasjon" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                    <button>
+                        <span>Informasjon</span>
+                    </button>
+                </NavLink>
+                <NavLink to="treningstider" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                    <button>Treningstider</button>
+                </NavLink>
+                <NavLink to="priser" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                    <button>Priser</button>
+                </NavLink>
+            </div>
+        </>
+    )
+}
+
 function UngdomVoksenpartiet() {
     return (
         <div className={`${styles.ungdomvoksenGrid}`}>
@@ -56,31 +76,15 @@ function UngdomVoksenpartiet() {
                 <img src={ungvoksPicSide} alt="Utøver ungdom/voksenpartiet"/>
             </div>
             <div className={`${styles.textSide} slideLeft`}>
-                <HashRouter>
-                    <h1>Ungdom/voksenpartiet</h1>
-                    <div className={styles.subButtons}>
-                        <NavLink exact to="/" activeClassName={styles.buttonActive}>
-                            <button>
-                                <span>Informasjon</span>
-                            </button>
-                        </NavLink>
-                        <NavLink to="/treningstider" activeClassName={styles.buttonActive}>
-                            <button>Treningstider</button>
-                        </NavLink>
-                        <NavLink to="/priser" activeClassName={styles.buttonActive}>
-                            <button>Priser</button>
-                        </NavLink>
-                    </div>
-                    <Route exact path='/'>
-                        <UvpInformation/>
-                    </Route>
-                    <Route path='/treningstider'>
-                        <Treningstider/>
-                    </Route>
-                    <Route path='/priser'>
-                        <Priser/>
-                    </Route>
-                </HashRouter>
+                <h1>Ungdom/voksenpartiet</h1>
+                <Navigation/>
+                <Routes>
+                    <Route path='informasjon' element={ <UvpInformation/> }/>
+                    <Route path='treningstider' element={ <Treningstider/> }/>
+                    <Route path='priser' element={ <Priser/> }/>
+                    <Route path='/' element={ <Navigate to="informasjon"/> }/>
+
+                </Routes>
             </div>
         </div>
     )

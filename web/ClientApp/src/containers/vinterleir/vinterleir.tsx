@@ -1,10 +1,9 @@
-import React from 'react';
-import { HashRouter, Route, NavLink, Link, useHistory } from 'react-router-dom';
+import { Route, NavLink, Routes } from 'react-router-dom';
 import styles from './vinterleir.module.css';
 import choPicture from './Cho.webp';
 import vinterleirPicture from './Vinterleir.webp';
 
-function Information(props: { history: any }) {
+function Information() {
 
     return (
         <div>
@@ -56,38 +55,33 @@ function Priser() {
 }
 
 function Vinterleir() {
-    const history = useHistory();
+
     return (
         <div className={`${styles.vinterleirGrid} slideLeft`}>
             <div className={styles.picture}>
                 <img src={choPicture} alt="Barnepartiet"/>
             </div>
             <div className={styles.textSide}>
-                <HashRouter>
+                <Routes>
                     <h1 className={styles.vinterleirTitle}>Vinterleir</h1>
                     <div className={styles.subButtons}>
-                        <NavLink exact to="/" activeClassName={styles.buttonActive}>
+                        <NavLink to="/" className={( { isActive } ) => isActive ? styles.buttonActive : ""}>
                             <button>
                                 <span>Informasjon</span>
                             </button>
                         </NavLink>
-                        <NavLink to="/schedule" activeClassName={styles.buttonActive}>
+                        <NavLink to="/schedule" className={( { isActive } ) => isActive ? styles.buttonActive : ""}>
                             <button>Program og flyer</button>
                         </NavLink>
-                        <NavLink to="/priser" activeClassName={styles.buttonActive}>
+                        <NavLink to="/priser" className={( { isActive } ) => isActive ? styles.buttonActive : ""}>
                             <button>Priser</button>
                         </NavLink>
                     </div>
-                    <Route exact path='/'>
-                        <Information history={history}/>
-                    </Route>
-                    <Route path='/schedule'>
-                        <Schedule/>
-                    </Route>
-                    <Route path='/priser'>
-                        <Priser/>
-                    </Route>
-                </HashRouter>
+
+                    <Route path='/' element={ <Information /> } />
+                    <Route path='/schedule' element={ <Schedule/> } />
+                    <Route path='/priser' element={ <Priser/> } />
+                </Routes>
             </div>
         </div>
     )

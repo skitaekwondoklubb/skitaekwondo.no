@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../loading/loading";
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cancelOrder, checkIfPaid, OrderStatus } from '../../services/vinterleirService';
 import { deleteAllCookies, setCookie } from '../../services/cookieService';
 import styles from './registration.module.css';
@@ -52,7 +52,7 @@ function CheckVippsPayment(props: CheckVippsPaymentProps) {
     const [rejected, setRejected] = useState(false);
 
     const [error, setError] = useState<boolean>(false);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if(props.orderId == null) {
@@ -98,19 +98,19 @@ function CheckVippsPayment(props: CheckVippsPaymentProps) {
 
     function cancel() {
         deleteAllCookies();
-        history.push("/")
+        navigate("/")
     }
 
     function tryAgain() {
         cancelOrder(props.orderId);
         if(props.type === "Vinterleir") {
             setCookie("vinterleir_registrering_step", Steps.Payment, 3);
-            history.push("/vinterleiretterregistrering");
+            navigate("/vinterleiretterregistrering");
             return;
         }
 
         setCookie("simple_registrering_step", SimpleSteps.Payment, 3);
-        history.push("/graderingregistrering");
+        navigate("/graderingregistrering");
         
     }
 

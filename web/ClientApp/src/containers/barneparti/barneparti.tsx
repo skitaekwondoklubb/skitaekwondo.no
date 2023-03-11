@@ -1,5 +1,4 @@
-import React from 'react';
-import { HashRouter, Route, NavLink } from 'react-router-dom';
+import { Route, NavLink, Routes, Navigate } from 'react-router-dom';
 import styles from './barneparti.module.css';
 import sidePicture from './pictures/barneparti.webp'
 import actionPicture from './pictures/barnepartiaction.webp'
@@ -47,6 +46,27 @@ function Priser() {
     )
 }
 
+function Navigation() {
+    return (
+        <>
+            <h1>Barnepartiet</h1>
+            <div className={styles.subButtons}>
+                <NavLink to="informasjon" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                    <button>
+                        <span>Informasjon</span>
+                    </button>
+                </NavLink>
+                <NavLink to="treningstider" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                    <button>Treningstider</button>
+                </NavLink>
+                <NavLink to="priser" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                    <button>Priser</button>
+                </NavLink>
+            </div>
+        </>
+    )
+}
+
 function Barneparti() {
     return (
         <div className={`${styles.barnepartiGrid} `}>
@@ -54,31 +74,14 @@ function Barneparti() {
                 <img src={sidePicture} alt="Barnepartiet"/>
             </div>
             <div className={`${styles.textSide} slideLeft`}>
-                <HashRouter>
-                    <h1>Barnepartiet</h1>
-                    <div className={styles.subButtons}>
-                        <NavLink exact to="/" activeClassName={styles.buttonActive}>
-                            <button>
-                                <span>Informasjon</span>
-                            </button>
-                        </NavLink>
-                        <NavLink to="/treningstider" activeClassName={styles.buttonActive}>
-                            <button>Treningstider</button>
-                        </NavLink>
-                        <NavLink to="/priser" activeClassName={styles.buttonActive}>
-                            <button>Priser</button>
-                        </NavLink>
-                    </div>
-                    <Route exact path='/'>
-                        <BpInformation/>
-                    </Route>
-                    <Route path='/treningstider'>
-                        <Treningstider/>
-                    </Route>
-                    <Route path='/priser'>
-                        <Priser/>
-                    </Route>
-                </HashRouter>
+                <Navigation/>
+                <Routes>
+                    <Route path='treningstider' element={ <Treningstider/> }/>
+                    <Route path='priser' element={ <Priser/> }/>
+                    <Route path='informasjon' element={ <BpInformation/> }/>
+                    <Route path='/' element={ <Navigate to="informasjon" /> }/>
+
+                </Routes>
                 <b>
                     <p>Barnepartiet er på dette tidspunktet fullt.</p>
                     <p>Send mail til <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å bli satt på venteliste til høstsemesteret!</p>

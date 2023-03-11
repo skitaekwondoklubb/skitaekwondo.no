@@ -1,9 +1,12 @@
-import React from 'react';
-import { HashRouter, Link, NavLink, Route, useHistory } from 'react-router-dom';
+import { Routes, Link, Route } from 'react-router-dom';
 import RandomizedBackground from './randomizedbackground';
 import styles from './home.module.css'
-import { getClubs } from '../../services/clubService';
 
+const titles = [
+    "Hånd, fot, veien å gå",
+    "Lær selvforsvar",
+    "Kroppsbeherskelse"
+]
 
 function Treningstider() {
     return (
@@ -22,37 +25,34 @@ function Treningstider() {
     )
 }
 
-function Home() {
-    const history = useHistory();
 
-    const titles = [
-        "Hånd, fot, veien å gå",
-        "Lær selvforsvar",
-        "Kroppsbeherskelse"
-    ]
+function Dojang() {
+    return (
+        <div className={styles.start}>
+            <h1 className={styles.title}>{titles[Math.floor(Math.random()*titles.length)]}</h1>
+            <p>Ski Taekwondo Klubb er en av Norges eldste taekwondo klubber</p>
+            <div className={`${styles.infoBoxButtons} fadeInSlow`}>
+                <Link to="/om/oss"><button>Les mer</button></Link>
+                <Link to="treningstider"><button>Treningstider</button></Link>
+            </div>
+            {/* <div className={`${`${styles.infoBoxButtons} ${styles.infoBoxExtraButtonMargin}`} fadeInSlow`}>
+                <a href="/program"><button>Program - Vinterleir 2022</button></a>
+            </div> */}
+        </div>
+    )
+}
+
+function Home() {
+
     return (
         <div className={styles.home}>
             <RandomizedBackground/>
             <div className={styles.homeGrid}>
                 <div className={styles.infoBox}>
-                    <HashRouter>
-                        <Route exact path="/">
-                            <div className={styles.start}>
-                                <h1 className={styles.title}>{titles[Math.floor(Math.random()*titles.length)]}</h1>
-                                <p>Ski Taekwondo Klubb er en av Norges eldste taekwondo klubber</p>
-                                <div className={`${styles.infoBoxButtons} fadeInSlow`}>
-                                    <button onClick={() => history.push("/omoss")}>Les mer</button>
-                                    <Link to="/treningstider"><button>Treningstider</button></Link>
-                                </div>
-                                {/* <div className={`${`${styles.infoBoxButtons} ${styles.infoBoxExtraButtonMargin}`} fadeInSlow`}>
-                                    <a href="/program"><button>Program - Vinterleir 2022</button></a>
-                                </div> */}
-                            </div>
-                        </Route>
-                        <Route exact path ="/treningstider">
-                            <Treningstider/>
-                        </Route>
-                    </HashRouter>
+                    <Routes>
+                        <Route path ="/treningstider" element={ <Treningstider/> }/>
+                        <Route path="/" element={ <Dojang /> }/>
+                    </Routes>
 
                 </div>
             </div>

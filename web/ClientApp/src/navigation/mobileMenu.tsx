@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
 import { destinations } from './destinations';
-import { Link, NavLink, Router, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './navigation.module.css';
 
 function MobileMenu() {
-    const history = useHistory();
 
     return (
         <div className={styles.mobileMenu}>

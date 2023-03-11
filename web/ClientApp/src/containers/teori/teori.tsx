@@ -1,5 +1,4 @@
-import React from 'react';
-import { HashRouter, Link, NavLink, Route } from 'react-router-dom';
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import styles from './teori.module.css';
 import mom from './pictures/mom_kroppen.webp';
 import taegeuki from './pictures/taegeuki.webp'
@@ -68,6 +67,22 @@ function Pensum() {
     )
 }
 
+function Navigation() {
+    return (
+        <div className={styles.teoriNavigation}>
+            <NavLink to="taegeukgi" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                <button>Taegeukgi</button>
+            </NavLink>
+            <NavLink to="mom" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                <button>Kroppen</button>
+            </NavLink>
+            <NavLink to="pensum" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                <button>Pensum</button>
+            </NavLink>
+        </div>
+    )
+}
+
 function Teori() {
     return (
         <div className={`${styles.teoriGrid} slideLeft`}>
@@ -80,31 +95,14 @@ function Teori() {
                 <div className={styles.title}>
                     <h1>Teori og pensum</h1>
                 </div>
-                <HashRouter>
-                    <div className={styles.teoriNavigation}>
-                        <NavLink to="/taegeukgi" activeClassName={styles.buttonActive}>
-                            <button>Taegeukgi</button>
-                        </NavLink>
-                        <NavLink to="/mom" activeClassName={styles.buttonActive}>
-                            <button>Kroppen</button>
-                        </NavLink>
-                        <NavLink to="/pensum" activeClassName={styles.buttonActive}>
-                            <button>Pensum</button>
-                        </NavLink>
-                    </div>
-                    <Route exact path="/">
-                        <TeoriInformation/>
-                    </Route>
-                    <Route path="/taegeukgi" >
-                        <Taegeuki/>
-                    </Route>
-                    <Route path="/mom">
-                        <Mom/>
-                    </Route>
-                    <Route path="/pensum">
-                        <Pensum/>
-                    </Route>
-                </HashRouter>
+                <Navigation/>
+                <Routes>
+                    <Route path="informasjon" element={ <TeoriInformation/> }/>
+                    <Route path="taegeukgi"  element={ <Taegeuki/> }/>
+                    <Route path="mom" element={ <Mom/> }/>
+                    <Route path="pensum" element={ <Pensum/> }/>
+                    <Route path="/" element={ <Navigate to="informasjon"/> }/>
+                </Routes>
             </div>
         </div>
     )

@@ -1,19 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { destinations } from './destinations';
-import { Link, NavLink, Router, useHistory } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styles from './navigation.module.css';
 import logo from '../containers/skitkd_logo.webp';
+import { useMatch } from 'react-router';
 
 function Navigation() {
-    const history = useHistory();
+    const navigate = useNavigate();
+    const match = useMatch("*/menu");
     const [menuEnabled, setMenuEnabled] = useState(false);
 
     function toggleMenu() {
-        if(!history.location.pathname.endsWith("menu")) {
-            history.push("/menu");
+        if(!match) {
+            navigate("/menu");
         }
         else {
-            history.goBack();
+            navigate("..");
         }
     }
 
@@ -37,13 +39,13 @@ function Navigation() {
             <div className={styles.rightSideNav}>
                 {
                     destinations && destinations.map((item) => {
+                        const linkStyle = item.name === "Hjem" ? styles.hjemLink : styles.navLink
                         return (
-                            <NavLink activeClassName={styles.selectedNav} onClick={() => setMenuEnabled(false)}
+                            <NavLink 
+                                className={({ isActive }) => `${linkStyle} ${isActive ? styles.selectedNav : ""}`} 
+                                onClick={() => setMenuEnabled(false)}
                                 to={item.link} 
-                                className={ item.name === "Hjem" 
-                                    ? styles.hjemLink 
-                                    : styles.navLink
-                                }
+                                key={`${item.name}_nav`}
                             >{item.name} </NavLink>
                         )
                     })

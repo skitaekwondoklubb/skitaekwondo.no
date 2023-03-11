@@ -1,6 +1,7 @@
-import { HashRouter, NavLink, Route } from 'react-router-dom';
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import styles from './omoss.module.css';
 import logo from '../skitkd_logo.webp';
+import React from 'react';
 
 function OmTaekwondo() {
     return (
@@ -32,6 +33,24 @@ function OmSkiTaekwondo() {
     )
 }
 
+function Navigation() {
+    return (
+        <React.Fragment>
+            <h1>Om Ski Taekwondo Klubb</h1>
+            <div className={styles.subButtons}>
+                <NavLink to="oss" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                    <button>
+                        <span>Om oss</span>
+                    </button>
+                </NavLink>
+                <NavLink to="taekwondo" className={({ isActive }) => isActive ? styles.buttonActive : ""}>
+                    <button>Taekwondo</button>
+                </NavLink>
+            </div>
+        </React.Fragment>
+    )
+}
+
 function OmOss() {
     return (
         <div className={`${styles.omOssGrid} `}>
@@ -39,27 +58,12 @@ function OmOss() {
                 <img src={logo} alt="Ski taekwondo klubb sin logo"/>
             </div>
             <div className={`${styles.textSide} slideLeft`}>
-                <HashRouter>
-                <h1>Om Ski Taekwondo Klubb</h1>
-                <div className={styles.subButtons}>
-                        <NavLink exact to="/" activeClassName={styles.buttonActive}>
-                            <button>
-                                <span>Om oss</span>
-                            </button>
-                        </NavLink>
-                        <NavLink to="/taekwondo" activeClassName={styles.buttonActive}>
-                            <button>Taekwondo</button>
-                        </NavLink>
-                    </div>
-                    <Route exact path='/'>
-                        <OmSkiTaekwondo/>
-                    </Route>
-                    <Route path='/taekwondo'>
-                        <OmTaekwondo/>
-                    </Route>
-                </HashRouter>
-             
-
+                <Navigation/>
+                <Routes>
+                    <Route path='oss' element={ <OmSkiTaekwondo/> }/>
+                    <Route path='taekwondo' element={ <OmTaekwondo/> }/>
+                    <Route path='/' element={ <Navigate to="oss" /> }/>
+                </Routes>
             </div>
         </div>
     )
