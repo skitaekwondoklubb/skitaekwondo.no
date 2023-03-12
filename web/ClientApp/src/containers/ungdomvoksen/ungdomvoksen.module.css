@@ -1,6 +1,6 @@
 :local .ungdomvoksenGrid {
     display: grid;
-    grid-template-columns: 600px 40%;
+    grid-template-columns: 600px 50%;
     gap: 10%;
     margin-top: 2em;
 }
@@ -8,10 +8,11 @@
 :local .picture {
     display: flex;
     justify-content: center;
+    width: 600px !important;
+    height: 850px;
 }
 
 :local .picture img {
-    height: 80vh;
     overflow:hidden;
 }
 

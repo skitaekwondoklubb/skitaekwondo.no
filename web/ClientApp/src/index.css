@@ -39,21 +39,30 @@ button:hover {
   text-decoration: none;
 }
 
+a {
+  font-size: 1.2rem;
+}
+
 p {
-  font-size: 1.3vw;
+  font-size: 1.3rem;
 }
 
 h1 {
   /* font-size: 3.7em; */
   margin-top: 0px;
-  font-size: 3vw;
+  font-size: 3rem;
   padding-bottom: 10px;
   /* font-size: 60px; */
   border-bottom: 5px solid #eb1a52;
 }
 
 h2 {
-  font-size: 1.7em;
+  font-size: 1.7rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+
 }
 
 .react-autosuggest__container {
@@ -113,4 +122,3 @@ h2 {
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd;
 }
-

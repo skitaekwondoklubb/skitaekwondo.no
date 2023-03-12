@@ -1,6 +1,6 @@
 :local .barnepartiGrid {
     display: grid;
-    grid-template-columns: 600px 40vw;
+    grid-template-columns: 600px 50%;
     gap: 10%;
     margin-top: 2em;
 }
@@ -13,7 +13,6 @@
 :local .picture img {
     overflow:hidden;
     height: 80vh;
-    overflow:hidden;
 }
 
 :local .textSide {

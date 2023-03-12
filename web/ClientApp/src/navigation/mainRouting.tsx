@@ -24,7 +24,7 @@ function MainRouting() {
   return (
       <BrowserRouter basename={`${process.env.PUBLIC_URL}`} >
         <Navigation/>
-        <div className={styles.overflow}>
+        <div className={styles.mainContent}>
 
         <Routes>
               <Route path="/*" element={ <Home/> }/>
