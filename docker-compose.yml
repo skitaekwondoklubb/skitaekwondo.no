@@ -3,6 +3,7 @@ version: '3.5'
 services:
   postgres:
     image: postgres
+    container_name: postgres_skitkd_dev
     environment:
       POSTGRES_USER: skitkd_dev
       POSTGRES_PASSWORD: skitkd_dev
@@ -15,6 +16,7 @@ services:
   
   pgadmin:
     image: dpage/pgadmin4
+    container_name: pgadmin_skitkd_dev
     environment:
       PGADMIN_DEFAULT_EMAIL: skitkd@skitkd.com
       PGADMIN_DEFAULT_PASSWORD: skitkd_dev

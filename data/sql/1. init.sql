@@ -3,10 +3,13 @@ DROP TABLE IF EXISTS grade CASCADE;
 DROP TABLE IF EXISTS person CASCADE;
 DROP TABLE IF EXISTS vinterleirregistration CASCADE;
 DROP TABLE IF EXISTS graderingregistration CASCADE;
+DROP TABLE IF EXISTS otherregistration CASCADE;
+DROP TABLE IF EXISTS tshirt CASCADE;
 DROP TABLE IF EXISTS ledsager CASCADE;
 DROP TABLE IF EXISTS payment CASCADE;
 DROP TABLE IF EXISTS vipps CASCADE;
 DROP TABLE IF EXISTS transactionError CASCADE;
+
 
 CREATE TABLE club (
    clubId serial PRIMARY KEY,
@@ -95,4 +98,18 @@ CREATE TABLE ledsager (
     hasPaid boolean NOT NULL
 );
 
+CREATE TABLE otherregistration (
+    registrationId serial PRIMARY KEY,
+    personId int NOT NULL REFERENCES person(personId),
+    paymentId int NULL REFERENCES payment(paymentId),
+    cancelled boolean NOT NULL,
+    mailsent boolean NOT NULL
+);
 
+
+CREATE TABLE tshirt (
+    tshirtId serial PRIMARY KEY,
+    registrationId int NOT NULL REFERENCES otherregistration(registrationId),
+    model varchar NOT NULL,
+    size varchar NOT NULL
+);

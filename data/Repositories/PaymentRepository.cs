@@ -33,6 +33,11 @@ namespace SkiTKD.Data.Repositories
                 cancelled = false
             };
 
+            // If they paid nothing, they still paid.
+            if(amount == 0) {
+                newPayment.paid = true;
+            }
+
             var paymentEntity = _dbContext.Add(newPayment);
             _dbContext.SaveChanges();
 
@@ -155,6 +160,11 @@ namespace SkiTKD.Data.Repositories
             var tryGradering = _dbContext.GraderingRegistrations.SingleOrDefault(x => x.paymentid == paymentId);
             if(tryGradering != null) {
                 return tryGradering;
+            }
+
+            var tryOther = _dbContext.OtherRegistrations.SingleOrDefault(x => x.paymentid == paymentId);
+            if(tryOther != null) {
+                return tryOther;
             }
 
             throw new Exception($"PaymentId {paymentId} is not connected to any registrations.");

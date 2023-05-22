@@ -15,6 +15,8 @@ namespace SkiTKD.Data {
         public DbSet<ClubEntity> Clubs { get; set; }
         public DbSet<GradeEntity> Grades { get; set; }
         public DbSet<GraderingRegistrationEntity> GraderingRegistrations { get; set; }
+        public DbSet<OtherRegistrationEntity> OtherRegistrations { get; set; }
+        public DbSet<TShirtEntity> Tshirts { get; set; }
         public DbSet<PersonEntity> Persons { get; set; }
         public DbSet<VinterleirRegistrationEntity> VinterleirRegistrations { get; set; }
         public DbSet<LedsagerEntity> Ledsagere { get; set; }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
 using SkiTKD.Data.Entities;
 using SkiTKD.Data.Interfaces;
+using SkiTKD.Data.Models;
 using static SkiTKD.Data.Models.VinterleirRegistration;
 
 namespace SkiTKD.Data.Repositories
@@ -52,7 +53,12 @@ namespace SkiTKD.Data.Repositories
 
         public bool SendMail(RegistrationEntity registration) {
             if(registration.mailsent == false) {
-                SendMailToRecipient(registration);
+                if(registration is OtherRegistrationEntity) {
+                    SendOrderRecieptThroughMail(registration);
+                }
+                else {
+                    SendMailToRecipient(registration);
+                }
                 registration.mailsent = true;
                 _dbContext.SaveChanges();
             }
@@ -119,6 +125,64 @@ namespace SkiTKD.Data.Repositories
             }
 
             return builder.ToString();
+        }
+
+        private bool SendOrderRecieptThroughMail(RegistrationEntity registration) {
+              try {
+                var f = new GraphServiceClient(
+                new DelegateAuthenticationProvider(
+                    (requestMessage) =>
+                    {
+                        requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", _tokenService.GetToken().GetAwaiter().GetResult());
+                        return Task.FromResult(0);
+                    })
+                );
+
+                var allTshirts = _dbContext.Tshirts.Where(x => x.registrationid == registration.registrationid).Select(y => new TShirtModel {
+                    Size = y.size,
+                    Model = y.model
+                }).ToList();                
+                var payment = registration.Payment ?? _paymentRepo.FindPaymentById(registration.paymentid ?? throw new Exception("Mangler paymentId i registrering."));
+                var paymentMethod = payment.vipps ? "Vipps" : "Kort/Kontant";
+                var orderId = "";
+
+
+                // Vis ordrenummer hvis dette er Vipps.
+                if(payment.vipps && registration.Payment.VippsEntity != null) {
+                    orderId = $"<p>Vipps ordernummer: {registration.Payment.VippsEntity.orderid}</p>";
+                }
+
+                var order = GetOtherReceipt(registration, allTshirts, paymentMethod, orderId);
+
+                var message = new Message
+                {
+                    Subject = $"Kvittering på kjøp av t-skjorter",
+                    Body = new ItemBody
+                    {
+                        ContentType = BodyType.Html,
+                        Content = order
+                    },
+                    ToRecipients = new List<Recipient>()
+                    {
+                        new Recipient
+                        {
+                            EmailAddress = new EmailAddress
+                            {
+                                Address = registration.Person.email
+                            }
+                        }
+                    }
+                };
+                
+
+                f.Me.SendMail(message, null).Request().PostAsync().GetAwaiter().GetResult();
+
+                return true;
+            }
+            catch(Exception e) {
+                Console.WriteLine("Klarte ikke levere mail!");
+                throw e;
+            }
         }
 
         private bool SendMailToRecipient(RegistrationEntity registration) {
@@ -209,6 +273,37 @@ namespace SkiTKD.Data.Repositories
                 {orderId}
                 <p>For avbestilling, ta kontakt med oss på <a href='mailto: kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a></p>
                 <p>Lykke til!</p>
+                <p>Med vennlig hilsen<p>
+                <p>Ski Taekwondo Klubb</p>
+            ";
+        }
+
+        private string GetOtherReceipt(RegistrationEntity reg, List<TShirtModel> order, string paymentMethod, string orderId) {
+            if(!(reg is OtherRegistrationEntity)) {
+                throw new Exception("Klarte ikke sende mail: Feil registreringstype.");
+            }
+
+            var orderBuilder = new StringBuilder();
+            foreach (var item in order)
+            {
+                if(order.First() == item) {
+                    orderBuilder.Append($"<ul>T-skjorte: {item.Model}, {item.Size} (Gratis)</ul>");
+                }
+                else {
+                    orderBuilder.Append($"<ul>T-skjorte: {item.Model}, {item.Size} (160kr)</ul>");
+                }
+            }
+
+            var total = (order.Count - 1) * 160;
+
+            return @$"
+                <p>Hei {reg.Person.firstname} {reg.Person.lastname}, takk for at dere støtter Ski Taekwondo Klubb!<p>
+                <p>Her følger en kvittering:<p>
+                {orderBuilder.ToString()}
+                <p>Totalt: {total}kr</p>
+                <p>Betalingsmåte: {paymentMethod}</p>
+                {orderId}
+                <p>For avbestilling eller bestilling av flere t-skjorter, ta kontakt med oss på <a href='mailto: kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a></p>
                 <p>Med vennlig hilsen<p>
                 <p>Ski Taekwondo Klubb</p>
             ";

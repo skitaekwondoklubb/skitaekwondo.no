@@ -50,4 +50,18 @@ namespace SkiTKD.Data.Entities {
     public class GraderingRegistrationEntity : RegistrationEntity { 
 
     }
+
+    [Table("otherregistration")]
+    public class OtherRegistrationEntity : RegistrationEntity { 
+    }
+
+    [Table("tshirt")]
+    public class TShirtEntity  { 
+        [Key]
+        public int tshirtid { get; set; }
+        [ForeignKey("Registration")]
+        public int registrationid { get; set; }
+        public string size { get; set; }
+        public string model { get; set; }
+    }
 }

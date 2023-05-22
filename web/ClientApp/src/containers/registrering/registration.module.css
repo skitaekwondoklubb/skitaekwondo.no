@@ -315,6 +315,16 @@
     margin-bottom: 0.2em;
 }
 
+:local .tshirtShowcase {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+:local .addTshirtButton {
+    display: grid;
+}
+
 @media only screen and (max-width: 1280px) {
     :local .registrationTop {
         margin-left: 1.5em;
@@ -411,5 +421,17 @@
         border-radius: 5px;
         font-size: 0.8em;
     }    
+
+    :local .tshirtShowcase {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.4em;
+        margin-bottom: 0.4em;
+    }
+
+    :local .addTshirtButton {
+        margin-top: 1em;        
+    }
 
 }

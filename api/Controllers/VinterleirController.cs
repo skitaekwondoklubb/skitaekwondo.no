@@ -74,7 +74,7 @@ namespace SkiTKD.Web.Controllers
                             var payment = _paymentRepo.AddPayment(registration, reg.Vipps, _paymentRepo.GetTotal(reg));
 
                         if(reg.Vipps) {
-                            var request = await _vippsRepo.VippsRequest(registration.registrationid, person.telephone, payment.paymentid, (int)payment.amount, "Vinterleir for utøver");
+                            var request = await _vippsRepo.VippsRequest(registration.registrationid, person.telephone, payment.paymentid, (int)payment.amount, "Vinterleir for utøver", "vipps/vinterleir");
                             var url = await _vippsRepo.Payments(request);
                             if(url == null || request?.transaction?.orderId == null) {
                                 throw new Exception("Klarte ikke koble til Vipps. OrdreId er NULL");

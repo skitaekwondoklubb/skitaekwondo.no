@@ -8,18 +8,19 @@ namespace SkiTKD.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GraderingController : ControllerBase
+    public class OtherController : ControllerBase
     {
-        private readonly ILogger<GraderingController> _logger;
-        private readonly IGraderingRepository _graderingRepository;
+        private readonly ILogger<OtherController> _logger;
+        private readonly IOtherRepository _OtherRepository;
         private readonly IPersonRepository _personRepo;
         private readonly IVippsRepository _vippsRepo;
         private readonly IPaymentRepository _paymentRepo;
         private readonly IMailRepository _mailRepo;
 
-        public GraderingController(
-            ILogger<GraderingController> logger, 
-            IGraderingRepository repo,
+
+        public OtherController(
+            ILogger<OtherController> logger, 
+            IOtherRepository repo,
             IPersonRepository personRepo, 
             IVippsRepository vippsRepo,
             IPaymentRepository paymentRepo,
@@ -27,7 +28,7 @@ namespace SkiTKD.Web.Controllers
         )
         {
             _logger = logger;
-            _graderingRepository = repo;
+            _OtherRepository = repo;
             _personRepo = personRepo;
             _vippsRepo = vippsRepo;
             _paymentRepo = paymentRepo;
@@ -36,7 +37,7 @@ namespace SkiTKD.Web.Controllers
 
         [HttpPost]
         [Route("Post")]
-        public async Task<ActionResult<string>> Post(GraderingRegistration reg)
+        public async Task<ActionResult<string>> Post(OtherRegistration reg)
         {
             using(TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)) {
                 try {
@@ -48,30 +49,27 @@ namespace SkiTKD.Web.Controllers
                         reg.Telephone
                     );
 
-                    var registration = _graderingRepository.AddRegistration(reg, person.personid);
+                    var registration = _OtherRepository.AddRegistration(reg, person.personid);
 
                     if(registration.Person == null){
                         throw new Exception("PERSON ER NULL");
                     }
 
-                    var existingPayment = registration.Payment;
-                    if(existingPayment == null || !(existingPayment.paid) || (existingPayment.cancelled == true)) {
-                        var payment = _paymentRepo.AddPayment(
-                            registration, 
-                            reg.Vipps, 
-                            registration.Person.lastname.ToLower() == "test" ? 10 : PaymentRepository.GetTotalGradering // People with "Test" as name gets 10kr instead.
-                        );
+                    var payment = _paymentRepo.AddPayment(
+                        registration, 
+                        reg.Vipps, 
+                        registration.Person.lastname.ToLower() == "test" ? 10 : ((reg.Tshirts.Count() - 1) * 160 ) // People with "Test" as name gets 10kr instead.
+                    );
 
 
-                        if(reg.Vipps) {
-                            var request = await _vippsRepo.VippsRequest(registration.registrationid, person.telephone, payment.paymentid, (int)payment.amount, "Gradering for utøver", "vipps/gradering");
-                            var url = await _vippsRepo.Payments(request);
-                            if(url == null || request?.transaction?.orderId == null) {
-                                throw new Exception("Klarte ikke koble til Vipps. OrdreId er NULL");
-                            }
-                            scope.Complete();
-                            return Ok(url);
+                    if(reg.Vipps) {
+                        var request = await _vippsRepo.VippsRequest(registration.registrationid, person.telephone, payment.paymentid, (int)payment.amount, "45-års jubileum T-skjorte", "vipps/tshirt");
+                        var url = await _vippsRepo.Payments(request);
+                        if(url == null || request?.transaction?.orderId == null) {
+                            throw new Exception("Klarte ikke koble til Vipps. OrdreId er NULL");
                         }
+                        scope.Complete();
+                        return Ok(url);
                     }
 
                     _mailRepo.SendMail(registration);

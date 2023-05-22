@@ -24,4 +24,8 @@ namespace SkiTKD.Data.Models {
         public bool Vipps { get; set; }
     }
 
+    public class OtherRegistration : Person {
+        public bool Vipps { get; set; }
+        public TShirtModel[] Tshirts { get; set; }
+    }
 }

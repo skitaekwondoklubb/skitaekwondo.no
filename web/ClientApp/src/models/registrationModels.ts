@@ -1,5 +1,6 @@
 
 import { Instructor } from './instructor';
+import { TShirt } from './tshirtsizes';
 export interface Registration {
     firstName: string;
     lastName: string;
@@ -38,5 +39,15 @@ export interface SimpleRegistration {
     age: number;
     email: string;
     telephone: string;
+    vipps: boolean;
+}
+
+export interface TShirtRegistration {
+    firstName: string;
+    lastName: string;
+    age: number;
+    email: string;
+    telephone: string;
+    tshirts: TShirt[];
     vipps: boolean;
 }

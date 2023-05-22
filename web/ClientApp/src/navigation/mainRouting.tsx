@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Link, Route, Routes, useParams } from 'react-router-dom';
 import Home from '../containers/home/home';
 import OmOss from '../containers/omoss/omoss';
 import Barneparti from '../containers/barneparti/barneparti';
@@ -14,11 +14,12 @@ import styles from './navigation.module.css';
 import Arrangementer from '../containers/arrangementer/arrangementer';
 import Vinterleir from '../containers/vinterleir/vinterleir';
 // import VinterleirRegistrering from '../containers/vinterleir/vinterleirregistrering';
-// import CheckVippsPayment from '../containers/registrering/checkVippsPayment';
+import CheckVippsPayment from '../containers/registrering/checkVippsPayment';
 // import VinterleirPublic from '../containers/vinterleirpublic/vinterleirpublic';
 // import VinterleirAdministration from '../containers/vinterleirpublic/administration';
 // import Agenda from '../containers/vinterleiragenda/agenda';
-// import SimpleRegistrationRouting from '../containers/graderingregistrering/simplegraderingrouting';
+import SimpleRegistrationRouting from '../containers/graderingregistrering/simplegraderingrouting';
+import TshirtRouting from '../containers/tshirtregistering/tshirtrouting';
 
 function MainRouting() {
   return (
@@ -40,16 +41,10 @@ function MainRouting() {
               <Route path="/arrangementer/*" element={ <Arrangementer/> }/>
 
               <Route path="/graderingregistrering/*" element={
-                <div className={styles.expiredRegistration}>
-                    <h1>Registrering til gradering</h1>
-                    <p className={styles.smallGap}>Gradering er over for denne gang! Vi sees til sommeren!</p>
-                    {/* <p className={styles.bigGap}> 🙂</p> */}
-                    <div className={styles.extraButtons}>
-                      <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
-                      {/* <Link to="/vinterleirdeltakere"><button className={`${styles.backButton} ${styles.otherButton}`}>Til deltakerliste</button></Link> */}
-                    </div>
-
-                  </div>
+                <SimpleRegistrationRouting />
+              }/>
+              <Route path="/tskjorte/*" element={
+                <TshirtRouting  />
               }/>
   {/*             
               <Route exact path="/registrering">
@@ -85,7 +80,9 @@ function MainRouting() {
               </Route> */}
 
               {/* <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId}/> type={"Vinterleir"}} /> */}
-              {/* <Route exact path="/vipps/:ordreId" render={(props) => <CheckVippsPayment orderId={props.match.params.ordreId} type={"Gradering"}/>} /> */}
+              <Route path="/vipps/gradering/:ordreId" element={<CheckVippsPayment type={"Gradering"}/>} />
+              <Route path="/vipps/tshirt/:ordreId" element={<CheckVippsPayment type={"T-skjorte"}/>} />
+
         </Routes>
           </div>
     </BrowserRouter>

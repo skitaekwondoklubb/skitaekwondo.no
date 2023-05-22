@@ -77,7 +77,7 @@ namespace SkiTKD.Data.Repositories
             }
         }
 
-        public async Task<VippsPaymentRequestBody> VippsRequest(int registrationId, string telephone, int paymentid, int total, string transactionText) {
+        public async Task<VippsPaymentRequestBody> VippsRequest(int registrationId, string telephone, int paymentid, int total, string transactionText, string apiLocation) {
             var ordreId = Guid.NewGuid().ToString();
             var requestBody = new VippsPaymentRequestBody {
                 customerInfo = new CustomerInfo {
@@ -86,7 +86,7 @@ namespace SkiTKD.Data.Repositories
                 merchantInfo = new MerchantInfo {
                     authToken = await GetAccessToken(),
                     callbackPrefix = $"{_callbackPrefix}/api/Vipps",
-                    fallBack = $"{_callbackPrefix}/vipps/{ordreId}",
+                    fallBack = $"{_callbackPrefix}/{apiLocation}/{ordreId}",
                     merchantSerialNumber = _msn,
                 },
                 transaction = new Transaction {
