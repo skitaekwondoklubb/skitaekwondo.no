@@ -51,3 +51,10 @@ export interface TShirtRegistration {
     tshirts: TShirt[];
     vipps: boolean;
 }
+
+export interface JubileumRegistration {
+    firstName: string;
+    lastName: string;
+    adult: number;
+    child: number;
+}

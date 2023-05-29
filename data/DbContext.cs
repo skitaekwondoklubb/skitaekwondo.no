@@ -16,6 +16,7 @@ namespace SkiTKD.Data {
         public DbSet<GradeEntity> Grades { get; set; }
         public DbSet<GraderingRegistrationEntity> GraderingRegistrations { get; set; }
         public DbSet<OtherRegistrationEntity> OtherRegistrations { get; set; }
+        public DbSet<JubileumEntity> JubileumRegistrations { get; set; }
         public DbSet<TShirtEntity> Tshirts { get; set; }
         public DbSet<PersonEntity> Persons { get; set; }
         public DbSet<VinterleirRegistrationEntity> VinterleirRegistrations { get; set; }

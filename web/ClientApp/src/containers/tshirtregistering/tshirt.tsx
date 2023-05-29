@@ -15,7 +15,7 @@ function Tshirt(props: TShirtStepProps) {
             <p>Vi vil trenge informasjon som en del av registreringsprosessen og vil lagre dette digitalt.</p>
             <p>Denne informasjonen vil <b>kun</b> brukes av Ski Taekwondo Klubb for å kunne registrere og motta betaling for t-skjortene. Ski Taekwondo Klubb deler ingen
                 informasjon med tredjeparter.</p>
-            <p>Etter t-skjortene er gitt ut vil digital personlig identifiserbar informasjon anonymiseres eller slettes.</p>
+            <p>Etter jubileumet er ferdig vil digital personlig identifiserbar informasjon anonymiseres eller slettes.</p>
             <div className={styles.navigationButtons}>
                 <button className={styles.nextButton} onClick={() => props.setCurrentStep(props.step+1)}>Neste</button>
             </div>

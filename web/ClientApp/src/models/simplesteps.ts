@@ -1,4 +1,4 @@
-import { SimpleRegistration, TShirtRegistration } from './registrationModels';
+import { JubileumRegistration, SimpleRegistration, TShirtRegistration } from './registrationModels';
 
 export enum SimpleSteps {
     Welcome,
@@ -19,6 +19,12 @@ export enum TShirtSteps {
     Done
 }
 
+export enum JubileumSteps {
+    Welcome,
+    Registration,
+    Done
+}
+
 
 export interface SimpleStepProps {
     step: SimpleSteps;
@@ -36,4 +42,13 @@ export interface TShirtStepProps {
     nextStep: TShirtSteps;
     registration: TShirtRegistration;
     setRegistration: (reg: TShirtRegistration) => void;
+}
+
+export interface JubileumStepProps {
+    step: JubileumSteps;
+    setCurrentStep: (step: JubileumSteps) => void;
+    prevStep: JubileumSteps;
+    nextStep: JubileumSteps;
+    registration: JubileumRegistration;
+    setRegistration: (reg: JubileumRegistration) => void;
 }

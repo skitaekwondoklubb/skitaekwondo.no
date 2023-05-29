@@ -131,7 +131,7 @@ function Payment(props: SimpleStepProps) {
                     reg.vipps = false;
                     props.setRegistration(reg);
                 }}>Kort/Kontant</button>
-                <img src={Vippsbutton} onClick={payWithVipps}/>
+                {/* <img src={Vippsbutton} onClick={payWithVipps}/> */}
             </div>
             <Loading loading={loading} />
         </div>

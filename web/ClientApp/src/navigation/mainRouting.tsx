@@ -20,6 +20,7 @@ import CheckVippsPayment from '../containers/registrering/checkVippsPayment';
 // import Agenda from '../containers/vinterleiragenda/agenda';
 import SimpleRegistrationRouting from '../containers/graderingregistrering/simplegraderingrouting';
 import TshirtRouting from '../containers/tshirtregistering/tshirtrouting';
+import JublieumRouting from '../containers/jublieumregistrering/tshirtrouting';
 
 function MainRouting() {
   return (
@@ -45,6 +46,9 @@ function MainRouting() {
               }/>
               <Route path="/tskjorte/*" element={
                 <TshirtRouting  />
+              }/>
+              <Route path="/jubileum/*" element={
+                <JublieumRouting  />
               }/>
   {/*             
               <Route exact path="/registrering">

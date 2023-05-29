@@ -25,6 +25,7 @@ builder.Services.AddTransient<IClubRepository, ClubRepository>();
 builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
 builder.Services.AddTransient<IVinterleirRegistrationRepository, VinterleirRegistrationRepository>();
 builder.Services.AddTransient<IGraderingRepository, GraderingRepository>();
+builder.Services.AddTransient<IJubileumRepository, JubileumRepository>();
 builder.Services.AddTransient<IOtherRepository, OtherRepository>();
 builder.Services.AddTransient<IMailRepository, MailRepository>();
 builder.Services.AddTransient<IVippsRepository, VippsRepository>();

@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS ledsager CASCADE;
 DROP TABLE IF EXISTS payment CASCADE;
 DROP TABLE IF EXISTS vipps CASCADE;
 DROP TABLE IF EXISTS transactionError CASCADE;
+DROP TABLE IF EXISTS jubileum CASCADE;
 
 
 CREATE TABLE club (
@@ -112,4 +113,12 @@ CREATE TABLE tshirt (
     registrationId int NOT NULL REFERENCES otherregistration(registrationId),
     model varchar NOT NULL,
     size varchar NOT NULL
+);
+
+CREATE TABLE jubileum (
+    jubileumId serial PRIMARY KEY,
+    firstName varchar NOT NULL,
+    lastName varchar NOT NULL,
+    adults int NOT NULL,
+    children int NOT NULL
 );
