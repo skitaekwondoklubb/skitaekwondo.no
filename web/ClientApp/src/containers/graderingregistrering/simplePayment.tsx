@@ -105,11 +105,11 @@ function Payment(props: SimpleStepProps) {
         })
     }
 
-    if(payLater) {
-        return (
-            <PayLater {... props} total={total} goBack={() => setPayLater(false)} />
-        )
-    }
+    // if(payLater) {
+    //     return (
+    //         <PayLater {... props} total={total} goBack={() => setPayLater(false)} />
+    //     )
+    // }
 
     return (
         <div className="slideLeft">
@@ -125,12 +125,13 @@ function Payment(props: SimpleStepProps) {
             </div>
             <div className={styles.paymentButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
-                <button className={styles.cashCard} onClick={() => {
+                <button className={styles.nextButton} onClick={() => {
                     setPayLater(true);
                     var reg = props.registration;
                     reg.vipps = false;
                     props.setRegistration(reg);
-                }}>Kort/Kontant</button>
+                    next();
+                }}>Registrer</button>
                 {/* <img src={Vippsbutton} onClick={payWithVipps}/> */}
             </div>
             <Loading loading={loading} />

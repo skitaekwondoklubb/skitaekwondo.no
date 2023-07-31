@@ -58,7 +58,7 @@ function JublieumRouting() {
         <div className={styles.registrationCenter}>
             <div className={`${styles.registration} slideLeft`}>
                 <div className={styles.textSide}>
-                    <h1>Registrering til 45-års jubileuum</h1>
+                    <h1>Registrering til 45-års jubileum</h1>
                     <RouteCurrentStep { ... currentProps }/>
                 </div>
             </div>

@@ -13,7 +13,7 @@ function Arrangementer() {
 
                 <hr/>
 
-                <h2>Borgertoget i Ski</h2>
+                {/* <h2>Borgertoget i Ski</h2>
                 <h3>Dato: onsdag 17. mai.</h3>
                 <p>Tradisjon tro går vi i borgertoget i Ski! Møt opp i nystrøken dokbok så går vi sammen fra utenfor Don Pablos Pizza sammen med resten av toget.</p>
 
@@ -35,7 +35,7 @@ function Arrangementer() {
                 <h3>Dato: onsdag 21. juni</h3>
                 <p>Barn vil ha sin siste treningsdag 21. juni. For ungdom/voksen vil det være fellestrening med 4. cup og opp 19. og 21. juni.</p>
 
-                <hr/>
+                <hr/> */}
 
                 <h2>Sommerskole på Ski Taekwondo Klubb</h2>
                 <h3>Dato: 14-16. august</h3>

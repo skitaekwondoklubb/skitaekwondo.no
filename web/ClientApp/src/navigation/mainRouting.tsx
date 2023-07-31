@@ -40,16 +40,16 @@ function MainRouting() {
               <Route path="/kontakt/*" element={ <Kontakt/> }/>
               <Route path="/vinterleir/*" element={ <Vinterleir/> }/>
               <Route path="/arrangementer/*" element={ <Arrangementer/> }/>
-
+{/* 
               <Route path="/graderingregistrering/*" element={
                 <SimpleRegistrationRouting />
-              }/>
-              <Route path="/tskjorte/*" element={
+              }/> */}
+              {/* <Route path="/tskjorte/*" element={
                 <TshirtRouting  />
-              }/>
-              <Route path="/jubileum/*" element={
+              }/> */}
+              {/* <Route path="/jubileum/*" element={
                 <JublieumRouting  />
-              }/>
+              }/> */}
   {/*             
               <Route exact path="/registrering">
                 <div className={styles.expiredRegistration}>
