@@ -82,10 +82,10 @@ function Barneparti() {
                     <Route path='/' element={ <Navigate to="informasjon" /> }/>
 
                 </Routes>
-                <b>
+                {/* <b>
                     <p>Barnepartiet er på dette tidspunktet fullt.</p>
                     <p>Send mail til <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a> for å bli satt på venteliste til høstsemesteret!</p>
-                </b>
+                </b> */}
             </div>
         </div>
     )

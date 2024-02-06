@@ -26,6 +26,7 @@ namespace SkiTKD.Web.Controllers
             IMailRepository mailRepo
         )
         {
+            throw new Exception("Jubileum er over.");
             _logger = logger;
             _jubileumRepository = repo;
             _personRepo = personRepo;

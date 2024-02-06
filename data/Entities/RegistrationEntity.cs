@@ -39,7 +39,7 @@ namespace SkiTKD.Data.Entities {
         public bool wantstoinstruct { get; set; }
         public string otherinfo { get; set; }
         public bool @public { get; set; }
-
+        
         public virtual ClubEntity Club { get; set; }
         public virtual GradeEntity Grade { get; set; }
 

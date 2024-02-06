@@ -5,9 +5,10 @@ import { StepProps } from "../../models/steps";
 function Gradering(props: StepProps) {
     const [gradering, setGradering] = useState(props.registration.gradering);
     const isCup = props.registration.gradeId < 14;
+    const isSki = props.registration.clubId === 29;
 
     useEffect(() => {
-        if(props.registration.age > 12 && isCup) {
+        if(!isSki || (props.registration.age > 12 && isCup)) {
             setGradering(false);
         }
     }, [])
@@ -34,6 +35,25 @@ function Gradering(props: StepProps) {
         }
     }
 
+    if(!isSki && isCup) {
+
+        return (
+            <div className="slideLeft">
+                <p>Gradering på leieren er dessverre kun for Ski Taekwondo Klubb.</p>
+                <div className={styles.registrationForm}>
+                    <div className={`${styles.largeSpan} ${styles.checkboxLine}`}>
+                        <input type={"checkbox"} disabled={true} checked={gradering} onChange={x => {setGradering(false)}}/>
+                        <span>Ønsker gradering</span>
+                    </div>
+                </div>
+                <div className={styles.navigationButtons}>
+                    <button className={styles.backButton} onClick={goBack}>Tilbake</button>
+                    <button className={styles.nextButton} onClick={nextStep}>Neste</button>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="slideLeft">
             <p>Ønsker du å prøve å gradere på vinterleiren?</p>
@@ -46,7 +66,7 @@ function Gradering(props: StepProps) {
             <div hidden={!isCup || props.registration.age < 13}>
                 <p><b>Det vil ikke være cupgradering på vinterleiren for ungdom/voksne. </b></p>
                 {
-                    props.registration.clubId === 29 &&
+                    isSki &&
                     <p>Ski Taekwondo Klubb vil ha gradering for ungdom/voksne i januar 2023.</p>
                 }
             </div>

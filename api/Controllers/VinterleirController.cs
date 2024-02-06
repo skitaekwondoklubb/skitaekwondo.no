@@ -27,6 +27,7 @@ namespace SkiTKD.Web.Controllers
             IMailRepository mailRepo
         )
         {
+            throw new Exception("Registrering til vinterleir er over. Velkommen igjen neste år.");
             _logger = logger;
             _regRepo = regRepo;
             _personRepo = personRepo;
@@ -40,7 +41,6 @@ namespace SkiTKD.Web.Controllers
         [Route("Post")]
         public async Task<ActionResult<string>> Post(VinterleirRegistration reg)
         {
-            throw new Exception("Vinterleirregistrering er ikke mulig nå.");
 
             using(TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled)) {
                 try {
@@ -71,10 +71,10 @@ namespace SkiTKD.Web.Controllers
 
                     var existingPayment = registration.Payment;
                     if(existingPayment == null || !(existingPayment.paid) || (existingPayment.cancelled == true)) {
-                            var payment = _paymentRepo.AddPayment(registration, reg.Vipps, _paymentRepo.GetTotal(reg));
+                        var payment = _paymentRepo.AddPayment(registration, reg.Vipps, _paymentRepo.GetTotal(reg));
 
                         if(reg.Vipps) {
-                            var request = await _vippsRepo.VippsRequest(registration.registrationid, person.telephone, payment.paymentid, (int)payment.amount, "Vinterleir for utøver", "vipps/vinterleir");
+                            var request = await _vippsRepo.VippsRequest(registration.registrationid, person.telephone, payment.paymentid, (int)payment.amount, "Vinterleir for utøver", "vipps");
                             var url = await _vippsRepo.Payments(request);
                             if(url == null || request?.transaction?.orderId == null) {
                                 throw new Exception("Klarte ikke koble til Vipps. OrdreId er NULL");

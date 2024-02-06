@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Graph;
 using SkiTKD.Data.Entities;
 using SkiTKD.Data.Interfaces;
 using SkiTKD.Data.Models;
@@ -15,13 +16,16 @@ namespace SkiTKD.Data.Repositories
         private readonly ILedsagerRepository _ledsagerRepo;
         private readonly IGradeRepository _gradeRepo;
         private readonly IVippsRepository _vippsRepo;
+        private readonly IClubRepository _clubRepo;
 
-        public PaymentRepository(SkiTKDContext dbContext, IPersonRepository personRepo, ILedsagerRepository ledsagerRepo, IGradeRepository gradeRepo, IVippsRepository vippsRepo) {
+
+        public PaymentRepository(SkiTKDContext dbContext, IPersonRepository personRepo, ILedsagerRepository ledsagerRepo, IGradeRepository gradeRepo, IVippsRepository vippsRepo, IClubRepository clubrepo) {
           _dbContext = dbContext;
           _personRepo = personRepo;
           _ledsagerRepo = ledsagerRepo;
           _gradeRepo = gradeRepo;
           _vippsRepo = vippsRepo;
+          _clubRepo = clubrepo;
         }
 
         public PaymentEntity AddPayment(RegistrationEntity registration, bool vipps, int amount)
@@ -88,27 +92,45 @@ namespace SkiTKD.Data.Repositories
             return true;
         }
 
+        private int CalculateEarlyBirdPrice(int price) {
+            var currentDate = DateTime.UtcNow;
+            var earlyBirdDate = new DateTime(2023, 10, 1);
+            var prettyEarlyBird = new DateTime(2023, 11, 1);
+
+            if(currentDate < earlyBirdDate) {
+                Console.WriteLine("Early bird price:" + price);
+                var newprice = (price * (100-20)) / 100;
+                Console.WriteLine("Early bird price:" + newprice);
+
+                return newprice;
+            }
+            else if(currentDate >= earlyBirdDate && currentDate <= prettyEarlyBird) {
+                return (price * (100-10)) / 100;
+            }
+
+            return price;
+        }
+
         public int GetTotal(VinterleirRegistration reg) {
             var grade = _gradeRepo.FindGradeById(reg.GradeId);
+            var skitaekwondo = _clubRepo.FindClub("Ski Taekwondo Klubb").clubid;
 
-            if(reg.LastName.ToLower().Equals("test")) {     // Only for us to test.
+            if(reg.LastName.ToLower().Equals("test")) {     // Only for us to test. Any test people get thrown out of the final list.
                 return 10;
             }
 
-            var total = 975;
+            var basePrice = (reg.Age <= 12) ? 975 : 1100;
 
-            if(reg.Age <= 12) {
-                total -= 150;
-            }
+            var total = CalculateEarlyBirdPrice(basePrice);
+
+            // ETTERREGISTRERING 
+            total += 100;
             
-            if(reg.Instructor == InstructorType.SkiFullTimeInstructor) {
+            if(reg.ClubId == skitaekwondo) {
                 total = 0;
             }
-            else if(reg.Instructor == InstructorType.SkiHelperInstructor) { 
-                total -= 475;
-            }
 
-            if(reg.Gradering == true && grade.isdan == false && grade.grade != 1) {
+            if(reg.ClubId == skitaekwondo && reg.Gradering == true && grade.isdan == false && grade.grade != 1) {
                 total += 350;
             }
 

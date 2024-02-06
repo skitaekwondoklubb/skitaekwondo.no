@@ -1,6 +1,6 @@
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import styles from './omoss.module.css';
-import logo from '../skitkd_logo.webp';
+import logo from '../skitkd_logo.svg';
 import React from 'react';
 
 function OmTaekwondo() {

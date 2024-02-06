@@ -48,6 +48,7 @@ namespace SkiTKD.Data.Repositories
             }
             else {
                 var mappedRegistration = new VinterleirRegistrationEntity {
+                    personid = personId,
                     clubid = registration.ClubId,
                     allergies = registration.Allergies,
                     gradeid = registration.GradeId,
@@ -61,6 +62,7 @@ namespace SkiTKD.Data.Repositories
                 };
                 _dbContext.Add(mappedRegistration);
                 _dbContext.SaveChanges();
+                
                 return mappedRegistration;
             }
             _dbContext.SaveChanges();

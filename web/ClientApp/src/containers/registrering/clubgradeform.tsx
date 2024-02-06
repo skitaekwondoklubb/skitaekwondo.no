@@ -15,20 +15,20 @@ interface IsInstructorProps {
     instructor: Instructor | undefined; 
 }
 
-function IsInstructor(props: IsInstructorProps) {
-    if(props.club === "Ski Taekwondo Klubb" && props.age > 12)
-        return (
-            <>
-                <p>Instruktør:</p>
-                <select className={`${styles.instructor}`} value={props.instructor} onChange={x => props.setInstructor(Number.parseInt(x.currentTarget.value))}>
-                    <option value={Instructor.NotInstructor}>Jeg er ikke instruktør</option>
-                    <option value={Instructor.SkiFullTimeInstructor} hidden={props.club !== "Ski Taekwondo Klubb"}>Er hovedinstruktør i Ski</option>
-                    <option value={Instructor.SkiHelperInstructor} hidden={props.club !== "Ski Taekwondo Klubb"}>Er hjelpeinstruktør i Ski</option>
-                </select>
-            </>
-        )
-    return <></>
-}
+// function IsInstructor(props: IsInstructorProps) {
+//     if(props.club === "Ski Taekwondo Klubb" && props.age > 12)
+//         return (
+//             <>
+//                 <p>Instruktør:</p>
+//                 <select className={`${styles.instructor}`} value={props.instructor} onChange={x => props.setInstructor(Number.parseInt(x.currentTarget.value))}>
+//                     <option value={Instructor.NotInstructor}>Jeg er ikke instruktør</option>
+//                     <option value={Instructor.SkiFullTimeInstructor} hidden={props.club !== "Ski Taekwondo Klubb"}>Er hovedinstruktør i Ski</option>
+//                     <option value={Instructor.SkiHelperInstructor} hidden={props.club !== "Ski Taekwondo Klubb"}>Er hjelpeinstruktør i Ski</option>
+//                 </select>
+//             </>
+//         )
+//     return <></>
+// }
 
 function ClubGrade(props: StepProps) {
     const [loading, setLoading] = useState(true);
@@ -72,12 +72,12 @@ function ClubGrade(props: StepProps) {
             registration.clubId = club.clubId;
         }
 
-        if(club?.name === "Ski Taekwondo Klubb" || (grade?.isDan === true && grade.grade >= 4)) {
-            registration.instructor = instructor;
-        }
-        else {
-            registration.instructor = Instructor.NotInstructor
-        }
+        // if(club?.name === "Ski Taekwondo Klubb" || (grade?.isDan === true && grade.grade >= 4)) {
+        //     registration.instructor = instructor;
+        // }
+        // else {
+        //     registration.instructor = Instructor.NotInstructor
+        // }
 
         props.setRegistration(registration);
     }
@@ -107,7 +107,7 @@ function ClubGrade(props: StepProps) {
                 {!loading ? <ClubAutocomplete currentSelection={club} clubs={clubs} setClub={setClub} /> : <input placeholder="Laster klubber..."/> }
                 <p>Beltegrad:</p>
                 {!loading ? <GradeAutocomplete currentSelection={grade} grades={grades ?? []} setGrade={setGrade}/>  : <input placeholder="Laster belter..."/> }
-                <IsInstructor age={props.registration.age} instructor={instructor} club={club?.name ?? ""} gradeId={grade?.gradeId ?? 0} setInstructor={setInstructor} />
+                {/* <IsInstructor age={props.registration.age} instructor={instructor} club={club?.name ?? ""} gradeId={grade?.gradeId ?? 0} setInstructor={setInstructor} /> */}
             </div>
             <div className={styles.masterDisclaimer} hidden={grade == null || grade?.gradeId < 18}>
                 <h3>Alle mastere betaler uansett for leieren. Noen få utvalgte får refusjon igjennom godtgjørelse.</h3>

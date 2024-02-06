@@ -7,6 +7,12 @@
     animation: "fadeIn" 0.2s ease-in;
 }
 
+:local .logoText {
+    text-overflow: none !important;
+    overflow: hidden;
+    width: 250px;
+}
+
 :local .navLink:hover {
     color: slategrey;
 }
@@ -64,6 +70,10 @@
     z-index: 1000;
     position:relative;
     background-color: white;
+}
+
+:local .navigationHide {
+    display: none !important
 }
 
 :local .rightSideNav {

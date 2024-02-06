@@ -24,8 +24,9 @@ namespace SkiTKD.Data.Repositories
         private readonly string _callbackPrefix;
         private IVippsTokenService _vippsTokenService;
         private readonly SkiTKDContext _dbContext;
+        private readonly IVinterleirRegistrationRepository _vinterleirRepo;
 
-        public VippsRepository(IConfiguration config, IVippsTokenService tokenService, SkiTKDContext context) {
+        public VippsRepository(IConfiguration config, IVippsTokenService tokenService, SkiTKDContext context, IVinterleirRegistrationRepository vinterleirRegRepo) {
   
             _subscription = config["VippsSubscription"];
             _msn = config["VippsMSN"];
@@ -35,6 +36,7 @@ namespace SkiTKD.Data.Repositories
             _callbackPrefix = config["VippsCallbackPrefix"];
             _vippsTokenService = tokenService;
             _dbContext = context;
+            _vinterleirRepo = vinterleirRegRepo;
         }
 
         private async Task<string> GetAccessToken() {
@@ -115,9 +117,63 @@ namespace SkiTKD.Data.Repositories
             return requestBody;
         }
 
+        public async Task<bool> Capture(string orderId) {
+            Console.WriteLine("Started capture");
+            var vippsPayment = FindVippsOrder(orderId);
+            if(vippsPayment.captured == true || vippsPayment.amount == 0) {
+                return true;
+            }
+
+            var requestBody = new VippsCaptureRequestBody {
+                merchantInfo = new CaptureMerchantInfo {
+                    merchantSerialNumber = _msn,
+                },
+                transaction = new CaptureTransaction {
+                    amount = (int) vippsPayment.amount,
+                    transactionText = vippsPayment.transactiontext,
+                }
+            };
+            
+            using (var client = new HttpClient())
+            {
+                using (var request = new HttpRequestMessage(HttpMethod.Post, $"{_vippsEndpoint}/ecomm/v2/payments/{vippsPayment.orderid}/capture"))
+                {
+                    string jsonBody = JsonConvert.SerializeObject(requestBody);
+                    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
+                    request.Headers.Add("Merchant-Serial-Number", _msn);
+                    request.Headers.Add("Vipps-System-Name", _systemName);
+                    request.Headers.Add("Vipps-System-Version", _systemVersion);
+                    request.Headers.Add("Ocp-Apim-Subscription-Key", _subscription);
+                    request.Headers.Add("X-Request-Id", $"{vippsPayment.paymentid}_capture_{DateTime.Now.Hour}_{DateTime.Now.Minute}_{DateTime.Now.Second}");
+                    request.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                    using (var response = await client.SendAsync(request))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var responseData = await response.Content.ReadAsStringAsync();
+                            var paymentResponse = JsonConvert.DeserializeObject<VippsCaptureResponse>(responseData);
+                            return true;
+                        }
+
+                        throw new Exception($"Vipps ga feilmelding: {response.ReasonPhrase} {await response.Content.ReadAsStringAsync()}");
+                    }
+                }
+            }
+        }
+
         public VippsEntity FindVippsOrder(string orderId) {
             var vippsOrder = _dbContext.VippsOrders.SingleOrDefault(x => x.orderid == orderId);
             return vippsOrder;
+        }
+
+        public bool IsCaptured(string orderId) {
+            var vippsEnt = FindVippsOrder(orderId);
+            if(vippsEnt == null) {
+                return false;
+            }
+            return vippsEnt.captured;
         }
 
         public bool SetTransactionData(string orderId, TransactionCallbackInfo info) {

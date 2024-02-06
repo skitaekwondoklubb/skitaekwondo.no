@@ -2,13 +2,16 @@ import { useState } from 'react';
 import { destinations } from './destinations';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styles from './navigation.module.css';
-import logo from '../containers/skitkd_logo.webp';
+import logo from '../containers/skitkd_logo.svg';
 import { useMatch } from 'react-router';
 
-function Navigation() {
+function Navigation() {
     const navigate = useNavigate();
     const match = useMatch("*/menu");
+    const isPrintable = window.location.href.includes("/print/");
+    
     const [menuEnabled, setMenuEnabled] = useState(false);
+    console.log(isPrintable);
 
     function toggleMenu() {
         if(!match) {
@@ -20,11 +23,11 @@ function Navigation() {
     }
 
     return (
-        <nav className={styles.navigation}>
+        <nav className={`${isPrintable ? styles.navigationHide : ""} ${styles.navigation}`}>
             <div className={styles.logoHome}>
                 <Link to="/" onClick={() => setMenuEnabled(false)} className={styles.hjemLink}>
                     <img src={logo} alt="Home"/>
-                    <span>Ski Taekwondo Klubb</span>
+                    <span className={`${styles.logoText}`}>Ski Taekwondo Klubb</span>
                 </Link>
             </div>
             <div className={styles.mobileButton}>

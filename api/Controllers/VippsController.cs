@@ -57,6 +57,9 @@ namespace SkiTKD.Web.Controllers
             if((hasPaid == null) || (hasPaid == false)) {
                 return _vippsRepo.GetStatus(orderId);
             }
+            else if(!vipps.captured && hasPaid != null && hasPaid == true) {
+                _vippsRepo.Capture(orderId);
+            }
 
             return CallbackStatuses.Reserved;
         }

@@ -16,6 +16,7 @@ import { Done, Welcome } from "./vinterleirregistrering";
 import Sleepover from "../registrering/sleepoverform";
 import { Registration } from "../../models/registrationModels";
 import Public from "../registrering/publicform";
+import { Instructor } from "../../models/instructor";
 
 
 function RegistrationRouting() {
@@ -35,7 +36,7 @@ function RegistrationRouting() {
         otherInfo: "",
         sleepover: false,
         vegan: false,
-        instructor: 0,
+        instructor: Instructor.NotInstructor,
         public: null,
         vipps: false,
         wantsToInstruct: false

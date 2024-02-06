@@ -27,6 +27,7 @@ namespace SkiTKD.Web.Controllers
             IMailRepository mailRepo
         )
         {
+            throw new Exception("T-skjorte salget er over.");
             _logger = logger;
             _OtherRepository = repo;
             _personRepo = personRepo;
@@ -72,7 +73,7 @@ namespace SkiTKD.Web.Controllers
                         return Ok(url);
                     }
 
-                    _mailRepo.SendMail(registration);
+                    //_mailRepo.SendMail(registration);
 
                     scope.Complete();
                 }

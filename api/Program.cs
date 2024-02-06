@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddDbContext<SkiTKDContext>();
 builder.Services.AddSingleton<IVippsTokenService, VippsTokenService>();
-builder.Services.AddSingleton<IGraphTokenService, GraphTokenService>();
+// builder.Services.AddSingleton<IGraphTokenService, GraphTokenService>();
 builder.Services.AddTransient<IPersonRepository, PersonRepository>();
 builder.Services.AddTransient<ILedsagerRepository, LedsagerRepository>();
 builder.Services.AddTransient<IGradeRepository, GradeRepository>();

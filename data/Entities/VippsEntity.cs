@@ -17,6 +17,7 @@ namespace SkiTKD.Data.Entities {
         public double amount { get; set; }
         public string status { get; set; }
         public DateTime timestamp { get; set; }
+        public bool captured { get; set; }
 
         public virtual PaymentEntity Payment { get; set; }
     }

@@ -26,6 +26,7 @@ namespace SkiTKD.Web.Controllers
             IMailRepository mailRepo
         )
         {
+            throw new Exception("Det er ikke mulig å registrere seg til gradering nå.");
             _logger = logger;
             _graderingRepository = repo;
             _personRepo = personRepo;

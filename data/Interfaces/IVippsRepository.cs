@@ -11,6 +11,7 @@ namespace SkiTKD.Data.Interfaces
         Task<VippsPaymentRequestBody> VippsRequest(int registrationId, string telephone, int paymentId, int total, string transactionText, string apiLocation);
         VippsEntity FindVippsOrder(string orderId);
         bool SetTransactionData(string orderId, TransactionCallbackInfo info);
+        Task<bool> Capture(string orderId);
         string GetStatus(string orderId);
     }
 }

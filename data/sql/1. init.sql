@@ -51,7 +51,8 @@ CREATE TABLE vipps (
     mobileNumber varchar NOT NULL,
     amount numeric NOT NULL,
     status varchar NULL,
-    timeStamp timestamp NULL
+    timeStamp timestamp NULL,
+    captured boolean NOT NULL
 );
 
 ALTER TABLE payment

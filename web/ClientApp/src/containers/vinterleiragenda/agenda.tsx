@@ -23,17 +23,29 @@ function Agenda() {
     const [showType, setShowType] = useState<ShowTypes>(ShowTypes.All);
     const [showGrade, setShowGrade] = useState<number | undefined>();
 
+    function getDayName() {
+        switch (selectedDay) {
+            case 1:
+                return "lørdag"
+            case 2:
+                return "søndag"    
+            default:
+                return "fredag"
+        }
+    }
+
+
     useEffect(() => {
         var currentDay = new Date().getDate();
 
         switch (currentDay) {
-            case 2:
+            case 1:
                 setSelectedDay(0);
                 break;
-            case 3:
+            case 2:
                 setSelectedDay(1);
                 break;
-            case 4:
+            case 3:
                 setSelectedDay(2);
                 break;
             default:
@@ -63,7 +75,7 @@ function Agenda() {
     return (
         <div className={styles.agenda}>
             <div className={styles.agendaWidth}>
-                <h1>Program - Vinterleir 2022</h1>
+                <h1>Program - Vinterleir 2023</h1>
                 <AgendaFilter showType={showType} setShowType={setShowType} showGrade={showGrade} setShowGrade={setShowGrade}/> 
 
                 <div className={styles.buttons}>
@@ -82,6 +94,7 @@ function Agenda() {
                         })
                     }
                 </div>
+                <p><a href={`/vinterleir/program/print/${selectedDay}`} target="_blank">Printbar versjon av hele {getDayName()}sprogrammet</a></p>
             </div>
         </div>
     )

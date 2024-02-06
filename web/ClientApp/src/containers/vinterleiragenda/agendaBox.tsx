@@ -1,4 +1,4 @@
-import { AgendaGrade, AgendaHappening, AgendaRowData, ShowTypes } from "./agendaData";
+import { AgendaGrade, AgendaHappening, AgendaRowData, ShowTypes, kamp } from "./agendaData";
 import styles from './agenda.module.css';
 import React from "react";
 
@@ -10,7 +10,7 @@ interface AgendaRowProps {
 
 export function AgendaRow(props: AgendaRowProps) {
     const rowsAfterFilter = props.row.happenings
-    .filter(x => props.showTypes === ShowTypes.All || (x.type === ShowTypes.All || props.showTypes === x.type))
+    .filter(x => props.showTypes === ShowTypes.All || (x.type === ShowTypes.All || x.type === ShowTypes.Kamp || props.showTypes === x.type))
     .filter(x => (props.showGrade === null || x.who.length === 0 || (x.who.find(y => y.color === props.showGrade?.color) != null)));
     const single = rowsAfterFilter.length === 1;
 
@@ -88,10 +88,12 @@ function MultiBox(props: AgendaBoxProps) {
             <h2>{props.agenda.what}</h2>
             <label className={styles.where}>{props.agenda.where}</label>
             <label className={styles.boxChildren}>{props.agenda.type === ShowTypes.Children ? "Barn 👧 (8-11 år)" : ""}</label>
+            <p hidden={props.agenda.type !== ShowTypes.Kamp}>{props.agenda.type === ShowTypes.Kamp && "Minst 10 år og gult belte /m kamperfaring"}</p>
             <h3>{ !props.agenda.override && props.agenda.who.length === 0 && "Alle" }</h3>
             <h3>{ props.agenda.override && props.agenda.override }</h3>
-            <p>{ !props.agenda.override && props.agenda.who.length > 0 && findGradeSpan(props.agenda.who) }</p>
-            <small className={styles.boxGradeName}>{ props.agenda.who.length > 0 && findGradeNameSpan(props.agenda.who) }</small>
+            <p>{ props.agenda.type !== ShowTypes.Kamp && !props.agenda.override && props.agenda.who.length > 0 && findGradeSpan(props.agenda.who) }</p>
+            <small className={styles.boxGradeName}>{ props.agenda.type !== ShowTypes.Kamp && props.agenda.who.length > 0 && findGradeNameSpan(props.agenda.who) }</small>
+            <small className={styles.boxGradeName}>{ props.agenda.type === ShowTypes.Kamp && "Ta gjerne med eget utstyr" }</small>
 
             <label className={styles.when}>{props.agenda.when}</label>
         </div>
@@ -103,10 +105,14 @@ function SingleBox(props: AgendaBoxProps) {
         <div className={`${styles.agendaBox} ${props.agenda.class} ${props.single ? styles.singleBox : styles.normalBox}`} >
             <h2>{props.agenda.what}</h2>
             <label className={styles.boxChildren}>{props.agenda.type === ShowTypes.Children ? "Barn 👧 (8-11 år)" : ""}</label>
+            <p hidden={props.agenda.type !== ShowTypes.Kamp}>{props.agenda.type === ShowTypes.Kamp && "Minst 10 år og gult belte /m kamperfaring"}</p>
+
             <h3>{ !props.agenda.override && props.agenda.who.length === 0 && "Alle" }</h3>
             <h3>{ props.agenda.override && props.agenda.override }</h3>
-            <p>{ !props.agenda.override && props.agenda.who.length > 0 && findGradeSpan(props.agenda.who) }</p>
-            <small className={styles.boxGradeName}>{ props.agenda.who.length > 0 && findGradeNameSpan(props.agenda.who) }</small>
+            <p>{ props.agenda.type !== ShowTypes.Kamp && !props.agenda.override && props.agenda.who.length > 0 && findGradeSpan(props.agenda.who) }</p>
+            <small className={styles.boxGradeName}>{ props.agenda.type !== ShowTypes.Kamp && props.agenda.who.length > 0 && findGradeNameSpan(props.agenda.who) }</small>
+            <small className={styles.boxGradeName}>{ props.agenda.type === ShowTypes.Kamp && "Ta med eget utstyr" }</small>
+
 
             <label className={styles.where}>{props.agenda.where}</label>
             <label className={styles.when}>{props.agenda.when}</label>

@@ -88,6 +88,11 @@
     font-size: 1.3em;
 }
 
+:local .sale {
+    border: 1px solid red;
+    border-radius: 1rem;
+}
+
 :local .registrationButton:disabled {
     border-color: grey;
 }

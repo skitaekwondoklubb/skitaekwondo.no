@@ -1,5 +1,7 @@
 using System.Transactions;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using SkiTKD.Data.Dto;
 using SkiTKD.Data.Interfaces;
 using SkiTKD.Data.Models;
@@ -26,6 +28,8 @@ namespace SkiTKD.Web.Controllers
         [Route("Get")]
         public ActionResult<List<GradeDto>> Get()
         {
+
+            
             var allGrades = _gradeRepo.GetAllGrades();
             List<GradeDto> grades = new List<GradeDto>();
             foreach (var grade in allGrades)

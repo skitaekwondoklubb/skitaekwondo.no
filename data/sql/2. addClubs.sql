@@ -36,3 +36,4 @@ INSERT INTO club (name) VALUES ('Tynset');
 INSERT INTO club (name) VALUES ('Ålesund');
 INSERT INTO club (name) VALUES ('Sølvbyen');
 INSERT INTO club (name) VALUES ('Smilodon Taekwondo Club');
+INSERT INTO club (name) VALUES ('Jidokwan Sweden');

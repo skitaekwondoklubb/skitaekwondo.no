@@ -36,7 +36,7 @@ function Dojang() {
                 <Link to="treningstider"><button>Treningstider</button></Link>
             </div>
             {/* <div className={`${`${styles.infoBoxButtons} ${styles.infoBoxExtraButtonMargin}`} fadeInSlow`}>
-                <a href="/program"><button>Program - Vinterleir 2022</button></a>
+                <Link to="/vinterleir/program"><button>Program - Vinterleir 2023</button></Link>
             </div> */}
         </div>
     )
