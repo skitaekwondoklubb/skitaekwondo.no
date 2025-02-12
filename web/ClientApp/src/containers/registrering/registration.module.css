@@ -51,6 +51,26 @@
     background-color: rgb(0, 90, 230);
 }
 
+:local .doneButton {
+    justify-content: right;
+    border-color: #388E3C;
+    background-color: #4CAF50;
+    color: white;
+    grid-column: 4;
+    justify-content: right;
+}
+
+:local .doneButton:disabled {
+    border-color: #66BB6A;
+    background-color: #A5D6A7;
+    cursor: not-allowed;
+}
+
+:local .doneButton:hover {
+    border-color: #1B5E20;
+    background-color: #388E3C;
+}
+
 :local .backButton {
     justify-content: right;
     border-color: slategray;
@@ -124,7 +144,7 @@
     display: grid;
     grid-template-columns: min-content max-content;
     column-gap: 2vw;
-    row-gap: 4vh;
+    row-gap: 1vh;
     justify-content: center;
     align-items: center;
 }
@@ -211,6 +231,64 @@
     margin-right: 1em;
 }
 
+:local .capitalize {
+    text-transform: capitalize;
+}
+
+:local .regCheckbox {
+    margin-bottom: 1em;
+    font-size: 1.0em;
+}
+
+:local .centerize {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+:local .checkboxCenter {
+    display: grid;
+    font-size: 1.3rem;
+    grid-template-columns: 230px 0.3fr;
+    cursor: pointer;
+    align-items: center;
+}
+
+:local .regCheckbox  input {
+    width: 25px;
+    height: 25px;
+}
+
+:local .regTopMargin {
+    margin-top: 2rem;
+}
+
+:local .receiptForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 1.5rem;
+}
+
+:local .receiptForm h2 {
+    margin-bottom: 0px;
+}
+
+:local .receipt p {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+:local .receipt h3 {
+    margin-bottom: 0px;
+}
+
+
+:local .receipt ul {
+    font-size: 1.4rem;
+}
+
 :local .paymentButtons {
     display: grid;
     /* grid-template-columns: 0.2fr 0.3fr 0.2fr 0.3fr; */
@@ -267,6 +345,7 @@
     font-weight: 600;
     font-size: 1.5em;
     padding: 15px;
+    margin-bottom: 0.3em;
 }
 
 :local .done {
@@ -275,6 +354,8 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    padding: 2vw;
+    text-align: center;
 }
 
 :local .done h2 {
@@ -434,4 +515,14 @@
         margin-top: 1em;        
     }
 
+
+    :local .receiptForm {
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 1.5rem;
+    }
+
+    :local .receiptForm h3 {
+        font-size: 1.25rem;
+    }
 }

@@ -127,7 +127,7 @@ namespace SkiTKD.Data.Repositories
                 lastname = ledsager.Person.lastname,
                 age = ledsager.Person.age,
                 allergies = "",
-                amount = 500,
+                amount = 550,
                 club = reg.Club.name,
                 email = ledsager.Person.email,
                 grade = "",

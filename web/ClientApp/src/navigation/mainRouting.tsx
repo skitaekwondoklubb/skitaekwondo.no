@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Home from '../containers/home/home';
 import OmOss from '../containers/omoss/omoss';
@@ -13,12 +12,18 @@ import Navigation from './navigation';
 import styles from './navigation.module.css';
 import Arrangementer from '../containers/arrangementer/arrangementer';
 import Vinterleir from '../containers/vinterleir/vinterleir';
-import CheckVippsPayment from '../containers/registrering/checkVippsPayment';
-import VinterleirAdministration from '../containers/vinterleirpublic/administration';
-import Agenda from '../containers/vinterleiragenda/agenda';
+import SimpleRegistrationRouting from '../containers/graderingregistrering/simplegraderingrouting';
+import { GraderingType } from '../models/registrationModels';
+import JublieumRouting from '../containers/jublieumregistrering/tshirtrouting';
+import SkoleRouting from '../containers/skoleregistrering/skolerouting';
 import VinterleirRegistrering from '../containers/vinterleir/vinterleirregistrering';
 import VinterleirPublic from '../containers/vinterleirpublic/vinterleirpublic';
+import Agenda from '../containers/vinterleiragenda/agenda';
 import PrintAgenda from '../containers/vinterleiragenda/printagenda';
+import VinterleirAdministration from '../containers/vinterleirpublic/administration';
+import CheckVippsPayment from '../containers/registrering/checkVippsPayment';
+import NewMemberRouting from '../containers/newmember/newmemberRouting';
+import NewMemberData from '../containers/newmember/admin/newmemberData';
 
 function MainRouting() {
 
@@ -39,56 +44,66 @@ function MainRouting() {
                 <Route path="/kontakt/*" element={ <Kontakt/> }/>
                 <Route path="/vinterleir/*" element={ <Vinterleir/> }/>
                 <Route path="/arrangementer/*" element={ <Arrangementer/> }/>
+
+                <Route path="/graderingregistrering" element={
+                  <div className={styles.expiredRegistration}>
+                    <h1>Graderingsregistrering</h1>
+                      <h3 className={`${styles.smallGap}`}><b><u>Du trenger ikke registrere deg til gradering.</u></b></h3>
+                      <p className={`${styles.smallGap}`}>Det er ingen registrering på nettet for gradering.</p>
+                      <p>For å kunne prøve å gradere må følgende være oppfylt:</p>
+                      <ul className={`${styles.smallList} ${styles.smallGap}`}>
+                        <li>Du må ha fullført teori og fysisk test.</li>
+                        <li>Du må ha godt nok oppmøte.</li>
+                        <li>Du må føle at du selv er klar til gradering.</li>
+                        <li>Du må ha med medlemspass på gradering.</li>
+                        <li>Du skal ha godkjennelse til å gradere fra Master Tom Lasse.</li>
+                      </ul>
+                      <p className={`${styles.smallGap}`}>Hvis alle kravene er oppfylt kan du møte opp på gradering tirsdag 21. januar klokken 18.</p>
+                      <p>Lykke til!</p>
+                  </div>
+                }/>
+
+                <Route path="/nyttmedlem" element={ <NewMemberRouting /> } />
+                <Route path="/nyttmedlem/sjekk" element={ <NewMemberData /> } />
+
+                {/* {
                 <Route path="/vinterleir/registrering/*" element={ 
                   <div className={styles.expiredRegistration}>
                     <h1>Registrering til vinterleir</h1>
                     <p className={styles.smallGap}>Fristen for registrering har utgått. </p>
-                    <p className={styles.bigGap}> Hvis du fortsatt ønsker å være med må du ta kontakt med oss på <a href='mailto:kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a>.</p>
+                    <p className={styles.bigGap}> Hvis du fortsatt ønsker å være med, ta kontakt med oss på <a href='mailto:kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a>.</p>
                     <div className={styles.extraButtons}>
                       <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
-                      {/* <Link to="/vinterleirdeltakere"><button className={`${styles.backButton} ${styles.otherButton}`}>Til deltakerliste</button></Link> */}
                     </div>
                   </div>
                  }/>
+                } */}
 
-                {/* <Route path="/vinterleir/etterregistrering/*" element={ <VinterleirRegistrering /> }/> */}
-                {/* <Route path="/vinterleir/deltakere" element={<VinterleirPublic />}/> */}
-                {/* <Route path="/vinterleir/program" element={ <Agenda /> }/> */}
-                {/* <Route path="/vinterleir/program/print/*" element={ <PrintAgenda /> }/> */}
-                {/* <Route path="/vinterleir/deltakere/admin" element={<VinterleirAdministration/>}/> */}
+
+                {/* <Route path="/gradering/barn" element={
+                  <SimpleRegistrationRouting type={GraderingType.Children} />
+                }/>
+
+
+
+                <Route path="/sommeravslutning" element={
+                  <JublieumRouting />
+                } /> */}
+
+                {/* <Route path="/sommerskole/registrering" element={
+                  <SkoleRouting />
+                } /> */}
+
+                {/* <Route path="/vinterleir/etterregistrering/*" element={ <VinterleirRegistrering /> }/>
+                <Route path="/vinterleir/deltakere" element={<VinterleirPublic />}/>
+                <Route path="/vinterleir/program" element={ <Agenda /> }/>
+                <Route path="/vinterleir/program/print/*" element={ <PrintAgenda /> }/>
+                <Route path="/vinterleir/deltakere/admin" element={<VinterleirAdministration/>}/> */}
                 {/* <Route path="/vipps/:ordreId" element={ <CheckVippsPayment type={"Vinterleir"} /> } /> */}
           </Routes>
         </div>
     </BrowserRouter>
   )
 }
-
-
-                // {/* <Route path="/vipps/gradering/:ordreId" element={<CheckVippsPayment type={"Gradering"}/>} />
-                // <Route path="/vipps/tshirt/:ordreId" element={<CheckVippsPayment type={"T-skjorte"}/>} /> */}
-                /* <Route path="/vinterleir/etterregistrering">
-                  <VinterleirRegistrering />
-                </Route> */
-
-
-                  // </div>
-  /* 
-                <Route path="/graderingregistrering/*" element={
-                  <SimpleRegistrationRouting />
-                }/> */
-                /* <Route path="/tskjorte/*" element={
-                  <TshirtRouting  />
-                }/> */
-                /* <Route path="/jubileum/*" element={
-                  <JublieumRouting  />
-                }/> */
-    /*             
-                <Route exact path="/registrering">
-                  <div className={styles.expiredRegistration}>
-                    <h1>Danseminaret er ferdig</h1>
-                    <p>Så du trenger ikke registrere deg igjen 🙂</p>
-                    <Link to="/"><button className={styles.backButton}>Tilbake til hovedsiden</button></Link>
-                  </div>
-                </Route> */
 
 export default MainRouting;

@@ -27,7 +27,6 @@ namespace SkiTKD.Web.Controllers
             IMailRepository mailRepo
         )
         {
-            throw new Exception("Registrering til vinterleir er over. Velkommen igjen neste år.");
             _logger = logger;
             _regRepo = regRepo;
             _personRepo = personRepo;
@@ -85,7 +84,7 @@ namespace SkiTKD.Web.Controllers
                         }
                     }
                     
-                    _mailRepo.SendMail(registration);
+                    // _mailRepo.SendMail(registration);
                     scope.Complete();
                 }
                 catch(Exception e) {

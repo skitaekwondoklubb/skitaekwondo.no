@@ -75,7 +75,7 @@ function Agenda() {
     return (
         <div className={styles.agenda}>
             <div className={styles.agendaWidth}>
-                <h1>Program - Vinterleir 2023</h1>
+                <h1>Program - Vinterleir {new Date().getFullYear()}</h1>
                 <AgendaFilter showType={showType} setShowType={setShowType} showGrade={showGrade} setShowGrade={setShowGrade}/> 
 
                 <div className={styles.buttons}>

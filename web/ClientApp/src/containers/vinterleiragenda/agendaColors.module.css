@@ -22,7 +22,14 @@
     border-color: seashell;
 }
 
+
 :global .boxyellow {
+    background-color: #F9A825;
+    color: white;
+    border-color: #FBC02D;
+}
+
+:global .boxorange {
     background-color: #ff5722;
     color: white;
     border-color: #b23c17;

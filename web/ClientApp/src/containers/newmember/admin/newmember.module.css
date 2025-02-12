@@ -1,0 +1,214 @@
+:local .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+}
+
+:local .newMemberAdminGrid {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+:local .newMemberAdminGrid input {
+    border: 1px solid slategray;
+    padding: 0.8em;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+:local .loginButton {
+    margin-top: 1em;
+    font-size: 1.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
+:local .red {
+    color: #eb1a52;
+    text-decoration: underline;
+}
+
+:local .dataContainer {
+    display: flex;
+    justify-content: center;
+}
+
+:local .peopleGrid {
+    margin-top: 1em;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-radius: 10px;
+    row-gap: 0.5em;
+    column-gap: 1em;
+}
+
+:local .peopleRow {
+    display: contents;
+    border-radius: 10px;
+}
+
+:local .peopleRow span {
+    padding-left: 1em;
+    padding-left: 1em;
+}
+
+:local .peopleRow button {
+    width: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+:local .peopleRow button img {
+    max-width: 15px;
+}
+
+:local .peopleRow button:hover img {
+    filter: invert(100%) sepia(0%) saturate(100%) hue-rotate(46deg) brightness(5000%) contrast(100%);
+}
+
+
+:local .headerGrid {
+    display: contents;
+    font-weight: bold;
+}
+
+
+/* Details  */
+
+:local .adminDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+:local .detailsGrid {
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border: 2px solid #aaa;
+    border-radius: 10px;
+    width: 70vw;
+}
+
+:local .detailsGrid label {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+:local .detailsGrid p {
+    font-size: 1em;
+}
+
+:local .fullRow {
+    margin-top: 1em;
+    grid-column: span 3;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+:local .fullRow div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+:local .fullRow textarea {
+    width: 400px;
+    height: 100px;
+    border-radius: 10px;
+    border: 1px solid #aaa;
+    padding: 1em;
+}
+
+:local .newmemberBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1.5em;
+    border: 2px solid #eb1a52;
+    border-radius: 10px;
+    padding: 1em;
+    height: 300px;
+    width: 20vw;
+}
+
+:local .newmemberBox span {
+    margin-bottom: 1em;
+}
+
+:local .newmemberBox h4 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+
+:local .sendEmailButton {
+    border-color: rgb(0, 102, 255);
+    background-color: rgb(0, 102, 255);
+    color: white;
+}
+
+:local .sendEmailButton:hover {
+    background-color: rgb(0, 76, 189);
+    border-color: rgb(0, 76, 189);
+}
+
+:local .longText {
+    grid-column: span 2;
+}
+
+@media only screen and (max-width: 1080px) { 
+
+    :local .header h1 {
+        font-size: 2em;
+    }
+
+    :local .newMemberAdminGrid h1 {
+        font-size: 1.5em;
+    }
+
+    :local .newMemberAdminGrid p {
+        font-size: 1.1em;
+    }
+    :local .peopleGrid {
+        grid-template-columns: 1fr !important;
+        margin-left: 1em;
+        margin-right: 1em;
+        margin-bottom: 1em;
+    }
+
+    :local .newmemberBox {
+        width: 70vw !important;
+    }
+
+    :local .noMobile {
+        display: none;
+    }
+
+    :local .detailsGrid {
+        grid-template-columns: 1fr;
+
+    }
+
+    :local .fullRow {
+        grid-column: auto;
+        flex-direction: column;
+    }
+
+    :local .fullRow textarea {
+        width: 50vw;
+        height: 100px;
+    }
+
+}

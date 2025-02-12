@@ -20,6 +20,7 @@ namespace SkiTKD.Data.Repositories
 
 
         public PaymentRepository(SkiTKDContext dbContext, IPersonRepository personRepo, ILedsagerRepository ledsagerRepo, IGradeRepository gradeRepo, IVippsRepository vippsRepo, IClubRepository clubrepo) {
+
           _dbContext = dbContext;
           _personRepo = personRepo;
           _ledsagerRepo = ledsagerRepo;
@@ -30,6 +31,8 @@ namespace SkiTKD.Data.Repositories
 
         public PaymentEntity AddPayment(RegistrationEntity registration, bool vipps, int amount)
         {
+            throw new System.Exception("Vinterleieren er over for denne gang. Takk for oppmøtet!");
+
             var newPayment = new PaymentEntity {
                 amount = amount,
                 vipps = vipps,
@@ -94,8 +97,9 @@ namespace SkiTKD.Data.Repositories
 
         private int CalculateEarlyBirdPrice(int price) {
             var currentDate = DateTime.UtcNow;
-            var earlyBirdDate = new DateTime(2023, 10, 1);
-            var prettyEarlyBird = new DateTime(2023, 11, 1);
+            var earlyBirdDate = new DateTime(currentDate.Year, 10, 1);
+            var prettyEarlyBird = new DateTime(currentDate.Year, 11, 1);
+            var etterregistrering = new DateTime(currentDate.Year, 11, 20);
 
             if(currentDate < earlyBirdDate) {
                 Console.WriteLine("Early bird price:" + price);
@@ -106,6 +110,9 @@ namespace SkiTKD.Data.Repositories
             }
             else if(currentDate >= earlyBirdDate && currentDate <= prettyEarlyBird) {
                 return (price * (100-10)) / 100;
+            }
+            else if(currentDate > etterregistrering) {
+                return price + 100;
             }
 
             return price;
@@ -119,12 +126,9 @@ namespace SkiTKD.Data.Repositories
                 return 10;
             }
 
-            var basePrice = (reg.Age <= 12) ? 975 : 1100;
+            var basePrice = (reg.Age <= 12) ? 1025 : 1200;
 
             var total = CalculateEarlyBirdPrice(basePrice);
-
-            // ETTERREGISTRERING 
-            total += 100;
             
             if(reg.ClubId == skitaekwondo) {
                 total = 0;
@@ -137,7 +141,7 @@ namespace SkiTKD.Data.Repositories
             foreach (var item in reg.Ledsagere)
             {
                 if(!item.AlreadyRegistered) {
-                    total += 500;
+                    total += 550;
                 }
                 else {
                     var exists = _personRepo.FindPerson(item.FirstName, item.LastName, item.Telephone);

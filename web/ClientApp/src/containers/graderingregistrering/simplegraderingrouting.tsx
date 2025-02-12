@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { deleteAllCookies, getCookie, setCookie } from "../../services/cookieService";
 import { SimpleSteps } from "../../models/simplesteps";
-import { SimpleRegistration } from "../../models/registrationModels";
+import { GraderingType, SimpleRegistration } from "../../models/registrationModels";
 import SimpleForm from "./simpleform";
 import SimplePayment from "./simplePayment";
 import SimpleGradering, { SimpleGraderingDone } from "./simplegradering";
@@ -14,7 +14,7 @@ interface CurrentPropsProps {
     setRegistration: (reg: SimpleRegistration) => void; 
 }
 
-function SimpleRegistrationRouting() {
+function SimpleRegistrationRouting(props: { type: GraderingType }) {
     const [currentStep, setCurrentStep] = useState(SimpleSteps.Welcome);
     const [registration, setRegistration] = useState<SimpleRegistration>({
         firstName: "",
@@ -22,7 +22,8 @@ function SimpleRegistrationRouting() {
         email: "",
         telephone: "",
         age: 0,
-        vipps: false
+        vipps: false,
+        type: props.type
     });
 
     const currentProps: CurrentPropsProps = { 
@@ -33,8 +34,8 @@ function SimpleRegistrationRouting() {
     };
 
     useEffect(() => {
-        const registrationCookie = getCookie("simple_registrering");
-        const step = getCookie("simple_registrering_step");
+        const registrationCookie = getCookie(`simple_registrering_${props.type === GraderingType.Children ? "Barn" : "UngdomVoksen"}`);
+        const step = getCookie(`simple_registrering_${props.type === GraderingType.Children ? "Barn" : "UngdomVoksen"}_step`);
 
         if(step != null && step !== '' && step !== "0" && registrationCookie != null && registrationCookie !== '') {
             try {
@@ -49,12 +50,12 @@ function SimpleRegistrationRouting() {
 
     function setCurrentStepAndSaveCookie(step: SimpleSteps) {
         setCurrentStep(step);
-        setCookie("simple_registrering_step", step, 3);
+        setCookie(`simple_registrering_${props.type === GraderingType.Children ? "Barn" : "UngdomVoksen"}_step`, step, 3);
     }
 
     function setRegistrationAndSaveCookie(reg: SimpleRegistration) {
         setRegistration(reg);
-        setCookie("simple_registrering", JSON.stringify(reg), 3);
+        setCookie(`simple_registrering_${props.type === GraderingType.Children ? "Barn" : "UngdomVoksen"}`, JSON.stringify(reg), 3);
     }
 
     return (

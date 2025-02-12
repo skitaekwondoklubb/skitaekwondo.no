@@ -52,7 +52,7 @@ export let fredag: AgendaDay = {
                     who: [ tresorte, dan, andredan, ],
                     where: "Sal 2",
                     class: "boxblack",
-                    type: ShowTypes.Grown
+                    type: ShowTypes.Adults
                 }
             ]
         },
@@ -62,7 +62,7 @@ export let fredag: AgendaDay = {
                 {
                     what: "Kveldsmat",
                     who: [ ],
-                    where: "Salen",
+                    where: "Kiosk",
                     class: "boxpurple",
                     type: ShowTypes.All
                 }
@@ -94,9 +94,9 @@ export let lordag: AgendaDay = {
                     what: "Kodanjamøte",
                     who: [ andredan ],
                     where: "",
-                    override: "4. Dan eller høyere",
+                    override: "4. Dan og over",
                     class: "boxblack",
-                    type: ShowTypes.Grown
+                    type: ShowTypes.Adults
                 }
             ]
         },
@@ -106,28 +106,28 @@ export let lordag: AgendaDay = {
                 {
                     what: "Trening",
                     type: ShowTypes.Children,
-                    who: [ hvitt, gulstrip, hvitstripe, gult  ],
+                    who: [ hvitt, gulstrip, hvitstripe ],
                     where: "Sal 1",
                     class: "",
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
-                    who: [ hvitt, gulstrip, hvitstripe, gult, gronnstripe, gront  ],
+                    type: ShowTypes.Adults,
+                    who: [ hvitt, gulstrip, hvitstripe, gult  ],
                     where: "Sal 2",
-                    class: "boxgreen",
+                    class: "boxyellow",
                 },
 
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.Adults,
                     who: [ rodt, sortstripe, tosorte  ],
                     where: "Sal 3",
                     class: "boxred",
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.Adults,
                     who: [ tresorte, dan ],
                     where: "Sal 4",
                     class: "boxaltred",
@@ -140,27 +140,27 @@ export let lordag: AgendaDay = {
                 {
                     what: "Trening",
                     type: ShowTypes.Children,
-                    who: [ gronnstripe, gront, blastripe, bla, rodtynnstripe, rodstripe ],
+                    who: [ gult, gronnstripe, gront, blastripe, bla, rodtynnstripe, rodstripe ],
                     where: "Sal 1",
-                    class: "boxyellow",
+                    class: "boxorange",
                 },
                 {
                     what: "Trening",
                     type: ShowTypes.All,
-                    who: [ bla, rodtynnstripe, rodstripe ],
+                    who: [ gront, bla, rodtynnstripe, rodstripe ],
                     where: "Sal 2",
                     class: "boxblue",
                 },
                 {
-                    what: "Kamptrening",
-                    type: ShowTypes.Kamp,
-                    who: [ gult, gronnstripe, gront, blastripe, bla, rodtynnstripe, rodstripe, rodt, sortstripe, tosorte, tresorte, dan, andredan  ],
+                    what: "Åpen sal",
+                    type: ShowTypes.All,
+                    who: [ ],
                     where: "Sal 3",
-                    class: "boxpurple",
+                    class: "boxgreen",
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.Adults,
                     who: [ andredan, ],
                     where: "Sal 4",
                     class: "boxblack",
@@ -198,28 +198,28 @@ export let lordag: AgendaDay = {
                 {
                     what: "Trening",
                     type: ShowTypes.Children,
-                    who: [ hvitt, gulstrip, hvitstripe, gult ],
+                    who: [ hvitt, gulstrip, hvitstripe ],
                     where: "Sal 1",
                     class: "",
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
-                    who: [ hvitt, gulstrip, hvitstripe, gult, gronnstripe, gront  ],
+                    type: ShowTypes.Adults,
+                    who: [ hvitt, gulstrip, hvitstripe, gult, gronnstripe  ],
                     where: "Sal 2",
-                    class: "boxgreen",
+                    class: "boxyellow",
                 },
 
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.Adults,
                     who: [ rodt, sortstripe, tosorte  ],
                     where: "Sal 3",
                     class: "boxred",
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.Adults,
                     who: [ tresorte, dan ],
                     where: "Sal 4",
                     class: "boxaltred",
@@ -232,27 +232,27 @@ export let lordag: AgendaDay = {
                 {
                     what: "Trening",
                     type: ShowTypes.Children,
-                    who: [ gronnstripe, gront, blastripe, bla, rodtynnstripe, rodstripe ],
+                    who: [ gult, gronnstripe, gront, blastripe, bla, rodtynnstripe, rodstripe ],
                     where: "Sal 1",
-                    class: "boxyellow",
+                    class: "boxorange",
                 },
                 {
                     what: "Trening",
                     type: ShowTypes.All,
-                    who: [ bla, rodtynnstripe, rodstripe ],
+                    who: [ gront, bla, rodtynnstripe, rodstripe ],
                     where: "Sal 2",
                     class: "boxblue",
                 },
                 {
-                    what: "Kamptrening",
-                    type: ShowTypes.Kamp,
-                    who: [ gult, gronnstripe, gront, blastripe, bla, rodtynnstripe, rodstripe, rodt, sortstripe, tosorte, tresorte, dan, andredan  ],
+                    what: "Åpen sal",
+                    type: ShowTypes.All,
+                    who: [ ],
                     where: "Sal 3",
-                    class: "boxpurple",
+                    class: "boxgreen",
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.Adults,
                     who: [ andredan, ],
                     where: "Sal 4",
                     class: "boxblack",
@@ -265,28 +265,28 @@ export let lordag: AgendaDay = {
                 {
                     what: "Trening",
                     type: ShowTypes.Children,
-                    who: [ hvitt, gulstrip, hvitstripe, gult ],
+                    who: [ hvitt, gulstrip, hvitstripe ],
                     where: "Sal 1",
                     class: "",
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
-                    who: [ hvitt, gulstrip, hvitstripe, gult, gronnstripe, gront  ],
+                    type: ShowTypes.Adults,
+                    who: [ hvitt, gulstrip, hvitstripe, gult, gronnstripe  ],
                     where: "Sal 2",
-                    class: "boxgreen",
+                    class: "boxyellow",
                 },
 
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.Adults,
                     who: [ rodt, sortstripe, tosorte  ],
                     where: "Sal 3",
                     class: "boxred",
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.Adults,
                     who: [ tresorte, dan ],
                     where: "Sal 4",
                     class: "boxaltred",
@@ -299,27 +299,27 @@ export let lordag: AgendaDay = {
                 {
                     what: "Trening",
                     type: ShowTypes.Children,
-                    who: [ gronnstripe, gront, blastripe, bla, rodtynnstripe, rodstripe ],
+                    who: [ gult, gronnstripe, gront, blastripe, bla, rodtynnstripe, rodstripe ],
                     where: "Sal 1",
-                    class: "boxyellow",
+                    class: "boxorange",
                 },
                 {
                     what: "Trening",
                     type: ShowTypes.All,
-                    who: [ bla, rodtynnstripe, rodstripe ],
+                    who: [ gront, bla, rodtynnstripe, rodstripe ],
                     where: "Sal 2",
                     class: "boxblue",
                 },
                 {
-                    what: "Kamptrening",
-                    type: ShowTypes.Kamp,
-                    who: [ gult, gronnstripe, gront, blastripe, bla, rodtynnstripe, rodstripe, rodt, sortstripe, tosorte, tresorte, dan, andredan  ],
+                    what: "Åpen sal",
+                    type: ShowTypes.All,
+                    who: [ ],
                     where: "Sal 3",
-                    class: "boxpurple",
+                    class: "boxgreen",
                 },
                 {
                     what: "Trening",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.Adults,
                     who: [ andredan, ],
                     where: "Sal 4",
                     class: "boxblack",
@@ -343,7 +343,7 @@ export let lordag: AgendaDay = {
             happenings: [
                 {
                     type: ShowTypes.All,
-                    what: "Middag og Aktiviteter",
+                    what: "Middag og aktiviteter",
                     who: [  ],
                     where: "Kiosk",
                     class: "boxpurple",
@@ -360,7 +360,7 @@ export let sondag: AgendaDay = {
             when: "08.00 - 09.30",
             happenings: [
                 {
-                    what: "Frokost og Rydding",
+                    what: "Frokost og rydding",
                     type: ShowTypes.All,
                     who: [  ],
                     where: "Kiosk/Soveplasser",
@@ -379,16 +379,9 @@ export let sondag: AgendaDay = {
                     class: "boxpurple",
                 },
                 {
-                    what: "Kamptrening",
-                    type: ShowTypes.Kamp,
-                    who: [ gult, gronnstripe, gront, blastripe, bla, rodtynnstripe, rodstripe, rodt, sortstripe, tosorte, tresorte, dan, andredan  ],
-                    where: "Sal 2",
-                    class: "boxpurple",
-                },
-                {
                     what: "Kodanjatrening",
-                    type: ShowTypes.Grown,
-                    override: "4. dan eller høyere",
+                    type: ShowTypes.Adults,
+                    override: "4. dan og over",
                     who: [ andredan ],
                     where: "Sal 3",
                     class: "boxblack",
@@ -407,9 +400,9 @@ export let sondag: AgendaDay = {
                 },
                 {
                     what: "Dan-sermoni",
-                    type: ShowTypes.Grown,
+                    type: ShowTypes.Adults,
                     who: [ dan, andredan, ],
-                    override: "1. dan eller høyere",
+                    override: "1. dan og over",
                     where: "Sal 2",
                     class: "boxblack",
                     when: "Frem til 12.00"

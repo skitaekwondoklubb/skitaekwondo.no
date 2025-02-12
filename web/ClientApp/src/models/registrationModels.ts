@@ -40,6 +40,7 @@ export interface SimpleRegistration {
     email: string;
     telephone: string;
     vipps: boolean;
+    type: GraderingType;
 }
 
 export interface TShirtRegistration {
@@ -57,4 +58,41 @@ export interface JubileumRegistration {
     lastName: string;
     adult: number;
     child: number;
+}
+
+export interface SkoleRegistration {
+    firstName: string;
+    lastName: string;
+    age: number;
+    email: string;
+    telephone: string;
+    parentFirstName: string;
+    parentLastName: string;
+    firstDay: boolean;
+    secondDay: boolean;
+    thirdDay: boolean;
+    isMember: boolean;
+}
+
+
+export interface NewMemberRegistration {
+    firstName: string;
+    lastName: string;
+    age: number;
+    email: string;
+    telephone: string;
+    parentFirstName: string;
+    parentLastName: string;
+    referer: RefererType;
+}
+
+export enum RefererType {
+    Website,
+    Email,
+    QRCode
+}
+
+export enum GraderingType {
+    Children,
+    Adults
 }

@@ -110,6 +110,10 @@
     padding: 0.3em 1em 0.3em 1em;
 }
 
+:local .smallList {
+    text-align: left;
+}
+
 @media only screen and (max-width: 1500px) {
 
     :local .navigation {

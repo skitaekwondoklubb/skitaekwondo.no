@@ -3,7 +3,7 @@
 export enum ShowTypes {
     All,
     Children,
-    Grown,
+    Adults,
     Kamp
 }
 
@@ -44,7 +44,7 @@ export const sortstripe: AgendaGrade = { nr: 3, dan: false, color: "Rødt med en
 export const tosorte: AgendaGrade = { nr: 2, dan: false, color: "Rødt med to sorte striper" };
 export const tresorte: AgendaGrade = { nr: 1, dan: false, color: "Rødt med tre sorte striper" };
 export const dan: AgendaGrade = { nr: 1, dan: true, color: "1. Dan" };
-export const andredan: AgendaGrade = { nr: 2, dan: true, color: "2. Dan eller høyere" };
+export const andredan: AgendaGrade = { nr: 2, dan: true, color: "2. Dan og over" };
 export const kamp: AgendaGrade = { nr: 100, dan: false, color: "Ta gjerne med eget utstyr." };
 
 export const gradeColors: AgendaGrade[] = [

@@ -19,18 +19,18 @@ function JubileumForm(props: JubileumStepProps) {
     function validateFirstName(name: string) {
         setFirstName(name);
 
-        if(name == null || name === "") { setFirstNameError("Du må legge inn et fornavn.") }
+        if(name == null || name === "") { setFirstNameError("Du må legge inn et fornavn") }
         else setFirstNameError("");
     }
 
     function validateLastName(name: string) {
         setLastName(name);
-        if(name == null || name === "") { setLastNameError("Du må legge inn et etternavn.") }
+        if(name == null || name === "") { setLastNameError("Du må legge inn et etternavn") }
         else setLastNameError("");
     }
 
     function validateAmount() {
-        if(amountAdult == null || ((amountAdult + amountChild) <= 0)) { setAmountError("Det må bli med noen.") }
+        if(amountAdult == null || ((amountAdult + amountChild) <= 0)) { setAmountError("Det må bli med noen") }
         else setAmountError("");
     }
 
@@ -77,11 +77,11 @@ function JubileumForm(props: JubileumStepProps) {
                     <input value={lastName} onChange={x => validateLastName(x.currentTarget.value)} />
                 </div>
                 <div className={styles.largeSpan}>
-                    <p >Antall deltakere under 12 år:</p>
+                    <p>Antall deltakere under 12 år:</p>
                     <input type={'number'} value={amountChild} onChange={x => setAmountChild(x.currentTarget.valueAsNumber)} />
                 </div>
                 <div className={styles.largeSpan}>
-                    <p >Antall deltakere 12 år og eldre:</p>
+                    <p>Antall deltakere 12 år og eldre:</p>
                     <input type={'number'} value={amountAdult} onChange={x => setAmountAdult(x.currentTarget.valueAsNumber)} />
                 </div>
 

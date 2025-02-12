@@ -3,13 +3,22 @@ import { Link } from 'react-router-dom';
 import { SimpleStepProps } from '../../models/simplesteps';
 import { deleteAllCookies } from '../../services/cookieService';
 import styles from '../registrering/registration.module.css';
+import { GraderingType } from '../../models/registrationModels';
 
 function SimpleGradering(props: SimpleStepProps) {
     const [accept, setAccept] = useState(false);
+
+    function getTypeText() {
+        return (
+            props.registration.type == GraderingType.Children 
+            ? "barnepartiet"
+            : "ungdom/voksenpartiene"
+        )
+    }
     
     return (
         <div className={`${styles.registrationTop} slideLeft`}>
-            <p>Velkommen til registrering til gradering i Ski Taekwondo Klubb.</p>
+            <p>Velkommen til registrering til gradering for { getTypeText() ?? "partiene" } i Ski Taekwondo Klubb.</p>
             <p>Vi vil trenge informasjon som en del av registreringsprosessen og vil lagre dette digitalt.</p>
             <p>Denne informasjonen vil <b>kun</b> brukes av Ski Taekwondo Klubb for å arrangere gradering. Ski Taekwondo Klubb deler ingen
                 informasjon med tredjeparter.</p>
@@ -33,7 +42,8 @@ export function SimpleGraderingDone() {
 
     return (
         <div className={styles.done}>
-            <h2>Du er herved registrert til gradering, lykke til!</h2>
+            <h2>Du er registrert til gradering, lykke til!</h2>
+            <p>Gradering betales på graderingsdagen.</p>
             <p>Du skal nå ha fått en epost som bekreftelse.</p>
             <p>For endringer eller avbestilling ta kontakt med oss på <a href="mailto:kontakt@skitaekwondo.no">kontakt@skitaekwondo.no</a></p>
             <Link to={"/"}><button>Tilbake til forsiden</button></Link>

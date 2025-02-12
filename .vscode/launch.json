@@ -5,10 +5,40 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Attach",
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build_api",
+            "program": "${workspaceFolder}/api/bin/Debug/net8.0/SkiTKD.Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "pipeTransport": {
+                "pipeCwd": "${workspaceFolder}",
+                "pipeProgram": "/usr/bin/bash",
+                "pipeArgs": ["-c"],
+                "debuggerPath": "/usr/bin/netcoredbg"
+            }
+        },
+      
+        {
+            "name": "Attach - Api",
             "type": "coreclr",
             "request": "attach",
-            "processName": "SkiTKD.Api"
+            "processId": "SkiTKD.Api",
+            "pipeTransport": {
+                "pipeCwd": "${workspaceFolder}",
+                "pipeProgram": "/usr/bin/bash",
+                "pipeArgs": ["-c"],
+                "debuggerPath": "/usr/bin/netcoredbg"
+            }
         }
     ]
 }

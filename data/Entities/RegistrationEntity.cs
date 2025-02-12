@@ -1,6 +1,8 @@
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SkiTKD.Data.Models;
 using static SkiTKD.Data.Models.VinterleirRegistration;
 
 namespace SkiTKD.Data.Entities {
@@ -42,14 +44,33 @@ namespace SkiTKD.Data.Entities {
         
         public virtual ClubEntity Club { get; set; }
         public virtual GradeEntity Grade { get; set; }
-
-
     }
 
     [Table("graderingregistration")]
     public class GraderingRegistrationEntity : RegistrationEntity { 
-
+        public GraderingType registrationtype { get; set; }
     }
+
+
+    [Table("skoleregistration")]
+    public class SkoleRegistrationEntity : RegistrationEntity { 
+        public string parentfirstname { get; set; }
+        public string parentlastname { get; set; }
+        public bool firstday { get; set; }
+        public bool secondday { get; set; }
+        public bool thirdday { get; set; }
+        public bool ismember { get; set; }
+    }
+
+
+    [Table("newmemberregistration")]
+    public class NewMemberRegistrationEntity : RegistrationEntity { 
+        public string parentfirstname { get; set; }
+        public string parentlastname { get; set; }
+        public DateTime registrationdate { get; set; }
+        public RefererType referer { get; set; }
+    }
+
 
     [Table("otherregistration")]
     public class OtherRegistrationEntity : RegistrationEntity { 

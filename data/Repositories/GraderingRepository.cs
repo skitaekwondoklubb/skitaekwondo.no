@@ -43,7 +43,8 @@ namespace SkiTKD.Data.Repositories
                 _dbContext.SaveChanges(); 
 
                 var mappedRegistration = new GraderingRegistrationEntity {
-                    personid = personId
+                    personid = personId,
+                    registrationtype = registration.Type
                 };
 
                 var reg = _dbContext.Add(mappedRegistration);

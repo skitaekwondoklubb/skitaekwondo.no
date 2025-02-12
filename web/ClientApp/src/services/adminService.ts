@@ -50,6 +50,16 @@ export interface VinterleirFullUser {
     transactionid: string;
 }
 
+export interface NewMemberDataUser {
+    firstname: string;
+    lastname: string;
+    age: number;
+    telephone: string;
+    email: string;
+    parentFirstname: string;
+    parentLastname: string;
+}
+
 export async function getAllFullVinterleirUsers(): Promise<VinterleirFullUser[]> {
     const cookie = getCookie("adminToken");
 

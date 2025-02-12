@@ -27,7 +27,7 @@ function AgendaFilter(props: AgendaFilterProps) {
             <div className={styles.mergedButton}>
                 <button onClick={() => props.setShowType(ShowTypes.All)} className={`${styles.mergedButtonOne} ${props.showType === ShowTypes.All && styles.selectedBtn}`}>Alle</button>
                 <button onClick={() => props.setShowType(ShowTypes.Children)} className={`${styles.mergedButtonTwo} ${props.showType === ShowTypes.Children && styles.selectedBtn}`}>Barn</button>
-                <button onClick={() => props.setShowType(ShowTypes.Grown)} className={`${styles.mergedButtonThree} ${props.showType === ShowTypes.Grown && styles.selectedBtn}`}>Ungdom/Voksen</button>
+                <button onClick={() => props.setShowType(ShowTypes.Adults)} className={`${styles.mergedButtonThree} ${props.showType === ShowTypes.Adults && styles.selectedBtn}`}>Ungdom/Voksen</button>
             </div>
 
             <div>

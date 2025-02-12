@@ -1,4 +1,4 @@
-import { JubileumRegistration, SimpleRegistration, TShirtRegistration } from './registrationModels';
+import { JubileumRegistration, NewMemberRegistration, SimpleRegistration, SkoleRegistration, TShirtRegistration } from './registrationModels';
 
 export enum SimpleSteps {
     Welcome,
@@ -25,6 +25,22 @@ export enum JubileumSteps {
     Done
 }
 
+export enum SkoleSteps {
+    Welcome,
+    Registration,
+    Parent,
+    Days,
+    Receipt,
+    Done
+}
+
+export enum NewMemberSteps {
+    Welcome,
+    Registration,
+    Parent,
+    Receipt,
+    Done
+}
 
 export interface SimpleStepProps {
     step: SimpleSteps;
@@ -51,4 +67,22 @@ export interface JubileumStepProps {
     nextStep: JubileumSteps;
     registration: JubileumRegistration;
     setRegistration: (reg: JubileumRegistration) => void;
+}
+
+export interface SkoleStepProps {
+    step: SkoleSteps;
+    setCurrentStep: (step: SkoleSteps) => void;
+    prevStep: SkoleSteps;
+    nextStep: SkoleSteps;
+    registration: SkoleRegistration;
+    setRegistration: (reg: SkoleRegistration) => void;
+}
+
+export interface NewMemberStepProps {
+    step: NewMemberSteps;
+    setCurrentStep: (step: NewMemberSteps) => void;
+    prevStep: NewMemberSteps;
+    nextStep: NewMemberSteps;
+    registration: NewMemberRegistration;
+    setRegistration: (reg: NewMemberRegistration) => void;
 }

@@ -38,7 +38,7 @@ function PrintAgenda() {
     return (
         <div className={styles.agenda}>
             <div className={styles.agendaWidthPrint}>
-                <h1 className={`${styles.agendaPrintTitle}`}>Program - Vinterleir 2023</h1>
+                <h1 className={`${styles.agendaPrintTitle}`}>Program - Vinterleir {new Date().getFullYear()}</h1>
 
                 <h2 className={`${styles.agendaPrintHeader}`}>{getDay()}</h2>
                 <div>
@@ -51,7 +51,7 @@ function PrintAgenda() {
                         })
                     }
                 </div>
-                <p>Programmet finnes også på <u><b>https://skitaekwondo.no</b></u> hvor du kan tilpasse alt til din beltegrad!</p>
+                <p>Programmet finnes også digitalt på <u><b>https://skitaekwondo.no</b></u> hvor du kan tilpasse programmet til din beltegrad!</p>
 
             </div>
         </div>

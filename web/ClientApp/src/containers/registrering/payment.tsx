@@ -13,22 +13,28 @@ import { Club, getClubs } from "../../services/clubService";
 function Gradering(props: {gradering: boolean, dangradering: boolean }) {
     if(props.gradering && !props.dangradering ) {
         return (
-            <CheckoutRow article={`Gradering`} price={"350"}/>
+            <CheckoutRow article={`Gradering`} price={"+350"}/>
         )
     }
     return <div/>
 }
 
+const currentDate = new Date();
+const earlyLimit = new Date(`${currentDate.getFullYear()}-10-01`);
+const prettyEarlyLimit = new Date(`${currentDate.getFullYear()}-11-01`);
+const prettyLate = new Date(`${currentDate.getFullYear()}-11-20`);
+
+
+const isEarly = currentDate < earlyLimit;
+const isPrettyEarly = currentDate >= earlyLimit && currentDate < prettyEarlyLimit;
+const isLate = currentDate > prettyLate;
 
 function calculatePrice(price: number) {
-    const currentDate = new Date();
-    const earlyLimit = new Date("2023-10-01");
-    const prettyEarlyLimit = new Date("2023-11-01");
-
-    if(currentDate < earlyLimit) {
+    // Just for show. Backend will calculate it properly.
+    if(isEarly) {
         return price * ((100-20) / 100);
     }
-    else if(currentDate >= earlyLimit && currentDate < prettyEarlyLimit) {
+    else if(isPrettyEarly) {
         return price * ((100-10) / 100);
     }
 
@@ -40,18 +46,23 @@ function VinterleirForUtover(props: { firstName: string, lastName: string, age: 
         return <CheckoutRow article={`Utøver ved Ski Taekwondo Klubb`} price={"0"}/>
     }
     else if(props.age <= 12) {
-        return <CheckoutRow article={`Vinterleir (barn): ${props.firstName} ${props.lastName}`} price={`${calculatePrice(975)}`}/>
+        return <CheckoutRow article={`Vinterleir (barn): ${props.firstName} ${props.lastName}`} price={`1025`}/>
     }
     
-    return <CheckoutRow article={`Vinterleir (voksen): ${props.firstName} ${props.lastName}`} price={`${calculatePrice(1100)}`}/>
+    return <CheckoutRow article={`Vinterleir: ${props.firstName} ${props.lastName}`} price={`1200`}/>
 }
 
+enum Currency {
+    NOK = "kr",
+    Percent = "%"
+}
 
-function CheckoutRow(props: { article: string, price: string }) {
+function CheckoutRow(props: { article: string, price: string, currencyType?: Currency }) {
+    const currency = props.currencyType ?? Currency.NOK;
     return (
         <div className={styles.checkout}>
             <span>{props.article}</span>
-            <span>{props.price}kr</span>
+            <span>{props.price}{currency}</span>
         </div>
     )
 }
@@ -108,14 +119,15 @@ function PayLater(props: ActualPaymentProps) {
 }
 
 function GetTotal(registration: Registration, grade: Grade, clubName?: string) {
-    const basePriceAge = (registration.age <= 12) ? 975 : 1100;
+    const basePriceAge = (registration.age <= 12) ? 1025 : 1200;
     let total = calculatePrice(basePriceAge);
 
     if(clubName === "Ski Taekwondo Klubb") {
         total = 0;
     }
-    else {
-        // Etterregistrering
+
+    // Etterregistrering
+    if(isLate) {
         total += 100;
     }
 
@@ -125,7 +137,7 @@ function GetTotal(registration: Registration, grade: Grade, clubName?: string) {
 
     for (const ledsager of (registration.ledsagere != null ? registration.ledsagere : [])) {
         if(ledsager.alreadyRegistered === false) {
-            total += 500;
+            total += 550;
         }
     }
 
@@ -194,9 +206,14 @@ function Payment(props: StepProps) {
         )
     }
 
+    if(!myClub?.name) {
+        return (<Loading loading={true} />);
+    }
+
     return (
         <div className="slideLeft">
             <p>Din registrering:</p>
+
             <div>
                 <VinterleirForUtover age={props.registration.age} firstName={props.registration.firstName} lastName={props.registration.lastName} clubName={myClub?.name}/>
                 <Gradering 
@@ -205,12 +222,13 @@ function Payment(props: StepProps) {
                         || (myGrade.isDan === false && myGrade.grade === 1))
                     }
                 />
+                { myClub?.name !== "Ski Taekwondo Klubb" && (isEarly || isPrettyEarly) && <CheckoutRow article={`Tidlig registrering*`} price={`-${isEarly ? 20 : 10}`} currencyType={Currency.Percent}/>}
                 {/* Etteregisterring */}
-                { myClub?.name !== "Ski Taekwondo Klubb" && <CheckoutRow article={`Sen registrering`} price={`${100}`}/>}
+                { myClub?.name !== "Ski Taekwondo Klubb" && isLate && <CheckoutRow article={`Sen registrering`} price={`${100}`}/>}
                 {
                     props?.registration?.ledsagere ? props.registration.ledsagere.map((ledsager) => {
                         return (
-                            <CheckoutRow article={`Ledsager: ${ledsager.firstName} ${ledsager.lastName}`} price={`${ledsager.alreadyRegistered ? 0 : 500}`}/>
+                            <CheckoutRow article={`Ledsager: ${ledsager.firstName} ${ledsager.lastName}`} price={`+${ledsager.alreadyRegistered ? 0 : 550}`}/>
                         )
                     })
                     : ""
@@ -219,6 +237,8 @@ function Payment(props: StepProps) {
                     <span>Totalt:</span>
                     <span>{total}kr</span>
                 </div>
+
+                {myClub?.name !== "Ski Taekwondo Klubb" && (isEarly || isPrettyEarly) && <label><span style={{fontSize: "1.1em"} }>*</span> Rabatten gjelder kun prisen på utøver.</label>}
 
             </div>
             {
@@ -231,7 +251,7 @@ function Payment(props: StepProps) {
                     props.setRegistration(reg);
                 }}>Kort/Kontant</button>
                 <img hidden={total === 0} src={Vippsbutton} onClick={payWithVipps}/>
-                <button hidden={(total !== 0 && myGrade != null && myClub != null) || myGrade == null || myClub == null} className={styles.nextButton} onClick={next}>Fullfør registrering</button>
+                <button hidden={(total !== 0 && myGrade != null && myClub != null) || myGrade == null || myClub == null} className={styles.nextButton} onClick={next}>Fullfør</button>
             </div>
             }
         

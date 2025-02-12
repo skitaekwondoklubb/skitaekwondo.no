@@ -4,10 +4,12 @@ import Vippsbutton from "../betalmedvipps.svg";
 import Loading from '../loading/loading';
 import { SimpleStepProps, SimpleSteps } from "../../models/simplesteps";
 import { sendGraderingRegistration } from "../../services/graderingService";
+import { GraderingType } from "../../models/registrationModels";
+import { Navigate, useLocation } from "react-router-dom";
 
-function Gradering() {
+function Gradering(props: { firstName: string }) {
     return (
-        <CheckoutRow article={`Gradering`} price={"350"}/>
+        <CheckoutRow article={`Gradering (${props.firstName})`} price={"350"}/>
     )
 }
 
@@ -29,7 +31,7 @@ interface ActualPaymentProps extends SimpleStepProps {
 function PayLater(props: ActualPaymentProps) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-
+    
     function nextStep() {
         setLoading(true);
         sendGraderingRegistration(props.registration).then((success: string) => {
@@ -76,6 +78,8 @@ function Payment(props: SimpleStepProps) {
     const [payLater, setPayLater] = useState(false);
     const [loading, setLoading] = useState(false);
     const total = 350;
+    const location = useLocation();
+    const registrationType = location.pathname.includes("gradering/barn") ? GraderingType.Children : GraderingType.Adults;
 
     function goBack() {
         if(typeof(props.prevStep) === "number") {
@@ -105,6 +109,12 @@ function Payment(props: SimpleStepProps) {
         })
     }
 
+
+    if(props.registration.type !== registrationType) {
+        return (
+            <Navigate to={ props.registration.type == GraderingType.Children ? "/gradering/barn" : "/gradering/ungdomvoksen" } />
+        )
+    }
     // if(payLater) {
     //     return (
     //         <PayLater {... props} total={total} goBack={() => setPayLater(false)} />
@@ -115,14 +125,16 @@ function Payment(props: SimpleStepProps) {
         <div className="slideLeft">
             <p>Din registrering:</p>
             <div>
-                <Gradering />
+                <Gradering firstName={props.registration.firstName} />
                
                 <div className={styles.checkoutTotal}>
                     <span>Totalt:</span>
                     <span>{total}kr</span>
                 </div>
-
             </div>
+
+            <p>Gradering skal betales i lokalene våre når dere ankommer gradering den {props.registration.type === GraderingType.Children ? "9. juni" : "11.juni"}</p>
+
             <div className={styles.paymentButtons}>
                 <button className={styles.backButton} onClick={goBack}>Tilbake</button>
                 <button className={styles.nextButton} onClick={() => {

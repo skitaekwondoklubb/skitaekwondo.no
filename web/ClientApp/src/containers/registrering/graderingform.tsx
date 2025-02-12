@@ -57,7 +57,7 @@ function Gradering(props: StepProps) {
     return (
         <div className="slideLeft">
             <p>Ønsker du å prøve å gradere på vinterleiren?</p>
-            <p hidden={!isCup}>Gradering koster 350,- og tar plass på søndag for cup.</p>
+            <p hidden={!isCup || props.registration.age >= 13}>Gradering koster 350,- og tar plass på søndag for cup.</p>
             <div hidden={isCup}>
                 <p><b>VIKTIG: Du må selv kontakte og betale TTU for dangradering!</b></p>
                 <p>Dangradering tar plass på fredag.</p>
@@ -67,7 +67,7 @@ function Gradering(props: StepProps) {
                 <p><b>Det vil ikke være cupgradering på vinterleiren for ungdom/voksne. </b></p>
                 {
                     isSki &&
-                    <p>Ski Taekwondo Klubb vil ha gradering for ungdom/voksne i januar 2023.</p>
+                    <p>Ski Taekwondo Klubb vil ha gradering for ungdom/voksne i januar {(new Date().getFullYear() +1)}.</p>
                 }
             </div>
             <div className={styles.registrationForm}>

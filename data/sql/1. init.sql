@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS payment CASCADE;
 DROP TABLE IF EXISTS vipps CASCADE;
 DROP TABLE IF EXISTS transactionError CASCADE;
 DROP TABLE IF EXISTS jubileum CASCADE;
-
+DROP TABLE IF EXISTS skoleregistration CASCADE;
+DROP TABLE IF EXISTS newmemberregistration CASCADE;
 
 CREATE TABLE club (
    clubId serial PRIMARY KEY,
@@ -89,7 +90,8 @@ CREATE TABLE graderingregistration (
     personId int NOT NULL REFERENCES person(personId),
     paymentId int NULL REFERENCES payment(paymentId),
     cancelled boolean NOT NULL,
-    mailsent boolean NOT NULL
+    mailsent boolean NOT NULL,
+    registrationType int NOT NULL
 );
 
 CREATE TABLE ledsager (
@@ -108,7 +110,6 @@ CREATE TABLE otherregistration (
     mailsent boolean NOT NULL
 );
 
-
 CREATE TABLE tshirt (
     tshirtId serial PRIMARY KEY,
     registrationId int NOT NULL REFERENCES otherregistration(registrationId),
@@ -122,4 +123,30 @@ CREATE TABLE jubileum (
     lastName varchar NOT NULL,
     adults int NOT NULL,
     children int NOT NULL
+);
+
+CREATE TABLE skoleregistration (
+    registrationId serial PRIMARY KEY,
+    personId int NOT NULL REFERENCES person(personId),
+    paymentId int NULL REFERENCES payment(paymentId),
+    parentfirstname varchar NOT NULL,
+    parentlastname varchar NOT NULL,
+    firstDay boolean NOT NULL,
+    secondDay boolean NOT NULL,
+    thirdDay boolean NOT NULL,
+    isMember boolean NOT NULL,
+    cancelled boolean NOT NULL,
+    mailsent boolean NOT NULL
+);
+
+CREATE TABLE newmemberregistration (
+    registrationId serial PRIMARY KEY,
+    personId int NOT NULL REFERENCES person(personId),
+    paymentId int NULL REFERENCES payment(paymentId),
+    parentfirstname varchar NOT NULL,
+    parentlastname varchar NOT NULL,
+    cancelled boolean NOT NULL,
+    mailsent boolean NOT NULL,
+    registeredDate timestamp NOT NULL,
+    referer int DEFAULT 0 NOT NULL
 );

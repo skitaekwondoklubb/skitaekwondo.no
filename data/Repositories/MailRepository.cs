@@ -4,22 +4,19 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using MailKit.Net.Smtp;
+using Azure;
+using Azure.Communication.Email;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Graph;
-using MimeKit;
 using SkiTKD.Data.Entities;
 using SkiTKD.Data.Interfaces;
 using SkiTKD.Data.Models;
-using static SkiTKD.Data.Models.VinterleirRegistration;
+using EmailAddress = Azure.Communication.Email.EmailAddress;
 
 namespace SkiTKD.Data.Repositories
 {
     public class MailRepository : IMailRepository
     {
-        private readonly string clientId;
-        private readonly string user;
-        private readonly string path;
         private readonly string password;
         private readonly IGraphTokenService _tokenService;
         private readonly SkiTKDContext _dbContext;
@@ -28,6 +25,7 @@ namespace SkiTKD.Data.Repositories
         private readonly IPaymentRepository _paymentRepo;
         private readonly ILedsagerRepository _ledsagerRepo;
         private readonly IVippsRepository _vippsRepo;
+        private readonly bool _sendMail = true;
 
 
         public MailRepository(
@@ -40,10 +38,11 @@ namespace SkiTKD.Data.Repositories
             IVippsRepository vippsRepo,
             IGraderingRepository graderingRepo
         ) {
-            clientId = config["ClientId"];
-            user = config["ExcelUser"];
-            path = config["VinterleirPath"];
             password = config["Pass"];
+            if(config["SendMail"] != null) {
+                _sendMail = bool.Parse(config["SendMail"]);
+            }
+
             // _tokenService = graphToken;
             _dbContext = dbContext;
             _vinterleirRegRepo = regRepo;
@@ -58,7 +57,9 @@ namespace SkiTKD.Data.Repositories
                 if(registration is OtherRegistrationEntity) {
                     SendOrderRecieptThroughMail(registration);
                 }
-
+                else if(registration is SkoleRegistrationEntity) {
+                    SendSkoleMailToRecipient(registration);
+                }
                 else {
                     SendMailToRecipient(registration);
                 }
@@ -70,11 +71,15 @@ namespace SkiTKD.Data.Repositories
         }
 
         private string GetOrder(RegistrationEntity reg) {
+
             if(reg is VinterleirRegistrationEntity) {
                 return GetVinterleirOrder(reg as VinterleirRegistrationEntity);
             }
             else if(reg is GraderingRegistrationEntity) {
                 return GetGraderingOrder();
+            }
+            else if(reg is SkoleRegistrationEntity) {
+                return $"Påmelding til sommerskole for {reg.Person.firstname} {reg.Person.lastname}";
             }
 
             throw new Exception($"Ingen registrering med denne typen.");
@@ -90,8 +95,8 @@ namespace SkiTKD.Data.Repositories
 
         private int CalculateEarlyBird(int price) {
             var currentDate = DateTime.UtcNow;
-            var earlyBirdDate = new DateTime(2023, 10, 1);
-            var prettyEarlyBird = new DateTime(2023, 11, 1);
+            var earlyBirdDate = new DateTime(currentDate.Year, 10, 1);
+            var prettyEarlyBird = new DateTime(currentDate.Year, 11, 1);
 
             if(currentDate < earlyBirdDate) {
                 var newprice = (price * (100-20)) / 100;
@@ -105,6 +110,10 @@ namespace SkiTKD.Data.Repositories
         } 
 
         private string GetVinterleirOrder(VinterleirRegistrationEntity registration) {
+            var currentDate = DateTime.UtcNow;
+            var etterregistering = new DateTime(currentDate.Year, 11, 20);
+            var isEtterregistrering = currentDate > etterregistering;
+
             var orders = new List<string>();
             var name = $"{registration.Person.firstname} {registration.Person.lastname}";
 
@@ -112,19 +121,23 @@ namespace SkiTKD.Data.Repositories
                 orders.Add($"{name}: 0 kr (gratis for Ski Taekwondo Klubb)");
             }
             else if(registration.Person.age <= 12) {
-                orders.Add($"{name}: {CalculateEarlyBird(975)} kr (barn)");
-                orders.Add("Sen registrering: 100kr");
+                orders.Add($"{name}: {CalculateEarlyBird(1025)}kr (barn)");
+                if(isEtterregistrering) {
+                    orders.Add("Sen registrering: 100kr");
+                }
             }
             else {
-                orders.Add($"{name}: {CalculateEarlyBird(1100)} kr");
-                orders.Add("Sen registrering: 100kr");
+                orders.Add($"{name}: {CalculateEarlyBird(1200)} kr");
+                if(isEtterregistrering) {
+                    orders.Add("Sen registrering: 100kr");
+                }
             }
 
             var ledsagere = _ledsagerRepo.FindLedsagersForPerson(registration.personid);
             if(ledsagere != null || ledsagere.Count > 0) {
                 foreach (var ledsager in ledsagere)
                 {
-                    orders.Add($"{ledsager.Person.firstname} {ledsager.Person.lastname}: 500 kr (ledsager)");
+                    orders.Add($"{ledsager.Person.firstname} {ledsager.Person.lastname}: 550 kr (ledsager)");
                 }
             }
 
@@ -171,69 +184,13 @@ namespace SkiTKD.Data.Repositories
 
                 var order = GetOtherReceipt(registration, allTshirts, paymentMethod, orderId);
 
-                var message = new Message
-                {
-                    Subject = $"Kvittering på kjøp av t-skjorter",
-                    Body = new ItemBody
-                    {
-                        ContentType = BodyType.Html,
-                        Content = order
-                    },
-                    ToRecipients = new List<Recipient>()
-                    {
-                        new Recipient
-                        {
-                            EmailAddress = new EmailAddress
-                            {
-                                Address = registration.Person.email
-                            }
-                        }
-                    }
-                };
-                
-
-                f.Me.SendMail(message, null).Request().PostAsync().GetAwaiter().GetResult();
-
-                return true;
-            }
-            catch(Exception e) {
-                Console.WriteLine("Klarte ikke levere mail!");
-                throw e;
-            }
-        }
-
-        private bool SendMailToRecipient(RegistrationEntity registration) {
-              try {
-                // Console.WriteLine("SETTING UP GRAPH CLIENT.........");
-
-                // var f = new GraphServiceClient(
-                // new DelegateAuthenticationProvider(
-                //     (requestMessage) =>
-                //     {
-                //         requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", _tokenService.GetToken().GetAwaiter().GetResult());
-                //         return Task.FromResult(0);
-                //     })
-                // );
-
-                // Console.WriteLine("GRAPH CLIENT SETUP OK");
-
-                var order = GetOrder(registration);
-                var payment = registration.Payment ?? _paymentRepo.FindPaymentById(registration.paymentid ?? throw new Exception("Mangler paymentId i registrering."));
-                var paymentMethod = payment.vipps ? "Vipps" : "Kort/Kontant";
-                var orderId = "";
-
-                // Vis ordrenummer hvis dette er Vipps.
-                if(payment.vipps && registration.Payment.VippsEntity != null) {
-                    orderId = $"<p>Vipps ordernummer: {registration.Payment.VippsEntity.orderid}</p>";
-                }
-
                 // var message = new Message
                 // {
-                //     Subject = $"Du er registrert til {GetTypeTitle(registration)}",
+                //     Subject = $"Kvittering på kjøp av t-skjorter",
                 //     Body = new ItemBody
                 //     {
                 //         ContentType = BodyType.Html,
-                //         Content = registration is VinterleirRegistrationEntity ? GetVinterleirReceipt(registration, order, paymentMethod, orderId) : GetGraderingReceipt(registration, order, paymentMethod, orderId)
+                //         Content = order
                 //     },
                 //     ToRecipients = new List<Recipient>()
                 //     {
@@ -247,27 +204,48 @@ namespace SkiTKD.Data.Repositories
                 //     }
                 // };
                 
-                // Console.WriteLine("SENDING THROUGH AUTHENTICATED F");
+
                 // f.Me.SendMail(message, null).Request().PostAsync().GetAwaiter().GetResult();
 
-                var message = new MimeMessage();
-                message.From.Add (new MailboxAddress ("Ski Taekwondo Klubb", "ikkesvarskitaekwondo@outlook.com"));
-                message.To.Add (new MailboxAddress ($"{registration.Person.firstname} {registration.Person.lastname}", registration.Person.email));
-                message.Subject = $"Du er registrert til {GetTypeTitle(registration)}";
+                return true;
+            }
+            catch(Exception e) {
+                Console.WriteLine("Klarte ikke levere mail!");
+                throw e;
+            }
+        }
 
-                message.Body = new TextPart ("html") {
-                    Text = registration is VinterleirRegistrationEntity ? GetVinterleirReceipt(registration, order, paymentMethod, orderId) : GetGraderingReceipt(registration, order, paymentMethod, orderId)
-                };
+        private bool SendMailToRecipient(RegistrationEntity registration) {
+              try {
+                
+                var order = GetOrder(registration);
+                var payment = registration.Payment ?? _paymentRepo.FindPaymentById(registration.paymentid ?? throw new Exception("Mangler paymentId i registrering."));
+                var paymentMethod = payment.vipps ? "Vipps" : "Kort/Kontant";
+                var orderId = "";
 
-                using (var client = new SmtpClient ()) {
-                    client.Connect ("smtp.office365.com", 587, false);
-
-                    // Note: only needed if the SMTP server requires authentication
-                    client.Authenticate (user, password);
-
-                    client.Send (message);
-                    client.Disconnect (true);
+                // Vis ordrenummer hvis dette er Vipps.
+                if(payment.vipps && registration.Payment.VippsEntity != null) {
+                    orderId = $"<p>Vipps ordernummer: {registration.Payment.VippsEntity.orderid}</p>";
                 }
+
+                // var message = new MimeMessage();
+                // message.From.Add (new MailboxAddress ("Ski Taekwondo Klubb", "ikkesvarskitaekwondo@outlook.com"));
+                // message.To.Add (new MailboxAddress ($"{registration.Person.firstname} {registration.Person.lastname}", registration.Person.email));
+                // message.Subject = $"Du er registrert til {GetTypeTitle(registration)}";
+
+                // message.Body = new TextPart ("html") {
+                //     Text = registration is VinterleirRegistrationEntity ? GetVinterleirReceipt(registration, order, paymentMethod, orderId) : GetGraderingReceipt(registration, order, paymentMethod, orderId)
+                // };
+
+                // using (var client = new SmtpClient ()) {
+                //     client.Connect ("smtp.office365.com", 587, false);
+
+                //     // Note: only needed if the SMTP server requires authentication
+                //     client.Authenticate (user, password);
+
+                //     client.Send (message);
+                //     client.Disconnect (true);
+                // }
 
                 return true;
             }
@@ -277,6 +255,64 @@ namespace SkiTKD.Data.Repositories
                 throw e;
             }
         }
+
+        public bool SendMail(List<EmailAddress> mailTo, EmailContent email) {
+
+            if(!_sendMail) {
+                return true;
+            }
+
+            string connectionString = $"endpoint={password}";
+            var emailClient = new EmailClient(connectionString);
+
+            var emailMessage = new EmailMessage(
+                senderAddress: "DoNotReply@skitaekwondo.no",
+                content: email,
+                recipients: new EmailRecipients(mailTo));
+
+            EmailSendOperation emailSendOperation = emailClient.Send(
+                WaitUntil.Completed,
+                emailMessage);
+            return true;
+        }
+
+         private bool SendSkoleMailToRecipient(RegistrationEntity registration) {
+              try {
+
+                // var message = new MimeMessage();
+                // message.From.Add (new MailboxAddress ("Ski Taekwondo Klubb", "ikkesvarskitaekwondo@outlook.com"));
+                // message.To.Add (new MailboxAddress ($"{registration.Person.firstname} {registration.Person.lastname}", registration.Person.email));
+                // message.Subject = $"Du er registrert til sommerskole";
+
+                // message.Body = new TextPart ("html") {
+                //     Text = @$"
+                //         <p>Hei {registration.Person.firstname} {registration.Person.lastname}, du er registrert til sommerskole i Ski Taekwondo Klubb.<p>
+                //         <p>For spørsmål eller avbestiling, ta kontakt med oss på <a href='mailto: kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a></p>
+                //         <p>Velkommen!</p>
+                //         <p>Med vennlig hilsen<p>
+                //         <p>Ski Taekwondo Klubb</p>
+                //     "
+                // };
+
+                // using (var client = new SmtpClient ()) {
+                //     client.Connect ("smtp.office365.com", 587, false);
+
+                //     // Note: only needed if the SMTP server requires authentication
+                //     client.Authenticate (user, password);
+
+                //     client.Send (message);
+                //     client.Disconnect (true);
+                // }
+
+                return true;
+            }
+            catch(Exception e) {
+                Console.WriteLine("Klarte ikke levere mail!");
+                
+                throw e;
+            }
+        }
+
 
         private string GetTypeTitle(RegistrationEntity reg) {
              return reg is VinterleirRegistrationEntity ? "vinterleir" : "gradering";
@@ -309,8 +345,7 @@ namespace SkiTKD.Data.Repositories
                 <p>Hei {reg.Person.firstname} {reg.Person.lastname}, du er herved registrert til gradering i Ski Taekwondo Klubb.<p>
                 <p>Her følger en kvittering:<p>
                 <ul>{order}</ul>
-                <p>Betalingsmåte: {paymentMethod}</p>
-                {orderId}
+                <p>Graderingen skal betales i lokalene på graderingsdagen.</p>
                 <p>For avbestilling, ta kontakt med oss på <a href='mailto: kontakt@skitaekwondo.no'>kontakt@skitaekwondo.no</a></p>
                 <p>Lykke til!</p>
                 <p>Med vennlig hilsen<p>

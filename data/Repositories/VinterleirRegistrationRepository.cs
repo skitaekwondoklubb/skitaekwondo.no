@@ -22,12 +22,16 @@ namespace SkiTKD.Data.Repositories
             IGradeRepository gradeRepo, 
             IClubRepository clubRepo
         ) {
+
           _dbContext = dbContext;
           _gradeRepo = gradeRepo;
           _clubRepo = clubRepo;
+
         }
         
         public VinterleirRegistrationEntity AddRegistration(VinterleirRegistration registration, int personId) {
+            throw new System.Exception("Vinterleieren er over for denne gang. Takk for oppmøtet!");
+
             if(personId == 0) {
                 throw new System.Exception("Databasefeil: Ingen person vedlagt i registrering.");
             }

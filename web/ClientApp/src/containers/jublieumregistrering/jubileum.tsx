@@ -8,11 +8,11 @@ function Tshirt(props: JubileumStepProps) {
     
     return (
         <div className={`${styles.registrationTop} slideLeft`}>
-            <p>Velkommen til registrering til Ski Taekwondo Klubb 45-års jubileum</p>
+            <p>Velkommen til registrering til Ski Taekwondo Klubbs sommeravslutning 2024!</p>
             <p>Vi vil trenge informasjon som en del av registreringsprosessen og vil lagre dette digitalt.</p>
-            <p>Denne informasjonen vil <b>kun</b> brukes av Ski Taekwondo Klubb for å kunne registrere påmelding til jubileum. Ski Taekwondo Klubb deler ingen
+            <p>Denne informasjonen vil kun brukes av Ski Taekwondo Klubb for å kunne registrere påmelding til sommeravslutning. Ski Taekwondo Klubb deler ingen
                 informasjon med tredjeparter.</p>
-            <p>Etter jubileumet vil digital personlig identifiserbar informasjon anonymiseres eller slettes.</p>
+            <p>Etter sommeravslutningen vil digital personlig identifiserbar informasjon anonymiseres eller slettes.</p>
             <div className={styles.navigationButtons}>
                 <button className={styles.nextButton} onClick={() => props.setCurrentStep(props.step+1)}>Neste</button>
             </div>
